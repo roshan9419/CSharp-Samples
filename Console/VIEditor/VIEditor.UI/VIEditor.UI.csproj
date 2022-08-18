@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="log4net" Version="2.0.14" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\VIEditor.FileManager\VIEditor.FileManager.csproj" />
+    <ProjectReference Include="..\VIEditor.Models\VIEditor.Models.csproj" />
+    <ProjectReference Include="..\VIEditor.Services\VIEditor.Services.csproj" />
+    <ProjectReference Include="..\VIEditor.Validators\VIEditor.Validators.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

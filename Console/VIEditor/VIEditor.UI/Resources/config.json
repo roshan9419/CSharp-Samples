@@ -1,0 +1,12 @@
+{
+  "eofCommands": [
+    ":x",
+    ":END"
+  ],
+  "supportedFileExtensions": [
+    "txt",
+    "cs",
+    "java"
+  ],
+  "defaultFileExtension": "txt"
+}

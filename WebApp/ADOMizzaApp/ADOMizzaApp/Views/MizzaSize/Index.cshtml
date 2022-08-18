@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Mizza.DataModels.MizzaSize>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h3 class="text-success">@ViewBag.SuccessMessage</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaSizeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaSizeName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MizzaSizeID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MizzaSizeName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.MizzaSizeID }) |
+            @Html.ActionLink("Details", "Details", new { id = item.MizzaSizeID }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.MizzaSizeID })
+        </td>
+    </tr>
+}
+
+</table>

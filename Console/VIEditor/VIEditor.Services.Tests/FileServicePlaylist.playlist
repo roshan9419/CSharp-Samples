@@ -1,0 +1,5 @@
+﻿<Playlist Version="1.0">
+<Add Test="VIEditor.Services.Tests.FileServiceTest.CreateValidFileItemTest" />
+<Add Test="VIEditor.Services.Tests.FileServiceTest.GetExistFileItemTest" />
+<Add Test="VIEditor.Services.Tests.FileServiceTest.UpdateExistFileItemTest" />
+</Playlist>

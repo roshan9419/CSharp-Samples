@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2caee58e554443b8be5fb36d211d22b8" Name="Diagram1">
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaSize" Width="1.5" PointX="0.75" PointY="2.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaSKU" Width="1.5" PointX="3" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaSkuBasePrice" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaSKUStock" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaStyle" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaToppingSKUPrice" Width="1.5" PointX="7.25" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaToppingSKUStock" Width="1.5" PointX="7.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaToppingsStyleSKU" Width="1.5" PointX="5" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MIzzaNextModel.MizzaToppingStyle" Width="1.5" PointX="2.75" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaSKU_MizzaSize" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaSKU_MizzaStyle" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaSkuBasePrice_MizzaSKU" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaSKUStock_MizzaSKU" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU" ManuallyRouted="false" />
+        <AssociationConnector Association="MIzzaNextModel.FK_MizzaToppingsStyleSKU_MizzaToppingStyle" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

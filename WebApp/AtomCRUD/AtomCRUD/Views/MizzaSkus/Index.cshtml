@@ -1,0 +1,47 @@
+﻿@model IEnumerable<AtomCRUD.Models.MizzaSku>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MizzaSkuname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MizzaSize)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MizzaStyle)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MizzaSkuname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MizzaSize.MizzaSizeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MizzaStyle.MizzaStyleId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MizzaSkuid" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.MizzaSkuid" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.MizzaSkuid" class="btn btn-danger">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

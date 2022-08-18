@@ -1,0 +1,36 @@
+﻿@model MizzaPro.Models.MizzaSku
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>MizzaSku</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MizzaSkuname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MizzaSkuname)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MizzaSize)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MizzaSize.MizzaSizeId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MizzaStyle)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MizzaStyle.MizzaStyleId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.MizzaSkuid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,10 @@
+{
+  "invalidNumber": "Invalid Number",
+  "invalidChoice": "Invalid Choice",
+  "fileNotFound": "File not found",
+  "fileAlreadyExists": "File already exists!",
+  "invalidDirectoryPath": "Invalid Directory Path",
+  "fileNotSupported": "Currently this file extension is not supported!",
+  "fileCreateFailure": "Failed to create file",
+  "fileUpdateFailure": "Failed to update file"
+}

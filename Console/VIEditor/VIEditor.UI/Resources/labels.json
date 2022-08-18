@@ -1,0 +1,24 @@
+{
+  "welcomeMessage": "Welcome to VI Editor!",
+  "about": "About",
+  "menus": {
+    "newFile": "New File",
+    "openFile": "Open File",
+    "recentFile": "View Recent Files",
+    "changeTheme": "Change Theme",
+    "help": "Help & About",
+    "exit": "Exit"
+  },
+  "createFile": "Create new file",
+  "openFile": "Open existing file",
+  "askFileDirectory": "Enter the directory (e.g., C:/Documents): ",
+  "askFileName": "Enter file name (e.g., todo.txt): ",
+  "fileUpdated": "File has been updated",
+  "goBackToMenu": "Press any key to go back to menu...",
+  "pressKeyToStart": "Press any key to start writing...",
+  "pressKeyToRetry": "Press any key to retry...",
+  "yourChoice": "Your Choice : ",
+  "fileOverride": "Do you want to override this file? (Y/N): ",
+  "supportedFileExtensions": "Supported file extensions",
+  "commandsToTerminate": "Commands to Terminate editing mode"
+}

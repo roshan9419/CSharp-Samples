@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Mizza.DataModels.MizzaToppingSKUPrice>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { toppingStyleID = item.ToppingStyleID, skuid = item.SKUID }) |
+            @Html.ActionLink("Details", "Details", new { toppingStyleID = item.ToppingStyleID, skuid = item.SKUID }) |
+            @Html.ActionLink("Delete", "Delete", new { toppingStyleID = item.ToppingStyleID, skuid = item.SKUID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32505.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSQCalcy.UI", "LSQCalcy.UI\LSQCalcy.UI.csproj", "{A6353847-434B-49DC-97C5-1775BA9C366E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LSQCalcy.Operations", "LSQCalcy.Operations\LSQCalcy.Operations.csproj", "{FCF55509-F298-4ED8-885D-2687CE112B03}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A6353847-434B-49DC-97C5-1775BA9C366E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6353847-434B-49DC-97C5-1775BA9C366E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6353847-434B-49DC-97C5-1775BA9C366E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6353847-434B-49DC-97C5-1775BA9C366E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCF55509-F298-4ED8-885D-2687CE112B03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF55509-F298-4ED8-885D-2687CE112B03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF55509-F298-4ED8-885D-2687CE112B03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF55509-F298-4ED8-885D-2687CE112B03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1B75911A-5EE0-4598-89C9-E8374A5C129D}
+	EndGlobalSection
+EndGlobal

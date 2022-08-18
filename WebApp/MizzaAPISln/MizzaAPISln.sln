@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MizzaAPI", "MizzaAPI\MizzaAPI.csproj", "{193D85F4-D668-40EC-B4CE-66DC8820EF61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mizza.DataModels", "..\ADOMizzaApp\Mizza.DataModels\Mizza.DataModels.csproj", "{1311C3AD-3B1B-453D-A5E2-62C4D53DF9B3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{193D85F4-D668-40EC-B4CE-66DC8820EF61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{193D85F4-D668-40EC-B4CE-66DC8820EF61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{193D85F4-D668-40EC-B4CE-66DC8820EF61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{193D85F4-D668-40EC-B4CE-66DC8820EF61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1311C3AD-3B1B-453D-A5E2-62C4D53DF9B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1311C3AD-3B1B-453D-A5E2-62C4D53DF9B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1311C3AD-3B1B-453D-A5E2-62C4D53DF9B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1311C3AD-3B1B-453D-A5E2-62C4D53DF9B3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F90EA9A0-E740-4E2F-B23E-6D9CBE5D6985}
+	EndGlobalSection
+EndGlobal

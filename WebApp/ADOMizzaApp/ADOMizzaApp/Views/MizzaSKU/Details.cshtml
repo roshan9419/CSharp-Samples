@@ -1,0 +1,42 @@
+﻿@model Mizza.DataModels.MizzaSKU
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MizzaSKU</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MizzaSKUName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MizzaSKUName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MizzaStyleID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MizzaStyleID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MizzaSizeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MizzaSizeID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.MizzaSKUID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

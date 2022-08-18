@@ -1,0 +1,526 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MIzzaNextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="MizzaSize">
+          <Key>
+            <PropertyRef Name="MizzaSizeID" />
+          </Key>
+          <Property Name="MizzaSizeName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MizzaSizeID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaSKU">
+          <Key>
+            <PropertyRef Name="MizzaSKUID" />
+          </Key>
+          <Property Name="MizzaSKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MizzaSKUName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MizzaStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="MizzaSizeID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaSkuBasePrice">
+          <Key>
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="SKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaSKUStock">
+          <Key>
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="SKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StockCount" Type="nchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaStyle">
+          <Key>
+            <PropertyRef Name="MizzaStyleID" />
+          </Key>
+          <Property Name="MizzaStyleName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MizzaStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaToppingSKUPrice">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Price" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaToppingSKUStock">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StockCount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaToppingsStyleSKU">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="ToppingSKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ToppingSKUID" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MizzaToppingStyle">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ToppingName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MizzaSKU_MizzaSize">
+          <End Role="MizzaSize" Type="Self.MizzaSize" Multiplicity="1" />
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSize">
+              <PropertyRef Name="MizzaSizeID" />
+            </Principal>
+            <Dependent Role="MizzaSKU">
+              <PropertyRef Name="MizzaSizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSKU_MizzaStyle">
+          <End Role="MizzaStyle" Type="Self.MizzaStyle" Multiplicity="1" />
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaStyle">
+              <PropertyRef Name="MizzaStyleID" />
+            </Principal>
+            <Dependent Role="MizzaSKU">
+              <PropertyRef Name="MizzaStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSkuBasePrice_MizzaSKU">
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="1" />
+          <End Role="MizzaSkuBasePrice" Type="Self.MizzaSkuBasePrice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSKU">
+              <PropertyRef Name="MizzaSKUID" />
+            </Principal>
+            <Dependent Role="MizzaSkuBasePrice">
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSKUStock_MizzaSKU">
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="1" />
+          <End Role="MizzaSKUStock" Type="Self.MizzaSKUStock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSKU">
+              <PropertyRef Name="MizzaSKUID" />
+            </Principal>
+            <Dependent Role="MizzaSKUStock">
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU">
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="1" />
+          <End Role="MizzaToppingSKUPrice" Type="Self.MizzaToppingSKUPrice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="ToppingSKUID" />
+            </Principal>
+            <Dependent Role="MizzaToppingSKUPrice">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU">
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="1" />
+          <End Role="MizzaToppingSKUStock" Type="Self.MizzaToppingSKUStock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="ToppingSKUID" />
+            </Principal>
+            <Dependent Role="MizzaToppingSKUStock">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingsStyleSKU_MizzaToppingStyle">
+          <End Role="MizzaToppingStyle" Type="Self.MizzaToppingStyle" Multiplicity="1" />
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingStyle">
+              <PropertyRef Name="ToppingStyleID" />
+            </Principal>
+            <Dependent Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MIzzaNextModelStoreContainer">
+          <EntitySet Name="MizzaSize" EntityType="Self.MizzaSize" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaSKU" EntityType="Self.MizzaSKU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaSkuBasePrice" EntityType="Self.MizzaSkuBasePrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaSKUStock" EntityType="Self.MizzaSKUStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaStyle" EntityType="Self.MizzaStyle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaToppingSKUPrice" EntityType="Self.MizzaToppingSKUPrice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaToppingSKUStock" EntityType="Self.MizzaToppingSKUStock" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaToppingsStyleSKU" EntityType="Self.MizzaToppingsStyleSKU" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MizzaToppingStyle" EntityType="Self.MizzaToppingStyle" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MizzaSKU_MizzaSize" Association="Self.FK_MizzaSKU_MizzaSize">
+            <End Role="MizzaSize" EntitySet="MizzaSize" />
+            <End Role="MizzaSKU" EntitySet="MizzaSKU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSKU_MizzaStyle" Association="Self.FK_MizzaSKU_MizzaStyle">
+            <End Role="MizzaStyle" EntitySet="MizzaStyle" />
+            <End Role="MizzaSKU" EntitySet="MizzaSKU" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSkuBasePrice_MizzaSKU" Association="Self.FK_MizzaSkuBasePrice_MizzaSKU">
+            <End Role="MizzaSKU" EntitySet="MizzaSKU" />
+            <End Role="MizzaSkuBasePrice" EntitySet="MizzaSkuBasePrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSKUStock_MizzaSKU" Association="Self.FK_MizzaSKUStock_MizzaSKU">
+            <End Role="MizzaSKU" EntitySet="MizzaSKU" />
+            <End Role="MizzaSKUStock" EntitySet="MizzaSKUStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU" Association="Self.FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU">
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKU" />
+            <End Role="MizzaToppingSKUPrice" EntitySet="MizzaToppingSKUPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU" Association="Self.FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU">
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKU" />
+            <End Role="MizzaToppingSKUStock" EntitySet="MizzaToppingSKUStock" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingsStyleSKU_MizzaToppingStyle" Association="Self.FK_MizzaToppingsStyleSKU_MizzaToppingStyle">
+            <End Role="MizzaToppingStyle" EntitySet="MizzaToppingStyle" />
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKU" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MIzzaNextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="MizzaSize">
+          <Key>
+            <PropertyRef Name="MizzaSizeID" />
+          </Key>
+          <Property Name="MizzaSizeName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MizzaSizeID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaSKUs" Relationship="Self.FK_MizzaSKU_MizzaSize" FromRole="MizzaSize" ToRole="MizzaSKU" />
+        </EntityType>
+        <EntityType Name="MizzaSKU">
+          <Key>
+            <PropertyRef Name="MizzaSKUID" />
+          </Key>
+          <Property Name="MizzaSKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MizzaSKUName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MizzaStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MizzaSizeID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaSize" Relationship="Self.FK_MizzaSKU_MizzaSize" FromRole="MizzaSKU" ToRole="MizzaSize" />
+          <NavigationProperty Name="MizzaStyle" Relationship="Self.FK_MizzaSKU_MizzaStyle" FromRole="MizzaSKU" ToRole="MizzaStyle" />
+          <NavigationProperty Name="MizzaSkuBasePrice" Relationship="Self.FK_MizzaSkuBasePrice_MizzaSKU" FromRole="MizzaSKU" ToRole="MizzaSkuBasePrice" />
+          <NavigationProperty Name="MizzaSKUStock" Relationship="Self.FK_MizzaSKUStock_MizzaSKU" FromRole="MizzaSKU" ToRole="MizzaSKUStock" />
+        </EntityType>
+        <EntityType Name="MizzaSkuBasePrice">
+          <Key>
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="SKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MizzaSKU" Relationship="Self.FK_MizzaSkuBasePrice_MizzaSKU" FromRole="MizzaSkuBasePrice" ToRole="MizzaSKU" />
+        </EntityType>
+        <EntityType Name="MizzaSKUStock">
+          <Key>
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="SKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StockCount" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaSKU" Relationship="Self.FK_MizzaSKUStock_MizzaSKU" FromRole="MizzaSKUStock" ToRole="MizzaSKU" />
+        </EntityType>
+        <EntityType Name="MizzaStyle">
+          <Key>
+            <PropertyRef Name="MizzaStyleID" />
+          </Key>
+          <Property Name="MizzaStyleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MizzaStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaSKUs" Relationship="Self.FK_MizzaSKU_MizzaStyle" FromRole="MizzaStyle" ToRole="MizzaSKU" />
+        </EntityType>
+        <EntityType Name="MizzaToppingSKUPrice">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MizzaToppingsStyleSKU" Relationship="Self.FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU" FromRole="MizzaToppingSKUPrice" ToRole="MizzaToppingsStyleSKU" />
+        </EntityType>
+        <EntityType Name="MizzaToppingSKUStock">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="SKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="StockCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MizzaToppingsStyleSKU" Relationship="Self.FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU" FromRole="MizzaToppingSKUStock" ToRole="MizzaToppingsStyleSKU" />
+        </EntityType>
+        <EntityType Name="MizzaToppingsStyleSKU">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+            <PropertyRef Name="ToppingSKUID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToppingSKUID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaToppingSKUPrice" Relationship="Self.FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU" FromRole="MizzaToppingsStyleSKU" ToRole="MizzaToppingSKUPrice" />
+          <NavigationProperty Name="MizzaToppingSKUStock" Relationship="Self.FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU" FromRole="MizzaToppingsStyleSKU" ToRole="MizzaToppingSKUStock" />
+          <NavigationProperty Name="MizzaToppingStyle" Relationship="Self.FK_MizzaToppingsStyleSKU_MizzaToppingStyle" FromRole="MizzaToppingsStyleSKU" ToRole="MizzaToppingStyle" />
+        </EntityType>
+        <EntityType Name="MizzaToppingStyle">
+          <Key>
+            <PropertyRef Name="ToppingStyleID" />
+          </Key>
+          <Property Name="ToppingStyleID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ToppingName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MizzaToppingsStyleSKUs" Relationship="Self.FK_MizzaToppingsStyleSKU_MizzaToppingStyle" FromRole="MizzaToppingStyle" ToRole="MizzaToppingsStyleSKU" />
+        </EntityType>
+        <Association Name="FK_MizzaSKU_MizzaSize">
+          <End Role="MizzaSize" Type="Self.MizzaSize" Multiplicity="1" />
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSize">
+              <PropertyRef Name="MizzaSizeID" />
+            </Principal>
+            <Dependent Role="MizzaSKU">
+              <PropertyRef Name="MizzaSizeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSKU_MizzaStyle">
+          <End Role="MizzaStyle" Type="Self.MizzaStyle" Multiplicity="1" />
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaStyle">
+              <PropertyRef Name="MizzaStyleID" />
+            </Principal>
+            <Dependent Role="MizzaSKU">
+              <PropertyRef Name="MizzaStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSkuBasePrice_MizzaSKU">
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="1" />
+          <End Role="MizzaSkuBasePrice" Type="Self.MizzaSkuBasePrice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSKU">
+              <PropertyRef Name="MizzaSKUID" />
+            </Principal>
+            <Dependent Role="MizzaSkuBasePrice">
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaSKUStock_MizzaSKU">
+          <End Role="MizzaSKU" Type="Self.MizzaSKU" Multiplicity="1" />
+          <End Role="MizzaSKUStock" Type="Self.MizzaSKUStock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaSKU">
+              <PropertyRef Name="MizzaSKUID" />
+            </Principal>
+            <Dependent Role="MizzaSKUStock">
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU">
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="1" />
+          <End Role="MizzaToppingSKUPrice" Type="Self.MizzaToppingSKUPrice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="ToppingSKUID" />
+            </Principal>
+            <Dependent Role="MizzaToppingSKUPrice">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU">
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="1" />
+          <End Role="MizzaToppingSKUStock" Type="Self.MizzaToppingSKUStock" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="ToppingSKUID" />
+            </Principal>
+            <Dependent Role="MizzaToppingSKUStock">
+              <PropertyRef Name="ToppingStyleID" />
+              <PropertyRef Name="SKUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MizzaToppingsStyleSKU_MizzaToppingStyle">
+          <End Role="MizzaToppingStyle" Type="Self.MizzaToppingStyle" Multiplicity="1" />
+          <End Role="MizzaToppingsStyleSKU" Type="Self.MizzaToppingsStyleSKU" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MizzaToppingStyle">
+              <PropertyRef Name="ToppingStyleID" />
+            </Principal>
+            <Dependent Role="MizzaToppingsStyleSKU">
+              <PropertyRef Name="ToppingStyleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MIzzaNextEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MizzaSizes" EntityType="Self.MizzaSize" />
+          <EntitySet Name="MizzaSKUs" EntityType="Self.MizzaSKU" />
+          <EntitySet Name="MizzaSkuBasePrices" EntityType="Self.MizzaSkuBasePrice" />
+          <EntitySet Name="MizzaSKUStocks" EntityType="Self.MizzaSKUStock" />
+          <EntitySet Name="MizzaStyles" EntityType="Self.MizzaStyle" />
+          <EntitySet Name="MizzaToppingSKUPrices" EntityType="Self.MizzaToppingSKUPrice" />
+          <EntitySet Name="MizzaToppingSKUStocks" EntityType="Self.MizzaToppingSKUStock" />
+          <EntitySet Name="MizzaToppingsStyleSKUs" EntityType="Self.MizzaToppingsStyleSKU" />
+          <EntitySet Name="MizzaToppingStyles" EntityType="Self.MizzaToppingStyle" />
+          <AssociationSet Name="FK_MizzaSKU_MizzaSize" Association="Self.FK_MizzaSKU_MizzaSize">
+            <End Role="MizzaSize" EntitySet="MizzaSizes" />
+            <End Role="MizzaSKU" EntitySet="MizzaSKUs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSKU_MizzaStyle" Association="Self.FK_MizzaSKU_MizzaStyle">
+            <End Role="MizzaStyle" EntitySet="MizzaStyles" />
+            <End Role="MizzaSKU" EntitySet="MizzaSKUs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSkuBasePrice_MizzaSKU" Association="Self.FK_MizzaSkuBasePrice_MizzaSKU">
+            <End Role="MizzaSKU" EntitySet="MizzaSKUs" />
+            <End Role="MizzaSkuBasePrice" EntitySet="MizzaSkuBasePrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaSKUStock_MizzaSKU" Association="Self.FK_MizzaSKUStock_MizzaSKU">
+            <End Role="MizzaSKU" EntitySet="MizzaSKUs" />
+            <End Role="MizzaSKUStock" EntitySet="MizzaSKUStocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU" Association="Self.FK_MizzaToppingSKUPrice_MizzaToppingsStyleSKU">
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKUs" />
+            <End Role="MizzaToppingSKUPrice" EntitySet="MizzaToppingSKUPrices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU" Association="Self.FK_MizzaToppingSKUStock_MizzaToppingsStyleSKU">
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKUs" />
+            <End Role="MizzaToppingSKUStock" EntitySet="MizzaToppingSKUStocks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MizzaToppingsStyleSKU_MizzaToppingStyle" Association="Self.FK_MizzaToppingsStyleSKU_MizzaToppingStyle">
+            <End Role="MizzaToppingStyle" EntitySet="MizzaToppingStyles" />
+            <End Role="MizzaToppingsStyleSKU" EntitySet="MizzaToppingsStyleSKUs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MIzzaNextModelStoreContainer" CdmEntityContainer="MIzzaNextEntities">
+          <EntitySetMapping Name="MizzaSizes">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaSize">
+              <MappingFragment StoreEntitySet="MizzaSize">
+                <ScalarProperty Name="MizzaSizeName" ColumnName="MizzaSizeName" />
+                <ScalarProperty Name="MizzaSizeID" ColumnName="MizzaSizeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaSKUs">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaSKU">
+              <MappingFragment StoreEntitySet="MizzaSKU">
+                <ScalarProperty Name="MizzaSKUID" ColumnName="MizzaSKUID" />
+                <ScalarProperty Name="MizzaSKUName" ColumnName="MizzaSKUName" />
+                <ScalarProperty Name="MizzaStyleID" ColumnName="MizzaStyleID" />
+                <ScalarProperty Name="MizzaSizeID" ColumnName="MizzaSizeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaSkuBasePrices">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaSkuBasePrice">
+              <MappingFragment StoreEntitySet="MizzaSkuBasePrice">
+                <ScalarProperty Name="SKUID" ColumnName="SKUID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaSKUStocks">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaSKUStock">
+              <MappingFragment StoreEntitySet="MizzaSKUStock">
+                <ScalarProperty Name="SKUID" ColumnName="SKUID" />
+                <ScalarProperty Name="StockCount" ColumnName="StockCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaStyles">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaStyle">
+              <MappingFragment StoreEntitySet="MizzaStyle">
+                <ScalarProperty Name="MizzaStyleName" ColumnName="MizzaStyleName" />
+                <ScalarProperty Name="MizzaStyleID" ColumnName="MizzaStyleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaToppingSKUPrices">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaToppingSKUPrice">
+              <MappingFragment StoreEntitySet="MizzaToppingSKUPrice">
+                <ScalarProperty Name="ToppingStyleID" ColumnName="ToppingStyleID" />
+                <ScalarProperty Name="SKUID" ColumnName="SKUID" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaToppingSKUStocks">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaToppingSKUStock">
+              <MappingFragment StoreEntitySet="MizzaToppingSKUStock">
+                <ScalarProperty Name="ToppingStyleID" ColumnName="ToppingStyleID" />
+                <ScalarProperty Name="SKUID" ColumnName="SKUID" />
+                <ScalarProperty Name="StockCount" ColumnName="StockCount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaToppingsStyleSKUs">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaToppingsStyleSKU">
+              <MappingFragment StoreEntitySet="MizzaToppingsStyleSKU">
+                <ScalarProperty Name="ToppingStyleID" ColumnName="ToppingStyleID" />
+                <ScalarProperty Name="ToppingSKUID" ColumnName="ToppingSKUID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MizzaToppingStyles">
+            <EntityTypeMapping TypeName="MIzzaNextModel.MizzaToppingStyle">
+              <MappingFragment StoreEntitySet="MizzaToppingStyle">
+                <ScalarProperty Name="ToppingStyleID" ColumnName="ToppingStyleID" />
+                <ScalarProperty Name="ToppingName" ColumnName="ToppingName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
