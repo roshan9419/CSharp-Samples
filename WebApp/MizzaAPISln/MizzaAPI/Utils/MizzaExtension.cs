@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mizza.DataModels.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Reflection;
@@ -26,6 +27,7 @@ namespace Mizza.DataRepo
             foreach (DataColumn dtCol in dtRow.Table.Columns)
             {
                 PropertyInfo prop = item.GetType().GetProperty(dtCol.ColumnName);
+                
                 if (prop != null && dtRow[dtCol] != DBNull.Value)
                 {
                     prop.SetValue(item, dtRow[dtCol], null);

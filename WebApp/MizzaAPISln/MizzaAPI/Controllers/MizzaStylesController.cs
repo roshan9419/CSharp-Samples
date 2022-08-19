@@ -19,7 +19,7 @@ namespace MizzaAPI.Controllers
         // GET: api/MizzaStyles
         public IEnumerable<MizzaStyle> Get()
         {
-            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaStyles", new List<DBParameter> {
+            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaStyles", new DBParameter[] {
                 new DBParameter { Key = "MizzaStyleID", Value = null }
             });
             return _mizzaRepo.MizzaStyles.ConvertToObjects(dt);
@@ -28,7 +28,7 @@ namespace MizzaAPI.Controllers
         // GET: api/MizzaStyles/5
         public MizzaStyle Get(string id)
         {
-            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaStyles", new List<DBParameter> {
+            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaStyles", new DBParameter[] {
                 new DBParameter { Key = "MizzaStyleID", Value = id }
             });
             return _mizzaRepo.MizzaStyles.ConvertToObjects(dt)[0];
@@ -49,7 +49,7 @@ namespace MizzaAPI.Controllers
         // DELETE: api/MizzaStyles/5
         public void Delete(string id)
         {
-            _mizzaRepo.CommandVM.DeleteRecord("DeleteMizzaStyle", new List<DBParameter> {
+            _mizzaRepo.CommandVM.DeleteRecord("DeleteMizzaStyle", new DBParameter[] {
                 new DBParameter { Key = "MizzaStyleID", Value = id }
             });
         }

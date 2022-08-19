@@ -17,7 +17,7 @@ namespace MizzaAPI.Repository
             _conn = new MySqlConnection(connString);
         }
 
-        internal DataTable GetRecords(string procedureName, List<DBParameter> dbParams = null, CommandType commandType = CommandType.StoredProcedure)
+        internal DataTable GetRecords(string procedureName, DBParameter[] dbParams = null, CommandType commandType = CommandType.StoredProcedure)
         {
             MySqlCommand cmd = new MySqlCommand(procedureName, _conn);
             cmd.CommandType = commandType;
@@ -33,17 +33,17 @@ namespace MizzaAPI.Repository
             return dataTable;
         }
 
-        internal bool CreateRecord(string procedureName, List<DBParameter> dbParams = null, CommandType commandType = CommandType.StoredProcedure)
+        internal bool CreateRecord(string procedureName, DBParameter[] dbParams = null, CommandType commandType = CommandType.StoredProcedure)
         {
             return UpdateRecord(procedureName, dbParams, commandType);
         }
 
-        internal bool DeleteRecord(string procedureName, List<DBParameter> dbParams = null, CommandType commandType = CommandType.StoredProcedure)
+        internal bool DeleteRecord(string procedureName, DBParameter[] dbParams = null, CommandType commandType = CommandType.StoredProcedure)
         {
             return UpdateRecord(procedureName, dbParams, commandType);
         }
 
-        internal bool UpdateRecord(string procedureName, List<DBParameter> dbParams = null, CommandType commandType = CommandType.StoredProcedure)
+        internal bool UpdateRecord(string procedureName, DBParameter[] dbParams = null, CommandType commandType = CommandType.StoredProcedure)
         {
             MySqlCommand cmd = new MySqlCommand(procedureName, _conn);
             cmd.CommandType = commandType;

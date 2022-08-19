@@ -19,7 +19,7 @@ namespace MizzaAPI.Controllers
         // GET: api/MizzaSizes
         public IEnumerable<MizzaSize> Get()
         {
-            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new List<DBParameter> {
+            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new DBParameter[] {
                 new DBParameter { Key = "MizzaSizeID", Value = null }
             });
             return _mizzaRepo.MizzaSizes.ConvertToObjects(dt);
@@ -28,7 +28,7 @@ namespace MizzaAPI.Controllers
         // GET: api/MizzaSizes/5
         public MizzaSize Get(string id)
         {
-            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new List<DBParameter> {
+            var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new DBParameter[] {
                 new DBParameter { Key = "MizzaSizeID", Value = id }
             });
             return _mizzaRepo.MizzaSizes.ConvertToObjects(dt)[0];
@@ -49,7 +49,7 @@ namespace MizzaAPI.Controllers
         // DELETE: api/MizzaSizes/5
         public void Delete(string id)
         {
-            _mizzaRepo.CommandVM.DeleteRecord("DeleteMizzaSize", new List<DBParameter> {
+            _mizzaRepo.CommandVM.DeleteRecord("DeleteMizzaSize", new DBParameter[] {
                 new DBParameter { Key = "MizzaSizeID", Value = id }
             });
         }

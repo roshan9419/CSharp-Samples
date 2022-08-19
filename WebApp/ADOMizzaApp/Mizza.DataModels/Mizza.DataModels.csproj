@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\IgnoreProperty.cs" />
     <Compile Include="BunchMizza.cs" />
     <Compile Include="MizzaSize.cs" />
     <Compile Include="MizzaSKU.cs" />

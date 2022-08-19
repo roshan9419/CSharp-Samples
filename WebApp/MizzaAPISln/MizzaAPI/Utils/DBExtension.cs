@@ -1,4 +1,5 @@
-﻿using MizzaAPI.Models;
+﻿using Mizza.DataModels.Attributes;
+using MizzaAPI.Models;
 using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,20 @@ namespace MizzaAPI.Utils
 {
     public static class DBExtension
     {
-        public static List<DBParameter> GetDBParameters<T>(this T obj)
+        public static DBParameter[] GetDBParameters<T>(this T obj)
         {
             var dbParams = new List<DBParameter>();
             foreach (var prop in obj.GetType().GetProperties())
             {
+                foreach (var attr in prop.GetCustomAttributes(true))
+                    if (attr is IgnoreProperty) continue;
+                
                 dbParams.Add(new DBParameter { Key = prop.Name, Value = prop.GetValue(obj, null) });
             }
-            return dbParams;
+            return dbParams.ToArray();
         }
 
-        public static void AddDBParameters(this MySqlCommand cmd, List<DBParameter> dbParams)
+        public static void AddDBParameters(this MySqlCommand cmd, DBParameter[] dbParams)
         {
             if (dbParams != null)
             {
