@@ -4,6 +4,7 @@ using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace MizzaAPI.Utils
@@ -15,10 +16,8 @@ namespace MizzaAPI.Utils
             var dbParams = new List<DBParameter>();
             foreach (var prop in obj.GetType().GetProperties())
             {
-                foreach (var attr in prop.GetCustomAttributes(true))
-                    if (attr is IgnoreProperty) continue;
-                
-                dbParams.Add(new DBParameter { Key = prop.Name, Value = prop.GetValue(obj, null) });
+                if (ToAddOrIgnore(prop))
+                    dbParams.Add(new DBParameter { Key = prop.Name, Value = prop.GetValue(obj, null) });
             }
             return dbParams.ToArray();
         }
@@ -30,6 +29,13 @@ namespace MizzaAPI.Utils
                 foreach (var param in dbParams)
                     cmd.Parameters.AddWithValue($"@{param.Key}", param.Value);
             }
+        }
+
+        private static bool ToAddOrIgnore(PropertyInfo prop)
+        {
+            foreach (var attr in prop.GetCustomAttributes(true))
+                if (attr is IgnoreProperty) return false;
+            return true;
         }
     }
 }
