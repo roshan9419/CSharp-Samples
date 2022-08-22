@@ -1,0 +1,33 @@
+﻿@model IEnumerable<MVCAuthIndividual.Models.MizzaStyle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaStyleName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.MizzaStyleName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MizzaStyleID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MizzaStyleID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MizzaStyleID })
+        </td>
+    </tr>
+}
+
+</table>

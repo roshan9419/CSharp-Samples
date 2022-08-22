@@ -208,7 +208,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MizzaSizeController.cs" />
-    <Compile Include="Controllers\MizzaSkuController.cs" />
+    <Compile Include="Controllers\MizzaSKUsController.cs" />
+    <Compile Include="Controllers\MizzaStylesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -290,6 +291,16 @@
     <Content Include="Views\MizzaSize\Edit.cshtml" />
     <Content Include="Views\MizzaSize\Delete.cshtml" />
     <Content Include="Views\MizzaSku\Index.cshtml" />
+    <Content Include="Views\MizzaStyles\Create.cshtml" />
+    <Content Include="Views\MizzaStyles\Delete.cshtml" />
+    <Content Include="Views\MizzaStyles\Details.cshtml" />
+    <Content Include="Views\MizzaStyles\Edit.cshtml" />
+    <Content Include="Views\MizzaStyles\Index.cshtml" />
+    <Content Include="Views\MizzaSKUs\Create.cshtml" />
+    <Content Include="Views\MizzaSKUs\Delete.cshtml" />
+    <Content Include="Views\MizzaSKUs\Details.cshtml" />
+    <Content Include="Views\MizzaSKUs\Edit.cshtml" />
+    <Content Include="Views\MizzaSKUs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

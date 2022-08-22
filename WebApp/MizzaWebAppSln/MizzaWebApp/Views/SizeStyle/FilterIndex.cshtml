@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MizzaWebApp.Models.SizeStyleModel>
+
+@{
+    ViewBag.Title = "SizeStyle FilterIndex";
+}
+
+<h2>FilterIndex</h2>
+<hr />
+
+<form action="/sizestyle/filterindex" method="get" class="form-inline">
+
+    <div class="form-group mx-sm-3 mb-2">
+        <label for="mizzasizeid" class="sr-only">MizzaSizeID</label>
+        <input type="text" class="form-control" id="mizzasizeid" name="id" placeholder="MizzaSizeID">
+    </div>
+    <button type="submit" class="btn btn-primary mb-2">Search</button>
+</form>
+
+<h2>MizzaSizes</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaSize.MizzaSizeID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaSize.MizzaSizeName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.MizzaSize != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MizzaSize.MizzaSizeID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MizzaSize.MizzaSizeName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+<h2>MizzaStyles</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaStyle.MizzaStyleID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaStyle.MizzaStyleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.MizzaStyle != null)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MizzaStyle.MizzaStyleID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MizzaStyle.MizzaStyleName)
+                </td>
+                <td>
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+
+        }
+
+    }
+</table>

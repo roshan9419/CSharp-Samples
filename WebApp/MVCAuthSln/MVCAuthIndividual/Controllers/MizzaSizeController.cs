@@ -13,9 +13,9 @@ namespace MVCAuthIndividual.Controllers
     {
         private readonly MizzaContext _context;
 
-        public MizzaSizeController(MizzaContext context)
+        public MizzaSizeController()
         {
-            _context = context;
+            _context = new MizzaContext();
         }
 
         // GET: MizzaSize

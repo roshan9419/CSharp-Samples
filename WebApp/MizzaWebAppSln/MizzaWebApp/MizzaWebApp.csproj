@@ -128,9 +128,11 @@
     <Compile Include="Controllers\MizzaSkuController.cs" />
     <Compile Include="Controllers\MizzaStyleController.cs" />
     <Compile Include="Controllers\MizzaToppingStyleController.cs" />
+    <Compile Include="Controllers\SizeStyleController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\SizeStyleModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\MizzaRepository.cs" />
   </ItemGroup>
@@ -190,10 +192,11 @@
     <Content Include="Views\MizzaSku\Create.cshtml" />
     <Content Include="Views\MizzaSku\Edit.cshtml" />
     <Content Include="Views\MizzaSku\Delete.cshtml" />
+    <Content Include="Views\SizeStyle\Index.cshtml" />
+    <Content Include="Views\SizeStyle\FilterIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

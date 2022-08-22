@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MizzaWebApp.Models.SizeStyleModel>
+
+@{
+    ViewBag.Title = "SizeStyle Index";
+}
+
+<h2>Index</h2>
+<p><a class="btn btn-primary" href="/sizestyle/filterindex">Filter</a></p>
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaSize.MizzaSizeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MizzaStyle.MizzaStyleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MizzaSize.MizzaSizeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MizzaStyle.MizzaStyleName)
+            </td>
+            <td>
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+    }
+
+</table>
