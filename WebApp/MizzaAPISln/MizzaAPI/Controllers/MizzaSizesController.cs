@@ -16,11 +16,13 @@ namespace MizzaAPI.Controllers
             _mizzaRepo = new MizzaItemRepository();
         }
 
-        // GET: api/MizzaSizes
-        public IEnumerable<MizzaSize> Get()
+        // GET: api/MizzaSizes?limit=10&page=3
+        public IEnumerable<MizzaSize> Get([FromUri] int limit = 10, [FromUri] int page = 0)
         {
             var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new DBParameter[] {
-                new DBParameter { Key = "MizzaSizeID", Value = null }
+                new DBParameter { Key = "MizzaSizeID", Value = null },
+                new DBParameter { Key = "PageSize", Value = limit },
+                new DBParameter { Key = "PageNo", Value = page }
             });
             return _mizzaRepo.MizzaSizes.ConvertToObjects(dt);
         }
@@ -29,7 +31,9 @@ namespace MizzaAPI.Controllers
         public MizzaSize Get(string id)
         {
             var dt = _mizzaRepo.CommandVM.GetRecords("GetMizzaSizes", new DBParameter[] {
-                new DBParameter { Key = "MizzaSizeID", Value = id }
+                new DBParameter { Key = "MizzaSizeID", Value = id },
+                new DBParameter { Key = "PageSize", Value = null },
+                new DBParameter { Key = "PageNo", Value = null }
             });
             return _mizzaRepo.MizzaSizes.ConvertToObjects(dt)[0];
         }

@@ -16,8 +16,8 @@
     <button type="submit" class="btn btn-primary mb-2">Search</button>
 </form>
 
-<h2>MizzaSizes</h2>
-<table class="table">
+<h3> MizzaSizes</h3>
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.MizzaSize.MizzaSizeID)
@@ -40,15 +40,15 @@
                     @Html.DisplayFor(modelItem => item.MizzaSize.MizzaSizeName)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Details", "Details", "MizzaSize", new { id=item.MizzaSize.MizzaSizeID }, new { @class = "btn btn-primary" })
                 </td>
             </tr>
         }
     }
 </table>
 
-<h2>MizzaStyles</h2>
-<table class="table">
+<h3> MizzaStyles</h3>
+<table class="table table-striped">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.MizzaStyle.MizzaStyleID)
@@ -71,7 +71,7 @@
                     @Html.DisplayFor(modelItem => item.MizzaStyle.MizzaStyleName)
                 </td>
                 <td>
-                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ })
+                    @Html.ActionLink("Details", "Details", "MizzaStyle", new { id=item.MizzaStyle.MizzaStyleID },  new { @class = "btn btn-success" } )
                 </td>
             </tr>
 

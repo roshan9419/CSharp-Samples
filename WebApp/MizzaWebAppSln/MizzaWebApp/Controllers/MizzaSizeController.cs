@@ -13,9 +13,16 @@ namespace MizzaWebApp.Controllers
         }
 
         // GET: MizzaSize
-        public ActionResult Index()
+        public ActionResult Index(int page = 0, int limit = 5)
         {
-            var mizzaSizes = _mizzaRepo.GetMany<MizzaSize>("mizzasizes");
+            var mizzaSizes = _mizzaRepo.GetMany<MizzaSize>($"mizzasizes?limit={limit}&page={page}");
+
+            if (mizzaSizes.Count == limit)
+                ViewBag.NextPageNumber = page + 1;
+
+            if (page > 0)
+                ViewBag.PrevPageNumber = page - 1;
+
             return View(mizzaSizes);
         }
 
