@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinalTryAuth", "FinalTryAuth\FinalTryAuth.csproj", "{8A46AD11-AD40-47AE-AF24-86D54481995A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNet.Identity.MySQL", "..\AspNet.Identity.MySQL\AspNet.Identity.MySQL.csproj", "{26F6ECF9-4369-417B-8CF2-54FA92DF3660}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNet.Identity.MySQL.Test", "AspNet.Identity.MySQL.Test\AspNet.Identity.MySQL.Test.csproj", "{7001A1AB-9F05-4F32-8779-1F8617B78D91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthTestWebApp", "AuthTestWebApp\AuthTestWebApp.csproj", "{0400B731-9A7E-4F33-AF99-BAC01F388558}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A46AD11-AD40-47AE-AF24-86D54481995A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A46AD11-AD40-47AE-AF24-86D54481995A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A46AD11-AD40-47AE-AF24-86D54481995A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A46AD11-AD40-47AE-AF24-86D54481995A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26F6ECF9-4369-417B-8CF2-54FA92DF3660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7001A1AB-9F05-4F32-8779-1F8617B78D91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7001A1AB-9F05-4F32-8779-1F8617B78D91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7001A1AB-9F05-4F32-8779-1F8617B78D91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7001A1AB-9F05-4F32-8779-1F8617B78D91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0400B731-9A7E-4F33-AF99-BAC01F388558}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0400B731-9A7E-4F33-AF99-BAC01F388558}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0400B731-9A7E-4F33-AF99-BAC01F388558}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0400B731-9A7E-4F33-AF99-BAC01F388558}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FC8E1A07-423A-4A70-93A6-421BC87A1D5C}
+	EndGlobalSection
+EndGlobal

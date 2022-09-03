@@ -1,0 +1,100 @@
+﻿@model PlacementManagement.Web.ViewModels.StudentDetailViewModel
+
+@{
+    ViewBag.Title = "Manage Student Programs";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+
+    int? StudentId = null;
+    if (Model != null)
+    {
+        StudentId = Model.Student.StudentId;
+    }
+}
+
+@Html.Partial("_StudentSearchPartial", new ViewDataDictionary
+{
+    { "Title", ViewBag.Title },
+    { "ActionUrl", "/StudentPrograms" },
+    { "StudentId", StudentId },
+    { "ErrorMessage", ViewBag.ErrorMessage }
+})
+
+@if (Model != null)
+{
+    <div class="row px-3">
+        <div class="col-md-3 col-sm-6">
+            <strong>Student Name</strong>
+            <div class="text-muted">@Model.Student.FirstName @Model.Student.LastName</div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <strong>Email</strong>
+            <div class="text-muted">@Model.Student.Email</div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <strong>Phone Number</strong>
+            <div class="text-muted">@Model.Student.PhoneNumber</div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <strong>Registration Date</strong>
+            <div class="text-muted">@Model.Student.RegistrationDate</div>
+        </div>
+    </div>
+
+    <p>
+        @Html.ActionLink("Add Program", "Create", new { studentId = StudentId }, new { @class = "btn btn-success btn-sm float float-right mb-3" })
+    </p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>
+                Program Id
+            </th>
+            <th>
+                Batch Start Year
+            </th>
+            <th>
+                Batch End Year
+            </th>
+            <th>
+                Backlogs
+            </th>
+            <th>
+                Current CGPA
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model.StudentPrograms)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProgramId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BatchStartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BatchEndYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Backlogs)
+                </td>
+                <td>
+                    @if (item.CurrentCGPA == null)
+                    {
+                        <span>N.A.</span>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.CurrentCGPA)
+                    }
+                </td>
+                <td class="float-right">
+                    @Html.ActionLink("Edit", "Edit", new { studentId = item.StudentId, programId = item.ProgramId }, new { @class = "btn btn-info btn-sm" })
+                    @Html.ActionLink("Delete", "Delete", new { studentId = item.StudentId, programId = item.ProgramId }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+
+    </table>
+}

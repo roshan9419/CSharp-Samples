@@ -1,0 +1,55 @@
+﻿@model IEnumerable<PlacementManagement.Models.Student>
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<table class="table table-responsive-md table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </th>
+        <th>
+            Full name
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(item.StudentId.ToString(), "Details", new { studentId = item.StudentId })
+        </td>
+        <td>
+            @Html.DisplayName(item.FirstName) @Html.DisplayName(item.LastName)
+        </td>
+        <td>
+            @item.Email
+        </td>
+        <td>
+            @Html.DisplayFor(model => item.Gender)
+        </td>
+        <td>
+            @Html.DisplayName(item.PhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayName(item.RegistrationDate.ToString())
+        </td>
+    </tr>
+}
+
+</table>

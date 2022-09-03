@@ -1,0 +1,55 @@
+﻿@model PlacementManagement.Web.ViewModels.StudentQualificationViewModel
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Update Qualification Details</h2>
+
+<strong>Student Id</strong>
+<span class="mr-4">@Model.StudentId</span>
+
+<strong>Student Name</strong>
+<span class="mr-4">@Model.StudentName</span>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.StudentId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.QualificationTypeId, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.QualificationTypeId, ViewBag.Qualifications as SelectList, new { @class = "form-control", @style = "background-color: #f2f2f2; pointer-events: none; appearance: none" })
+                @Html.ValidationMessageFor(model => model.QualificationTypeId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Percentage, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Percentage, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Percentage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PassingYear, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PassingYear, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PassingYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update Qualification" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}

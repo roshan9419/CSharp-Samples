@@ -1,0 +1,161 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Dashboard</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/css/dashboard.css" rel="stylesheet" />
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="/">
+            <img class="rounded" src="https://i.graphicmama.com/blog/wp-content/uploads/2020/10/30131032/P-amazing-3D-logo-design-concept-in-20211.jpg" width="30" height="30" class="d-inline-block align-top" alt="">
+            Hi, @User.Identity.Name!
+        </a>
+        <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        @*<input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">*@
+
+        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+        {
+            @Html.AntiForgeryToken()
+            <ul class="navbar-nav px-3">
+                <li class="nav-item text-nowrap">
+                    <a class="btn btn-danger btn-sm my-1" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                </li>
+            </ul>
+        }
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+                <div class="sidebar-sticky pt-3">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/Dashboard">
+                                <span data-feather="home"></span>
+                                Dashboard <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Student/Index">
+                                <span data-feather="file"></span>
+                                Students
+                            </a>
+                        </li>
+                    </ul>
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Placement</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">
+                                    <span data-feather="file-text"></span>
+                                    Filter Students
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Manage Student</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Student/Register">
+                                    <span data-feather="file-text"></span>
+                                    Register Student
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Student/Details">
+                                    <span data-feather="file-text"></span>
+                                    Student Details
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Student/Update">
+                                    <span data-feather="file-text"></span>
+                                    Update Details
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/StudentPrograms">
+                                    <span data-feather="file-text"></span>
+                                    Manage Program
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/StudentQualifications">
+                                    <span data-feather="file-text"></span>
+                                    Manage Qualifications
+                                </a>
+                            </li>
+                        </ul>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                            <span>Extras</span>
+                            <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+                                <span data-feather="plus-circle"></span>
+                            </a>
+                        </h6>
+                        <ul class="nav flex-column mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Programs">
+                                    <span data-feather="file-text"></span>
+                                    Available Programs
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Qualifications">
+                                    <span data-feather="file-text"></span>
+                                    Available Qualifications
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Skills">
+                                    <span data-feather="file-text"></span>
+                                    Available Skills
+                                </a>
+                            </li>
+                        </ul>
+                    }
+                
+                </div>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

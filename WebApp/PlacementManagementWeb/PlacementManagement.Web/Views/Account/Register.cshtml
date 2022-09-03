@@ -1,0 +1,110 @@
+﻿@using PlacementManagement.Web.ViewModels
+@model StudentRegisterViewModel
+@{
+    ViewBag.Title = "Register Student";
+}
+
+<h2 class="text-center">@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+
+    <div class="container mb-5">
+        <h4 class="text-uppercase mb-5">General Information</h4>
+
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.FirstName, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.LastName, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Email, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.DateOfBirth, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.DateOfBirth, new { @class = "form-control datepicker", @style = "background: white; cursor: pointer", @readonly = "readonly" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Gender, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.Gender, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="container mb-5">
+        <h4 class="text-uppercase mb-5">Contact Information</h4>
+
+        <div class="form-row">
+            <div class="form-group col-md-8">
+                @Html.LabelFor(m => m.Address, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.Address, new { @class = "form-control", @style = "min-width: 90%" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Country, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.Country, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.State, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.City, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.PostalCode, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.PostalCode, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.PhoneNumber, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-4">
+                @Html.LabelFor(m => m.Aadhaar, new { @class = "font-weight-bold" })
+                @Html.TextBoxFor(m => m.Aadhaar, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-success" value="Register Student" />
+        </div>
+    </div>
+}
+
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-ui-1.13.2.min.js"></script>
+
+    <script>
+        $(function () {
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy",
+                changeMonth: true,
+                changeYear: true,
+                yearRange: "1970:-15"
+            });
+        })
+    </script>
+}

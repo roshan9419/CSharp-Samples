@@ -1,5 +1,6 @@
 ﻿using Mizza.DataModels;
 using MizzaWebApp.Repository;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace MizzaWebApp.Controllers
@@ -13,14 +14,14 @@ namespace MizzaWebApp.Controllers
         }
 
         // GET: MizzaSize
-        public ActionResult Index(int page = 0, int limit = 5)
+        public ActionResult Index(int page = 1, int limit = 5)
         {
             var mizzaSizes = _mizzaRepo.GetMany<MizzaSize>($"mizzasizes?limit={limit}&page={page}");
 
             if (mizzaSizes.Count == limit)
                 ViewBag.NextPageNumber = page + 1;
-
-            if (page > 0)
+            
+            if (page > 1)
                 ViewBag.PrevPageNumber = page - 1;
 
             return View(mizzaSizes);

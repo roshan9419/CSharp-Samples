@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32630.192
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacementManagement.Web", "PlacementManagement.Web\PlacementManagement.Web.csproj", "{BE76651B-33FA-4107-A587-0EEA928F43D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNet.Identity.MySQL", "AspNet.Identity.MySQL\AspNet.Identity.MySQL.csproj", "{A6F86EB1-2798-49CF-A9C0-C3CAC3E59E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacementManagement.Models", "PlacementManagement.DataModels\PlacementManagement.Models.csproj", "{A86F1F3E-A75E-4022-A301-DE8A7D5E2199}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlacementManagement.Services", "PlacementManagement.Services\PlacementManagement.Services.csproj", "{32701124-DC2E-405C-83C6-7E4A6E021328}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE76651B-33FA-4107-A587-0EEA928F43D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE76651B-33FA-4107-A587-0EEA928F43D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE76651B-33FA-4107-A587-0EEA928F43D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE76651B-33FA-4107-A587-0EEA928F43D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F86EB1-2798-49CF-A9C0-C3CAC3E59E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F86EB1-2798-49CF-A9C0-C3CAC3E59E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F86EB1-2798-49CF-A9C0-C3CAC3E59E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F86EB1-2798-49CF-A9C0-C3CAC3E59E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A86F1F3E-A75E-4022-A301-DE8A7D5E2199}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A86F1F3E-A75E-4022-A301-DE8A7D5E2199}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A86F1F3E-A75E-4022-A301-DE8A7D5E2199}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A86F1F3E-A75E-4022-A301-DE8A7D5E2199}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32701124-DC2E-405C-83C6-7E4A6E021328}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32701124-DC2E-405C-83C6-7E4A6E021328}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32701124-DC2E-405C-83C6-7E4A6E021328}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32701124-DC2E-405C-83C6-7E4A6E021328}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {70C42B99-7D0E-4139-AFB8-61754497C732}
+	EndGlobalSection
+EndGlobal

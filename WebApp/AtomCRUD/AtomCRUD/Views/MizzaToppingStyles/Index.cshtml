@@ -25,9 +25,9 @@
                 @Html.DisplayFor(modelItem => item.ToppingName)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ToppingStyleId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ToppingStyleId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ToppingStyleId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ToppingStyleId" class="btn btn-warning">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ToppingStyleId" class="btn btn-info">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.ToppingStyleId" class="btn btn-danger">Delete</a>
             </td>
         </tr>
 }

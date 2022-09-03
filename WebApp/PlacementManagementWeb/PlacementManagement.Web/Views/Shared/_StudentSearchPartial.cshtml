@@ -1,0 +1,23 @@
+﻿<form action=@ViewBag.ActionUrl method="get">
+
+    <div class="form-row align-items-center">
+        <h4 class="mr-2">@ViewBag.Title</h4>
+        @if (ViewBag.StudentId != null)
+        {
+            <span class="text-info h5">(@ViewBag.StudentId)</span>
+        }
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <span class="text-danger h5">(@ViewBag.ErrorMessage)</span>
+        }
+        <div class="col-auto ml-auto">
+            <input type="text" name="studentId" class="form-control mb-2" id="inlineFormInput" placeholder="Student Id">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </div>
+    </div>
+    <hr />
+    <dl class="dl-horizontal">
+    </dl>
+</form>

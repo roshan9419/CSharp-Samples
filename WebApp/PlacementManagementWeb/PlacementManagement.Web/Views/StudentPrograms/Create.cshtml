@@ -1,0 +1,71 @@
+﻿@model PlacementManagement.Web.ViewModels.StudentProgramViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Add Program Details</h2>
+
+<strong>Student Id</strong>
+<span class="mr-4">@Model.StudentId</span>
+
+<strong>Student Name</strong>
+<span class="mr-4">@Model.StudentName</span>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.StudentId)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ProgramId, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.ProgramId, ViewBag.Programs as SelectList, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ProgramId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BatchStartYear, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BatchStartYear, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BatchStartYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BatchEndYear, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BatchEndYear, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BatchEndYear, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Backlogs, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Backlogs, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Backlogs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentCGPA, htmlAttributes: new { @class = "control-label col-md-2 font-weight-bold" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CurrentCGPA, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CurrentCGPA, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Add Program" class="btn btn-success" />
+            </div>
+        </div>
+    </div>
+}
