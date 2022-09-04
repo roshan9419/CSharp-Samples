@@ -1,7 +1,9 @@
-﻿using PlacementManagement.Services.Models;
+﻿using PlacementManagement.Attributes;
+using PlacementManagement.Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace PlacementManagement.API.Utils
@@ -13,9 +15,18 @@ namespace PlacementManagement.API.Utils
             var dbParams = new List<DBParameter>();
             foreach (var prop in obj.GetType().GetProperties())
             {
-                dbParams.Add(new DBParameter { Key = prop.Name, Value = prop.GetValue(obj, null) });
+                if (!IgnoreProperty(prop))
+                    dbParams.Add(new DBParameter { Key = prop.Name, Value = prop.GetValue(obj, null) });
             }
             return dbParams.ToArray();
+        }
+
+        public static bool IgnoreProperty(PropertyInfo prop)
+        {
+            foreach (var attr in prop.GetCustomAttributes(true))
+                if (attr is IgnorePropertyConversion) 
+                    return true;
+            return false;
         }
     }
 }

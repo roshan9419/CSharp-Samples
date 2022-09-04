@@ -19,6 +19,9 @@ namespace PlacementManagement.Web.ViewModels
         [Display(Name = "Qualification Type")]
         public int QualificationTypeId { get; set; }
 
+        [Display(Name = "Qualification Type")]
+        public string QualificationName { get; set; }
+
         [Required]
         [Display(Name = "Percentage Scored")]
         public decimal Percentage { get; set; }

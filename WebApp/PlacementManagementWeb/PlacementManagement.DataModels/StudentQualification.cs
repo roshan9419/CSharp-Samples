@@ -10,6 +10,8 @@ namespace PlacementManagement.Models
         [Required]
         public int QualificationTypeId { get; set; }
 
+        public string QualificationName { get; set; }
+
         [Required]
         public decimal Percentage { get; set; }
 

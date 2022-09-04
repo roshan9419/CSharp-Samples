@@ -10,6 +10,8 @@ namespace PlacementManagement.Models
         [Required]
         public int ProgramId { get; set; }
 
+        public string ProgramName { get; set; }
+
         [Required]
         public int BatchStartYear { get; set; }
 

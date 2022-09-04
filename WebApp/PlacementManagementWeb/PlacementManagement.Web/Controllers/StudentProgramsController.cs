@@ -124,14 +124,12 @@ namespace PlacementManagement.Web.Controllers
                     StudentId = student.StudentId,
                     StudentName = student.GetFullName(),
                     ProgramId = selectedProgram.ProgramId,
+                    ProgramName = selectedProgram.ProgramName,
                     BatchStartYear = selectedProgram.BatchStartYear,
                     BatchEndYear = selectedProgram.BatchEndYear,
                     Backlogs = selectedProgram.Backlogs,
                     CurrentCGPA = selectedProgram.CurrentCGPA
                 };
-
-                List<Program> programs = await _programRepo.GetAll();
-                ViewData["Programs"] = new SelectList(programs, "ProgramId", "ProgramName", programId);
 
                 return View(model);
             }

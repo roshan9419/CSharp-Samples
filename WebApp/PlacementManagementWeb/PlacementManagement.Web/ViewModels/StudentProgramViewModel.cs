@@ -15,6 +15,9 @@ namespace PlacementManagement.Web.ViewModels
         [Display(Name = "Program Enrolled")]
         public int ProgramId { get; set; }
 
+        [Display(Name = "Program Enrolled")]
+        public string ProgramName { get; set; }
+
         [Required]
         [Display(Name = "Batch Start Year")]
         public int BatchStartYear { get; set; }

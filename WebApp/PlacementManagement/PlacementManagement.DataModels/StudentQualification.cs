@@ -1,5 +1,6 @@
 namespace PlacementManagement.DataModels
 {
+    using PlacementManagement.Attributes;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,6 +12,9 @@ namespace PlacementManagement.DataModels
         
         [Required]
         public int QualificationTypeId { get; set; }
+
+        [IgnorePropertyConversion]
+        public string QualificationName { get; set; }
 
         [Required]
         public decimal Percentage { get; set; }

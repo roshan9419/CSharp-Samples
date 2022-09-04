@@ -123,12 +123,10 @@ namespace PlacementManagement.Web.Controllers
                     StudentId = student.StudentId,
                     StudentName = student.GetFullName(),
                     QualificationTypeId = selectedQual.QualificationTypeId,
+                    QualificationName = selectedQual.QualificationName,
                     PassingYear = selectedQual.PassingYear,
                     Percentage = selectedQual.Percentage
                 };
-
-                List<QualificationType> qualTypes = await _qualRepo.GetAll();
-                ViewData["Qualifications"] = new SelectList(qualTypes, "Id", "Name", qualificationTypeId);
 
                 return View(model);
             }
