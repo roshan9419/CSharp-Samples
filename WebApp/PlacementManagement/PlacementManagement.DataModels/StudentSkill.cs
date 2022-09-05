@@ -1,5 +1,6 @@
 namespace PlacementManagement.DataModels
 {
+    using PlacementManagement.Attributes;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,6 +12,9 @@ namespace PlacementManagement.DataModels
         
         [Required]
         public int SkillId { get; set; }
+
+        [IgnorePropertyConversion]
+        public string SkillName { get; set; }
         
         public int? Experience { get; set; }
         

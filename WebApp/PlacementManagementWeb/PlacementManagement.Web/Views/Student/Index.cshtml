@@ -1,5 +1,4 @@
-﻿@model IEnumerable<PlacementManagement.Models.Student>
-
+﻿@model IEnumerable<PlacementManagement.Web.ViewModels.StudentDetailViewModel>
 @{
     ViewBag.Title = "Students";
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
@@ -10,46 +9,47 @@
 <table class="table table-responsive-md table-striped">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.StudentId)
+            @Html.DisplayNameFor(model => model.Student.StudentId)
         </th>
         <th>
             Full name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Student.Email)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Gender)
+            @Html.DisplayNameFor(model => model.Student.Gender)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
+            @Html.DisplayNameFor(model => model.Student.PhoneNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegistrationDate)
+            @Html.DisplayNameFor(model => model.Student.RegistrationDate)
         </th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.ActionLink(item.StudentId.ToString(), "Details", new { studentId = item.StudentId })
-        </td>
-        <td>
-            @Html.DisplayName(item.FirstName) @Html.DisplayName(item.LastName)
-        </td>
-        <td>
-            @item.Email
-        </td>
-        <td>
-            @Html.DisplayFor(model => item.Gender)
-        </td>
-        <td>
-            @Html.DisplayName(item.PhoneNumber)
-        </td>
-        <td>
-            @Html.DisplayName(item.RegistrationDate.ToString())
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.ActionLink(item.Student.StudentId.ToString(), "Details", new { studentId = item.Student.StudentId })
+            </td>
+            <td>
+                @Html.DisplayName(item.Student.FirstName) @Html.DisplayName(item.Student.LastName)
+            </td>
+            <td>
+                @item.Student.Email
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Student.Gender)
+            </td>
+            <td>
+                @Html.DisplayName(item.Student.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayName(item.Student.RegistrationDate.ToString())
+            </td>
+        </tr>
+    }
 
 </table>

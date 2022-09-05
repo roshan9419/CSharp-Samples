@@ -42,5 +42,11 @@ namespace PlacementManagement.Web.Repository
         {
             return await _service.GetMany<Student>("students");
         }
+
+        public async Task<Student> GetStudentByUserId(string userId)
+        {
+            var students = await _service.GetMany<Student>($"students?userId={userId}");
+            return students.First();
+        }
     }
 }

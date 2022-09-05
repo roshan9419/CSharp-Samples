@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Dashboard</title>
+    <title>@ViewBag.Title - PMS Dashboard</title>
     @Styles.Render("~/Content/css")
     <link href="~/Content/css/dashboard.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
@@ -42,17 +42,36 @@
                 <div class="sidebar-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/Dashboard">
+                            <a class="nav-link active" href="/">
                                 <span data-feather="home"></span>
                                 Dashboard <span class="sr-only">(current)</span>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Student/Index">
-                                <span data-feather="file"></span>
-                                Students
-                            </a>
-                        </li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Student/Index">
+                                    <span data-feather="file"></span>
+                                    Students
+                                </a>
+                            </li>
+                        }
+                        @if (User.IsInRole("Student"))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Profile/Index">
+                                    <span data-feather="file"></span>
+                                    Profile
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/StudentSkills">
+                                    <span data-feather="file"></span>
+                                    Manage Skills
+                                </a>
+                            </li>
+                        }
                     </ul>
 
                     @if (User.IsInRole("Admin"))
@@ -144,7 +163,7 @@
                             </li>
                         </ul>
                     }
-                
+
                 </div>
             </nav>
 

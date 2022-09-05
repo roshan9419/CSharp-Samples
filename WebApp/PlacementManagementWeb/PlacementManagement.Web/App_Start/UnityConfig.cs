@@ -5,6 +5,7 @@ using System;
 using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
+using PlacementManagement.Web.Controllers;
 
 namespace PlacementManagement.Web
 {
@@ -56,6 +57,8 @@ namespace PlacementManagement.Web
             container.RegisterType<IStudentAcademicRepository<StudentProgram, Program>, StudentProgramRepository>();
             container.RegisterType<IStudentAcademicRepository<StudentQualification, QualificationType>, StudentQualificationRepository>();
             container.RegisterType<IStudentAcademicRepository<StudentSkill, Skill>, StudentSkillRepository>();
+
+            container.RegisterType<AccountController>(new InjectionConstructor());
         }
     }
 }

@@ -52,7 +52,12 @@ namespace PlacementManagement.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var students = await _studentRepo.GetAllStudents();
-            return View(students);
+            var studentVMList = new List<StudentDetailViewModel>();
+            
+            foreach (var student in students)
+                studentVMList.Add(new StudentDetailViewModel { Student = student });
+            
+            return View(studentVMList);
         }
 
         // GET: Student/Details

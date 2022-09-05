@@ -1,4 +1,5 @@
-﻿using PlacementManagement.API.Repository;
+﻿using PlacementManagement.API.Models;
+using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,17 @@ namespace PlacementManagement.API.Controllers
             _studentRepo = studentRepo;
         }
 
-        // GET: api/Students
-        public IEnumerable<Student> Get()
+        // GET: api/Students?UserId=""
+        public IEnumerable<Student> Get([FromUri] StudentPagination stdPagination)
         {
-            return _studentRepo.GetAll();
+            Pagination pagination = new Pagination
+            {
+                Page = stdPagination.Page,
+                Limit = stdPagination.Limit,
+                OtherParams = new object[] { stdPagination.UserId }
+            };
+
+            return _studentRepo.GetAll(pagination);
         }
 
         // GET: api/Students/5
@@ -30,13 +38,13 @@ namespace PlacementManagement.API.Controllers
         }
 
         // POST: api/Students
-        public int Post([FromBody]Student value)
+        public int Post([FromBody] Student value)
         {
             return _studentRepo.Create(value);
         }
 
         // PUT: api/Students/5
-        public void Put(int id, [FromBody]Student value)
+        public void Put(int id, [FromBody] Student value)
         {
             _studentRepo.Update(value);
         }

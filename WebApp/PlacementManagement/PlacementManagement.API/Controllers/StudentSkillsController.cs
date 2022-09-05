@@ -24,13 +24,13 @@ namespace PlacementManagement.API.Controllers
         }
 
         // POST: api/StudentSkills
-        public void Post([FromBody]StudentSkill value)
+        public void Post([FromBody] StudentSkill value)
         {
             _stdSkillRepo.Create(value);
         }
 
         // PUT: api/StudentSkills/5
-        public void Put(int studentId, int programId, [FromBody]StudentSkill value)
+        public void Put(int studentId, int skillId, [FromBody] StudentSkill value)
         {
             _stdSkillRepo.Update(value);
         }

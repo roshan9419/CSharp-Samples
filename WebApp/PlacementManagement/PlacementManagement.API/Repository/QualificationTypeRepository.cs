@@ -1,4 +1,5 @@
-﻿using PlacementManagement.API.Utils;
+﻿using PlacementManagement.API.Models;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using PlacementManagement.Services;
 using PlacementManagement.Services.Models;
@@ -41,7 +42,7 @@ namespace PlacementManagement.API.Repository
             });
         }
 
-        public List<QualificationType> GetAll()
+        public List<QualificationType> GetAll(Pagination pagination)
         {
             return GetAll(_dbConfig.QualificationType.GetAll, null);
         }

@@ -25,7 +25,7 @@ namespace PlacementManagement.Web.Repository
 
         public async Task Update(StudentSkill skill)
         {
-            await _service.Create($"studentskills?studentId={skill.StudentId}&skillId={skill.SkillId}", skill);
+            await _service.Update($"studentskills?studentId={skill.StudentId}&skillId={skill.SkillId}", skill);
         }
 
         public async Task Remove(int studentId, int skillId)

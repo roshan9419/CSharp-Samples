@@ -1,4 +1,5 @@
-﻿using PlacementManagement.API.Repository;
+﻿using PlacementManagement.API.Models;
+using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
 using System.Collections.Generic;
 using System.Web.Http;
@@ -15,9 +16,9 @@ namespace PlacementManagement.API.Controllers
         }
 
         // GET: api/Skills
-        public IEnumerable<Skill> Get()
+        public IEnumerable<Skill> Get([FromUri] Pagination pagination)
         {
-            return _skillsRepo.GetAll();
+            return _skillsRepo.GetAll(pagination);
         }
 
         // GET: api/Skills/5

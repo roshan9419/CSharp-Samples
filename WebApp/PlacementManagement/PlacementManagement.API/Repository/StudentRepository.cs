@@ -1,4 +1,5 @@
-﻿using PlacementManagement.API.Utils;
+﻿using PlacementManagement.API.Models;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using PlacementManagement.Services;
 using PlacementManagement.Services.Models;
@@ -40,9 +41,15 @@ namespace PlacementManagement.API.Repository
             });
         }
 
-        public List<Student> GetAll()
+        public List<Student> GetAll(Pagination pagination)
         {
-            return GetAll(_dbConfig.Student.GetAll, null);
+            var dbParams = new DBParameter[] {
+                new DBParameter { Key = "PageNo", Value = pagination.Page },
+                new DBParameter { Key = "PageSize", Value = pagination.Limit },
+                new DBParameter { Key = "UserId", Value = pagination.OtherParams[0] }
+            };
+
+            return GetAll(_dbConfig.Student.GetAll, dbParams);
         }
     }
 }

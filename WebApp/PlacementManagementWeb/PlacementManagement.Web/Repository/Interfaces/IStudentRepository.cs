@@ -13,6 +13,7 @@ namespace PlacementManagement.Web.Repository
         Task UpdateStudent(int studentId, Student student);
         Task DeleteStudent(int studentId);
         Task<Student> GetStudent(int studentId);
+        Task<Student> GetStudentByUserId(string userId);
         Task<List<Student>> GetAllStudents();
     }
 }

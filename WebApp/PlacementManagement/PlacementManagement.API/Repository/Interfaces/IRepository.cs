@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using PlacementManagement.API.Models;
 
 namespace PlacementManagement.API.Repository
 {
@@ -8,6 +9,6 @@ namespace PlacementManagement.API.Repository
         bool Update(TEntity entity);
         bool Delete(int param);
         TEntity Get(int param);
-        List<TEntity> GetAll();
+        List<TEntity> GetAll(Pagination pagination);
     }
 }

@@ -9,6 +9,8 @@ namespace PlacementManagement.Models
         
         [Required]
         public int SkillId { get; set; }
+
+        public string SkillName { get; set; }
         
         public int? Experience { get; set; }
         
