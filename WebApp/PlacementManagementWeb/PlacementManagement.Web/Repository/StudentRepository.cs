@@ -48,5 +48,10 @@ namespace PlacementManagement.Web.Repository
             var students = await _service.GetMany<Student>($"students?userId={userId}");
             return students.First();
         }
+
+        public async Task<List<Student>> GetFilteredStudents(StudentFilter filter)
+        {
+            return await _service.GetManyUsingPost<StudentFilter, Student>("search", filter);
+        }
     }
 }

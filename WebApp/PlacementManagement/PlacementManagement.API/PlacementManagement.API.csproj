@@ -167,6 +167,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\QualificationTypesController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SkillsController.cs" />
     <Compile Include="Controllers\StudentProgramsController.cs" />
     <Compile Include="Controllers\StudentQualificationsController.cs" />
@@ -175,6 +176,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\StudentFilter.cs" />
     <Compile Include="Models\StudentPagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\GenericRepository.cs" />
@@ -184,6 +186,7 @@
     <Compile Include="Models\Pagination.cs" />
     <Compile Include="Repository\QualificationTypeRepository.cs" />
     <Compile Include="Repository\ProgramRepository.cs" />
+    <Compile Include="Repository\SearchRepository.cs" />
     <Compile Include="Repository\StudentSkillRepository.cs" />
     <Compile Include="Repository\StudentQualificationRepository.cs" />
     <Compile Include="Repository\StudentProgramRepository.cs" />
@@ -224,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -33,7 +33,7 @@ namespace PlacementManagement.API
             container.Register<IStudentRepository<StudentProgram>, StudentProgramRepository>(Lifestyle.Scoped);
             container.Register<IStudentRepository<StudentSkill>, StudentSkillRepository>(Lifestyle.Scoped);
             container.Register<IStudentRepository<StudentQualification>, StudentQualificationRepository>(Lifestyle.Scoped);
-
+            container.Register<ISearchRepository, SearchRepository>(Lifestyle.Scoped);
             
 
             // This is an extension method from the integration package.

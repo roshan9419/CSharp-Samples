@@ -75,6 +75,19 @@ namespace PlacementManagement.Services
                 throw new APIException(response.StatusCode, response.ReasonPhrase);
         }
 
+        public async Task<List<T2>> GetManyUsingPost<T, T2>(string endPoint, T dataObj)
+        {
+            var response = await _client.PostAsync(endPoint, ObjectToStringContent(dataObj));
+
+            List<T2> resultList;
+            if (response.IsSuccessStatusCode)
+                resultList = await response.Content.ReadAsAsync<List<T2>>();
+            else
+                throw new APIException(response.StatusCode, response.ReasonPhrase);
+
+            return resultList;;
+        }
+
         private static StringContent ObjectToStringContent<T>(T dataObj)
         {
             var jsonData = JsonConvert.SerializeObject(dataObj);

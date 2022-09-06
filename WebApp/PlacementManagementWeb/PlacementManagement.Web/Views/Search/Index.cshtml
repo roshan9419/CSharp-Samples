@@ -1,0 +1,203 @@
+﻿@model IEnumerable<PlacementManagement.Models.Student>
+@{
+    ViewBag.Title = "Filter Students";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+
+<div class="d-flex justify-content-between">
+    <h2>Filter Students</h2>
+    <button class="btn btn-sm btn-outline-primary h-25 mt-2">Hide</button>
+</div>
+
+<div class="card mt-3 p-4 shadow-sm">
+    <form onsubmit="return false;">
+        <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+                <label for="genderSelect">Select Gender's</label><br />
+                <select id="genderSelect" class="selectpicker form-control form-control-sm" multiple data-live-search="true">
+                    @foreach (var item in ViewBag.Genders)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group col-md-3 col-sm-6">
+                <label for="minCGPA">Minimum CGPA</label>
+                <input type="text" class="form-control form-control-sm" id="minCGPA">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-6">
+                <label for="maxBacklog">Maximum Backlogs Allowed</label>
+                <input type="number" class="form-control form-control-sm" id="maxBacklog">
+            </div>
+
+            <div class="form-group col-md-3 col-sm-6">
+                <label for="batches">Passout Batch's</label>
+                <input type="text" class="form-control form-control-sm" id="batches">
+                <small id="batches" class="text-muted">
+                    Enter the years separated by comma, e.g., 2023,2024
+                </small>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+                <label for="programSelect">Choose Program's</label><br />
+                <select id="programSelect" class="selectpicker w-100 form-control form-control-sm" multiple data-live-search="true">
+                    @foreach (var item in ViewBag.Programs)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+                <label for="skillSelect">Choose Student Skill's</label><br />
+                <select id="skillSelect" class="selectpicker w-100 form-control form-control-sm" multiple data-live-search="true">
+                    @foreach (var item in ViewBag.Skills)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row mt-2">
+            <div class="form-group col-lg-6 col-md-12">
+                <label for="qualSelect">Select Qualification Type</label><br />
+                <div class="row">
+                    <select id="qualSelect" class="col-6 selectpicker form-control form-control-sm ml-3 mr-2" data-live-search="true">
+                        @foreach (var item in ViewBag.Qualifications)
+                        {
+                            <option value="@item.Value">@item.Text</option>
+                        }
+                    </select>
+                    <input type="number" class="form-control form-control-sm col-3 mr-2" id="qualPercentage" placeholder="Percentage %" />
+                    <a class="btn btn-sm btn-info col-2" id="addQualBtn"><i class="fa fa-plus mr-2" aria-hidden="true"></i>Add</a>
+                </div>
+            </div>
+            <div class="form-group col-lg-6 col-md-12" id="addedQualifications">
+                <label class="text-white">Selected Qualifications</label><br />
+            </div>
+        </div>
+
+        <div class="mt-3">
+            <button type="submit" class="btn btn-sm btn-primary px-3"><i class="fa fa-filter mr-2" aria-hidden="true"></i>Apply Filter</button>
+            <button type="reset" class="btn btn-sm btn-link text-secondary">Clear</button>
+        </div>
+
+    </form>
+</div>
+
+<div class="row mt-5">
+    <div id="gridStudents"></div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    <script>
+
+        let filters = {
+            "MinimumCGPA": null,
+            "MaximumBacklog": null,
+            "Genders": null,
+            "Batches": null,
+            "ProgramIds": null,
+            "Qualifications": null,
+            "SkillIds": null
+        };
+        const selectedQuals = {};
+
+        $(() => {
+
+            $('#addQualBtn').click(function () {
+                const qualId = $('#qualSelect').find(":selected").val();
+                const qualName = $('#qualSelect').find(":selected").text();
+                const percentage = $('#qualPercentage').val();
+
+                if (!percentage || percentage == 0) return;
+                $('#qualPercentage').val('');
+
+                if (selectedQuals.hasOwnProperty(qualId)) return;
+                selectedQuals[qualId] = percentage;
+
+                addQualItemTag(qualId, qualName, percentage);
+            });
+
+            $('form').on('submit', () => {
+
+                filters.MinimumCGPA = $('#minCGPA').val() || null;
+                filters.MaximumBacklog = $('#maxBacklog').val() || null;
+                filters.Batches = $('#batches').val().length !== 0 ? $('#batches').val().split(',') : null;
+                filters.Genders = $('#genderSelect').val().length !== 0 ? $('#genderSelect').val() : null;
+                filters.ProgramIds = $('#programSelect').val().length !== 0 ? $('#programSelect').val() : null;
+                filters.SkillIds = $('#skillSelect').val().length !== 0 ? $('#skillSelect').val() : null;
+
+                filters.Qualifications = [];
+                for (let [qualId, perc] of Object.entries(selectedQuals)) {
+                    filters.Qualifications.push({
+                        QualificationTypeId: qualId,
+                        MinimumPercentage: perc
+                    })
+                }
+
+                if (filters.Qualifications.length === 0)
+                    filters.Qualifications = null;
+
+                console.log(filters);
+                getStudents();
+            });
+
+            $('form').on('reset', () => {
+                filters = null;
+            });
+        });
+
+        function addQualItemTag(qualId, name, percentage) {
+            let tag = `<button
+                            type="button"
+                            id="ql_${qualId}"
+                            class="qlItem btn btn-sm btn-secondary mr-2"
+                            onclick="removeQualItem(event)">
+                            ${name} <span class="badge badge-light">${percentage}%</span>
+                            <i class="fa fa-times ml-2" aria-hidden="true"></i>
+                      </button>`;
+            $('#addedQualifications').append(tag);
+        }
+
+        function removeQualItem(evt) {
+            const qualId = evt.target.id.split("_")[1];
+            delete selectedQuals[qualId];
+
+            $(`#${evt.target.id}`).remove();
+        }
+
+        function getStudents() {
+            $.ajax({
+                url: '@Url.Action("SearchStudents", "Search")',
+                dataType: 'html',
+                method: "POST",
+                data: filters,
+                success: function (res) {
+                    $('#gridStudents').html('').html(res);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            })
+        }
+
+    </script>
+}

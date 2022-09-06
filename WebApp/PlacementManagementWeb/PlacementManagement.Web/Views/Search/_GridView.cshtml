@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PlacementManagement.Models.Student>
+
+<div class="col-sm-12">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>StudentId</th>
+                <th>Name</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.StudentId</td>
+                    <td>@item.FirstName @item.LastName</td>
+                    <td>@item.Email</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -187,7 +187,7 @@
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\ProgramsController.cs" />
     <Compile Include="Controllers\QualificationsController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
@@ -199,13 +199,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\IPagination.cs" />
-    <Compile Include="Repository\Interfaces\ISearchRepository.cs" />
     <Compile Include="Repository\Interfaces\IStudentAcademicRepository.cs" />
     <Compile Include="Repository\Interfaces\IStudentRepository.cs" />
     <Compile Include="Repository\QualificationRepository.cs" />
     <Compile Include="Repository\ProgramRepository.cs" />
-    <Compile Include="Repository\SearchRepository.cs" />
     <Compile Include="Repository\SkillRepository.cs" />
     <Compile Include="Repository\StudentProgramRepository.cs" />
     <Compile Include="Repository\StudentQualificationRepository.cs" />
@@ -218,7 +215,6 @@
     <Compile Include="ViewModels\StudentUpdateViewModel.cs" />
     <Compile Include="ViewModels\StudentRegisterViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Pagination.cs" />
     <Compile Include="ViewModels\StudentDetailViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Interfaces\IManageRepository.cs" />
@@ -340,9 +336,12 @@
     <Content Include="Views\StudentSkills\Index.cshtml" />
     <Content Include="Views\StudentSkills\Create.cshtml" />
     <Content Include="Views\StudentSkills\Edit.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\_GridView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

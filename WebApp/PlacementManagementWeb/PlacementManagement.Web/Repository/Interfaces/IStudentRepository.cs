@@ -1,8 +1,5 @@
 ﻿using PlacementManagement.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PlacementManagement.Web.Repository
@@ -15,5 +12,6 @@ namespace PlacementManagement.Web.Repository
         Task<Student> GetStudent(int studentId);
         Task<Student> GetStudentByUserId(string userId);
         Task<List<Student>> GetAllStudents();
+        Task<List<Student>> GetFilteredStudents(StudentFilter filter);
     }
 }

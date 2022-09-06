@@ -43,11 +43,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Enums\Gender.cs" />
+    <Compile Include="Pagination.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QualificationType.cs" />
     <Compile Include="Skill.cs" />
     <Compile Include="Student.cs" />
+    <Compile Include="StudentFilter.cs" />
     <Compile Include="StudentProgram.cs" />
     <Compile Include="StudentQualification.cs" />
     <Compile Include="StudentSkill.cs" />

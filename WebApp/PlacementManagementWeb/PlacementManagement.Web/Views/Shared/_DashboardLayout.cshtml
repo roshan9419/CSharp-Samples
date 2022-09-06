@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = null;
 }
 
@@ -12,6 +11,9 @@
     @Styles.Render("~/Content/css")
     <link href="~/Content/css/dashboard.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 </head>
 <body>
 
@@ -30,7 +32,7 @@
             @Html.AntiForgeryToken()
             <ul class="navbar-nav px-3">
                 <li class="nav-item text-nowrap">
-                    <a class="btn btn-danger btn-sm my-1" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                    <a class="btn btn-danger btn-sm my-1" href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out mr-1" aria-hidden="true"></i> Log off</a>
                 </li>
             </ul>
         }
@@ -84,7 +86,7 @@
                         </h6>
                         <ul class="nav flex-column mb-2">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="/Search">
                                     <span data-feather="file-text"></span>
                                     Filter Students
                                 </a>

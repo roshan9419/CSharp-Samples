@@ -47,5 +47,11 @@ namespace PlacementManagement.API.Repository
             var dataTable = _dbService.Get(procedureName, dbParams, CommandType.StoredProcedure);
             return dataTable.ConvertToObjects<TEntity>();
         }
+
+        protected List<TEntity> ExecuteQuery(string query, DBParameter[] dbParams)
+        {
+            var dataTable = _dbService.Get(query, dbParams, CommandType.Text);
+            return dataTable.ConvertToObjects<TEntity>();
+        }
     }
 }
