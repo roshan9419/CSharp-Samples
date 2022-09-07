@@ -1,4 +1,5 @@
 ﻿using PlacementManagement.DataModels.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace PlacementManagement.API.Models
 {
@@ -43,6 +44,7 @@ namespace PlacementManagement.API.Models
     public class QualificationPercentage
     {
         public int QualificationTypeId { get; set; }
+
         public double MinimumPercentage { get; set; }
     }
 }

@@ -99,8 +99,8 @@
     </form>
 </div>
 
-<div class="row mt-5">
-    <div id="gridStudents"></div>
+<div class="row my-5 mx-2 px-md-3">
+    <div id="gridStudents" class="p-1 w-100"></div>
 </div>
 
 @section Scripts {
@@ -140,10 +140,10 @@
 
                 filters.MinimumCGPA = $('#minCGPA').val() || null;
                 filters.MaximumBacklog = $('#maxBacklog').val() || null;
-                filters.Batches = $('#batches').val().length !== 0 ? $('#batches').val().split(',') : null;
-                filters.Genders = $('#genderSelect').val().length !== 0 ? $('#genderSelect').val() : null;
-                filters.ProgramIds = $('#programSelect').val().length !== 0 ? $('#programSelect').val() : null;
-                filters.SkillIds = $('#skillSelect').val().length !== 0 ? $('#skillSelect').val() : null;
+                filters.Batches = $('#batches').val().length !== 0 ? $('#batches').val().split(',') : [];
+                filters.Genders = $('#genderSelect').val();
+                filters.ProgramIds = $('#programSelect').val();
+                filters.SkillIds = $('#skillSelect').val();
 
                 filters.Qualifications = [];
                 for (let [qualId, perc] of Object.entries(selectedQuals)) {
@@ -153,15 +153,12 @@
                     })
                 }
 
-                if (filters.Qualifications.length === 0)
-                    filters.Qualifications = null;
-
                 console.log(filters);
                 getStudents();
             });
 
             $('form').on('reset', () => {
-                filters = null;
+                filters = {};
             });
         });
 

@@ -1,21 +1,31 @@
 ﻿@model IEnumerable<PlacementManagement.Models.Student>
 
-<div class="col-sm-12">
-    <table class="table table-striped">
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+
+<div>
+    <table id="studentTable" class="table table-striped w-100">
         <thead>
             <tr>
                 <th>StudentId</th>
                 <th>Name</th>
                 <th>Email</th>
+                <th>Gender</th>
+                <th>Phone Number</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.StudentId</td>
+                    <td>
+                        @Html.ActionLink(item.StudentId.ToString(), "Details", "Student", new { studentId = item.StudentId }, null)
+                    </td>
                     <td>@item.FirstName @item.LastName</td>
                     <td>@item.Email</td>
+                    <td>@item.Gender</td>
+                    <td>@item.PhoneNumber</td>
                 </tr>
             }
         </tbody>

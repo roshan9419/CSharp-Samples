@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace PlacementManagement.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SearchController : Controller
     {
         private readonly IStudentRepository _studentRepo;
@@ -26,19 +27,24 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Search
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            //List<Student> model = await GetStudents();
             List<SelectListItem> genders = new List<SelectListItem>
             {
                 new SelectListItem { Text = "Male", Value = "1" },
                 new SelectListItem { Text = "Female", Value = "2" }
             };
             
+            var programTask = Task.Run(() => _programRepo.GetAll());
+            var skillTask = Task.Run(() => _skillRepo.GetAll());
+            var qualTask = Task.Run(() => _qualRepo.GetAll());
+
+            Task.WaitAll();
+
             ViewBag.Genders = new SelectList(genders, "Value", "Text");
-            ViewBag.Programs = new SelectList(await _programRepo.GetAll(), "ProgramId", "ProgramName");
-            ViewBag.Skills = new SelectList(await _skillRepo.GetAll(), "SkillId", "SkillName");
-            ViewBag.Qualifications = new SelectList(await _qualRepo.GetAll(), "Id", "Name");
+            ViewBag.Programs = new SelectList(programTask.Result, "ProgramId", "ProgramName");
+            ViewBag.Skills = new SelectList(skillTask.Result, "SkillId", "SkillName");
+            ViewBag.Qualifications = new SelectList(qualTask.Result, "Id", "Name");
 
             return View();
         }

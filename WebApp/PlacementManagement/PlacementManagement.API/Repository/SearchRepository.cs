@@ -83,9 +83,9 @@ namespace PlacementManagement.API.Repository
                 filter.Genders = (Gender[])Enum.GetValues(typeof(Gender));
 
             List<int> genders = new List<int>();
-            foreach(var gender in filter.Genders)
+            foreach (var gender in filter.Genders)
                 genders.Add((int)gender);
-            
+
             query += $" S.Gender IN ({string.Join(",", genders)})";
 
             if (!IsNullOrEmpty(filter.MinimumCGPA))
@@ -108,6 +108,7 @@ namespace PlacementManagement.API.Repository
                 var qualFilters = new List<string>();
                 foreach (var qual in filter.Qualifications)
                 {
+                    if (qual == null) continue;
                     string qualFilter = $"(SQ.QualificationTypeId = {qual.QualificationTypeId} AND " +
                         $"(" +
                             $" SELECT Percentage FROM StudentQualification" +
@@ -142,7 +143,7 @@ namespace PlacementManagement.API.Repository
 
         private bool IsNullOrEmpty(object property)
         {
-            return property == null;
+            return property == null || (property.GetType().IsArray && ((dynamic)property).Length == 0);
         }
     }
 }
