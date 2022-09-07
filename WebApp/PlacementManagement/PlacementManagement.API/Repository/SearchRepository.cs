@@ -1,9 +1,11 @@
 ﻿using PlacementManagement.API.Models;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using PlacementManagement.DataModels.Enums;
 using PlacementManagement.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,52 +14,14 @@ namespace PlacementManagement.API.Repository
 {
     public class SearchRepository : GenericRepository<Student>, ISearchRepository
     {
+        private readonly string _studentTable = typeof(Student).GetTableName();
+        private readonly string _stdProgramTable = typeof(StudentProgram).GetTableName();
+        private readonly string _stdQualificationTable = typeof(StudentQualification).GetTableName();
+        private readonly string _stdSkillTable = typeof(StudentSkill).GetTableName();
+
         public SearchRepository(MySqlDBService dbService) : base(dbService)
         {
         }
-
-
-        /*
-         
-        SELECT 
-
-	        S.StudentId,
-            S.Gender,
-            SP.CurrentCGPA,
-            SP.Backlogs,
-            SP.BatchEndYear,
-            SP.ProgramId,
-            SQ.QualificationTypeId,
-            SQ.Percentage,
-            SS.SkillId
-    
-        FROM Student S
-        INNER JOIN StudentProgram SP ON S.StudentId = SP.StudentId
-        INNER JOIN StudentQualification SQ ON S.StudentId = SQ.StudentId
-        INNER JOIN StudentSkill SS ON S.StudentId = SS.StudentId
-
-        WHERE S.Gender IN (1, 2)
-
-        AND SP.CurrentCGPA >= 7
-
-        AND SP.Backlogs <= 1
-
-        AND SP.BatchEndYear IN (2021, 2025, 2023)
-
-        AND SP.ProgramId IN (4, 1)
-
-        AND (
-	        (SQ.QualificationTypeId = 1 AND GetQualificationPercentage(SQ.StudentId, 1) >= 60) 
-	        OR 
-            (SQ.QualificationTypeId = 2 AND GetQualificationPercentage(SQ.StudentId, 2) >= 70)
-        )
-
-        AND SS.SkillId IN (13, 19, 3)
-
-        GROUP BY S.StudentId
-        ;
-         
-         */
 
         public List<Student> GetStudents(StudentFilter filter)
         {
@@ -66,44 +30,72 @@ namespace PlacementManagement.API.Repository
                 throw new ArgumentNullException(nameof(filter));
             }
 
-            string query = "SELECT S.* FROM Student S";
+            string query = $"SELECT S.* FROM {_studentTable} S";
 
             if (IsProgramFilterPresent(filter))
-                query += " INNER JOIN StudentProgram SP ON S.StudentId = SP.StudentId";
+                query += $" INNER JOIN {_stdProgramTable} SP ON S.StudentId = SP.StudentId";
 
             if (IsQualificationsPresent(filter))
-                query += " INNER JOIN StudentQualification SQ ON S.StudentId = SQ.StudentId";
+                query += $" INNER JOIN {_stdQualificationTable} SQ ON S.StudentId = SQ.StudentId";
 
             if (IsSkillsPresent(filter))
-                query += " INNER JOIN StudentSkill SS ON S.StudentId = SS.StudentId";
+                query += $" INNER JOIN {_stdSkillTable} SS ON S.StudentId = SS.StudentId";
 
             query += " WHERE";
 
-            if (IsNullOrEmpty(filter.Genders))
+            query = AddStudentFilter(query, filter);
+            query = AddProgramFilter(query, filter);
+            query = AddSkillFilter(query, filter);
+            query = AddQualificationsFilter(query, filter);
+
+            int limit = filter.Limit;
+            int offset = limit * (filter.Page - 1);
+
+            query += $" GROUP BY S.StudentId LIMIT {offset},{limit};";
+
+            return ExecuteQuery(query, null);
+        }
+
+        private string AddStudentFilter(string query, StudentFilter filter)
+        {
+            if (filter.Genders.IsNullOrEmpty())
                 filter.Genders = (Gender[])Enum.GetValues(typeof(Gender));
 
             List<int> genders = new List<int>();
             foreach (var gender in filter.Genders)
                 genders.Add((int)gender);
 
-            query += $" S.Gender IN ({string.Join(",", genders)})";
+            return query += $" S.Gender IN ({string.Join(",", genders)})";
+        }
 
-            if (!IsNullOrEmpty(filter.MinimumCGPA))
+        private string AddProgramFilter(string query, StudentFilter filter)
+        {
+            if (!filter.MinimumCGPA.IsNullOrEmpty())
                 query += $" AND SP.CurrentCGPA >= {filter.MinimumCGPA}";
 
-            if (!IsNullOrEmpty(filter.MaximumBacklog))
+            if (!filter.MaximumBacklog.IsNullOrEmpty())
                 query += $" AND SP.Backlogs <= {filter.MaximumBacklog}";
 
-            if (!IsNullOrEmpty(filter.Batches))
+            if (!filter.Batches.IsNullOrEmpty())
                 query += $" AND SP.BatchEndYear IN ({string.Join(",", filter.Batches)})";
 
-            if (!IsNullOrEmpty(filter.ProgramIds))
+            if (!filter.ProgramIds.IsNullOrEmpty())
                 query += $" AND SP.ProgramId IN ({string.Join(",", filter.ProgramIds)})";
 
-            if (!IsNullOrEmpty(filter.SkillIds))
-                query += $" AND SS.SkillId IN ({string.Join(",", filter.SkillIds)})";
+            return query;
+        }
 
-            if (!IsNullOrEmpty(filter.Qualifications))
+        private string AddSkillFilter(string query, StudentFilter filter)
+        {
+            if (!filter.SkillIds.IsNullOrEmpty())
+                query += $" AND SS.SkillId IN ({string.Join(",", filter.SkillIds)})";
+            
+            return query;
+        }
+
+        private string AddQualificationsFilter(string query, StudentFilter filter)
+        {
+            if (!filter.Qualifications.IsNullOrEmpty())
             {
                 var qualFilters = new List<string>();
                 foreach (var qual in filter.Qualifications)
@@ -111,9 +103,9 @@ namespace PlacementManagement.API.Repository
                     if (qual == null) continue;
                     string qualFilter = $"(SQ.QualificationTypeId = {qual.QualificationTypeId} AND " +
                         $"(" +
-                            $" SELECT Percentage FROM StudentQualification" +
-                            $" WHERE StudentQualification.StudentId = S.StudentId" +
-                            $" AND StudentQualification.QualificationTypeId = {qual.QualificationTypeId}" +
+                            $" SELECT Percentage FROM {_stdQualificationTable}" +
+                            $" WHERE {_stdQualificationTable}.StudentId = S.StudentId" +
+                            $" AND {_stdQualificationTable}.QualificationTypeId = {qual.QualificationTypeId}" +
                         $")" +
                         $" >= {qual.MinimumPercentage})";
                     qualFilters.Add(qualFilter);
@@ -122,28 +114,21 @@ namespace PlacementManagement.API.Repository
                 query += $" AND ({string.Join("OR", qualFilters)})";
             }
 
-            query += " GROUP BY S.StudentId;";
-
-            return ExecuteQuery(query, null);
+            return query;
         }
 
         private bool IsProgramFilterPresent(StudentFilter filter)
         {
             return (
-                !IsNullOrEmpty(filter.MinimumCGPA) ||
-                !IsNullOrEmpty(filter.MaximumBacklog) ||
-                !IsNullOrEmpty(filter.ProgramIds) ||
-                !IsNullOrEmpty(filter.Batches)
+                !filter.MinimumCGPA.IsNullOrEmpty() ||
+                !filter.MaximumBacklog.IsNullOrEmpty() ||
+                !filter.ProgramIds.IsNullOrEmpty() ||
+                !filter.Batches.IsNullOrEmpty()
             );
         }
 
-        private bool IsQualificationsPresent(StudentFilter filter) => !IsNullOrEmpty(filter.Qualifications);
+        private bool IsQualificationsPresent(StudentFilter filter) => !filter.Qualifications.IsNullOrEmpty();
 
-        private bool IsSkillsPresent(StudentFilter filter) => !IsNullOrEmpty(filter.SkillIds);
-
-        private bool IsNullOrEmpty(object property)
-        {
-            return property == null || (property.GetType().IsArray && ((dynamic)property).Length == 0);
-        }
+        private bool IsSkillsPresent(StudentFilter filter) => !filter.SkillIds.IsNullOrEmpty();
     }
 }

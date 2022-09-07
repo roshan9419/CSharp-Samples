@@ -2,6 +2,7 @@
 using PlacementManagement.Services.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -27,6 +28,16 @@ namespace PlacementManagement.API.Utils
                 if (attr is IgnorePropertyConversion) 
                     return true;
             return false;
+        }
+
+        public static string GetTableName(this Type classType)
+        {
+            TableAttribute attr = (TableAttribute)Attribute.GetCustomAttribute(classType, typeof(TableAttribute));
+            
+            if (attr == null)
+                throw new InvalidOperationException($"TableAttribute not specified for Type: {classType}");
+
+            return attr.Name;
         }
     }
 }
