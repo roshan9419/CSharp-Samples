@@ -338,10 +338,10 @@
     <Content Include="Views\StudentSkills\Edit.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\_GridView.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

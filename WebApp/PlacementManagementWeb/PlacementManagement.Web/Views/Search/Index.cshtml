@@ -16,10 +16,10 @@
 
 <div class="d-flex justify-content-between">
     <h2>Filter Students</h2>
-    <button class="btn btn-sm btn-outline-primary h-25 mt-2">Hide</button>
+    <button class="btn btn-sm btn-outline-primary h-25 mt-2" id="panelToggler">Hide</button>
 </div>
 
-<div class="card mt-3 p-4 shadow-sm">
+<div class="card mt-3 p-4 shadow-sm" id="filterPanel">
     <form onsubmit="return false;">
         <div class="form-row">
             <div class="form-group col-md-3 col-sm-6">
@@ -94,12 +94,16 @@
         <div class="mt-3">
             <button type="submit" class="btn btn-sm btn-primary px-3"><i class="fa fa-filter mr-2" aria-hidden="true"></i>Apply Filter</button>
             <button type="reset" class="btn btn-sm btn-link text-secondary">Clear</button>
+
+            @*<div class="spinner-border text-primary" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>*@
         </div>
 
     </form>
 </div>
 
-<div class="row my-5 mx-2 px-md-3">
+<div class="row my-1 mx-2 px-md-3">
     <div id="gridStudents" class="p-1 w-100"></div>
 </div>
 
@@ -116,9 +120,11 @@
             "Batches": null,
             "ProgramIds": null,
             "Qualifications": null,
-            "SkillIds": null
+            "SkillIds": null,
+            "Page": 1
         };
         const selectedQuals = {};
+        let filterPanelActive = true;
 
         $(() => {
 
@@ -144,6 +150,7 @@
                 filters.Genders = $('#genderSelect').val();
                 filters.ProgramIds = $('#programSelect').val();
                 filters.SkillIds = $('#skillSelect').val();
+                filters.Page = 1;
 
                 filters.Qualifications = [];
                 for (let [qualId, perc] of Object.entries(selectedQuals)) {
@@ -153,14 +160,26 @@
                     })
                 }
 
-                console.log(filters);
                 getStudents();
             });
 
             $('form').on('reset', () => {
                 filters = {};
             });
+
+            $('#panelToggler').click(toggleFilterPanel);
         });
+
+        function toggleFilterPanel() {
+            filterPanelActive = !filterPanelActive;
+            if (filterPanelActive) {
+                $('#filterPanel').show();
+                $('#panelToggler').text('Hide');
+            } else {
+                $('#filterPanel').hide();
+                $('#panelToggler').text('Unhide');
+            }
+        }
 
         function addQualItemTag(qualId, name, percentage) {
             let tag = `<button
@@ -179,6 +198,11 @@
             delete selectedQuals[qualId];
 
             $(`#${evt.target.id}`).remove();
+        }
+
+        function switchPage(page) {
+            filters.Page = page;
+            getStudents();
         }
 
         function getStudents() {

@@ -53,3 +53,16 @@
     }
 
 </table>
+
+<div class="d-flex justify-content-end">
+
+    @if (ViewBag.PrevPage != null)
+    {
+        @Html.ActionLink("Previous", "Index", new { page = ViewBag.PrevPage }, new { @class = "btn btn-secondary btn-sm" })
+    }
+
+    @if (ViewBag.NextPage != null)
+    {
+        @Html.ActionLink("Next", "Index", new { page = ViewBag.NextPage }, new { @class = "btn btn-primary btn-sm ml-2" })
+    }
+</div>

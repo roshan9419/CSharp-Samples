@@ -1,0 +1,184 @@
+﻿@model PlacementManagement.Web.ViewModels.StudentDetailViewModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<div>
+    <div class="mb-3">
+        <strong>StudentId</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.StudentId, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Full name</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.DisplayFor(model => model.Student.LastName, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Email</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Gender</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Gender, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Date of Birth</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Aadhaar</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Aadhaar, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Address</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Address, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Country</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Country, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>State</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.State, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>City</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.City, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Postal Code</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Phone number</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h4>Enrolled Programs</h4>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Program
+        </th>
+        <th>
+            Batch Start Year
+        </th>
+        <th>
+            Batch End Year
+        </th>
+        <th>
+            Backlogs
+        </th>
+        <th>
+            Current CGPA
+        </th>
+    </tr>
+
+    @foreach (var item in Model.StudentPrograms)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProgramName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchStartYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BatchEndYear)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Backlogs)
+            </td>
+            <td>
+                @if (item.CurrentCGPA == null)
+                {
+                    <span>N.A.</span>
+                }
+                else
+                {
+                    @Html.DisplayFor(modelItem => item.CurrentCGPA)
+                }
+            </td>
+        </tr>
+    }
+
+</table>
+
+<hr />
+
+<div class="d-flex justify-content-between align-items-center mb-2">
+    <h4>Student Qualifications</h4>
+</div>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            Qualification
+        </th>
+        <th>
+            Percentage Scored
+        </th>
+        <th>
+            Passing Year
+        </th>
+    </tr>
+
+    @foreach (var item in Model.StudentQualifications)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.QualificationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PassingYear)
+            </td>
+        </tr>
+    }
+
+</table>

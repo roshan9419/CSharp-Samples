@@ -38,9 +38,9 @@ namespace PlacementManagement.Web.Repository
             return await _service.Get<Student>($"students/{studentId}");
         }
 
-        public async Task<List<Student>> GetAllStudents()
+        public async Task<List<Student>> GetAllStudents(int page, int limit)
         {
-            return await _service.GetMany<Student>("students");
+            return await _service.GetMany<Student>($"students?page={page}&limit={limit}");
         }
 
         public async Task<Student> GetStudentByUserId(string userId)

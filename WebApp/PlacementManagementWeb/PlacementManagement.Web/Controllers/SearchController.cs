@@ -50,8 +50,15 @@ namespace PlacementManagement.Web.Controllers
         }
         public async Task<PartialViewResult> SearchStudents(StudentFilter filter)
         {
-            List<Student> model = await _studentRepo.GetFilteredStudents(filter);
-            return PartialView("_GridView", model);
+            List<Student> students = await _studentRepo.GetFilteredStudents(filter);
+
+            if (students.Count == filter.Limit)
+                ViewBag.NextPage = filter.Page + 1;
+
+            if (filter.Page > 1)
+                ViewBag.PrevPage = filter.Page - 1;
+
+            return PartialView("_GridView", students);
         }
     }
 }

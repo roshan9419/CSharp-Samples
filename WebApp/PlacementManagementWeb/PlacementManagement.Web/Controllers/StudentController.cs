@@ -49,14 +49,20 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Student
-        public async Task<ActionResult> Index()
+        public async Task<ActionResult> Index(int page = 1, int limit = 10)
         {
-            var students = await _studentRepo.GetAllStudents();
+            var students = await _studentRepo.GetAllStudents(page, limit);
             var studentVMList = new List<StudentDetailViewModel>();
             
             foreach (var student in students)
                 studentVMList.Add(new StudentDetailViewModel { Student = student });
-            
+
+            if (students.Count == limit)
+                ViewBag.NextPage = page + 1;
+
+            if (page > 1)
+                ViewBag.PrevPage = page - 1;
+
             return View(studentVMList);
         }
 

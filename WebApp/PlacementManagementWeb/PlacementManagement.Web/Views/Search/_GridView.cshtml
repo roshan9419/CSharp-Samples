@@ -1,9 +1,5 @@
 ﻿@model IEnumerable<PlacementManagement.Models.Student>
 
-<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
-
 <div>
     <table id="studentTable" class="table table-striped w-100">
         <thead>
@@ -30,4 +26,17 @@
             }
         </tbody>
     </table>
+
+    <div class="d-flex justify-content-end">
+
+        @if (ViewBag.PrevPage != null)
+        {
+            <button class="btn btn-secondary btn-sm" onclick="switchPage(@ViewBag.PrevPage)">Previous</button>
+        }
+
+        @if (ViewBag.NextPage != null)
+        {
+            <button class="btn btn-primary btn-sm" onclick="switchPage(@ViewBag.NextPage)">Next</button>
+        }
+    </div>
 </div>

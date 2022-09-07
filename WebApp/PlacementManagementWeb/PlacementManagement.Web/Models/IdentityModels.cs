@@ -18,7 +18,6 @@ namespace PlacementManagement.Web.Models
             userIdentity.AddClaim(new Claim("UserName", UserName));
 
             // TODO: Fetch user and set name
-            
             return userIdentity;
         }
     }

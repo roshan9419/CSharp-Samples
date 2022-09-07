@@ -11,7 +11,7 @@ namespace PlacementManagement.Web.Repository
         Task DeleteStudent(int studentId);
         Task<Student> GetStudent(int studentId);
         Task<Student> GetStudentByUserId(string userId);
-        Task<List<Student>> GetAllStudents();
+        Task<List<Student>> GetAllStudents(int page, int limit);
         Task<List<Student>> GetFilteredStudents(StudentFilter filter);
     }
 }
