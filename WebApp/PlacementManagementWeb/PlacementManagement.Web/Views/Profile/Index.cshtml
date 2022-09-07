@@ -21,12 +21,7 @@
         </div>
     </div>
 
-    <div class="mb-3">
-        <strong>Email</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.Email, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
+    <p class="text-uppercase text-muted mt-4">Basic Information</p>
 
     <div class="mb-3">
         <strong>Gender</strong>
@@ -36,9 +31,36 @@
     </div>
 
     <div class="mb-3">
-        <strong>Date of Birth</strong>
+        <strong>Birthday</strong>
         <div>
             @Html.DisplayFor(model => model.Student.DateOfBirth, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <p class="text-uppercase text-muted mt-4">Contact Information</p>
+
+    <div class="mb-3">
+        <strong>Phone number</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Email</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Email, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <strong>Address</strong>
+        <div>
+            @Html.DisplayFor(model => model.Student.Address, new { htmlAttributes = new { @class = "form-control" } }),
+            @Html.DisplayFor(model => model.Student.City, new { htmlAttributes = new { @class = "form-control" } }),
+            @Html.DisplayFor(model => model.Student.State, new { htmlAttributes = new { @class = "form-control" } }),
+            @Html.DisplayFor(model => model.Student.Country, new { htmlAttributes = new { @class = "form-control" } }) -
+            @Html.DisplayFor(model => model.Student.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 
@@ -46,48 +68,6 @@
         <strong>Aadhaar</strong>
         <div>
             @Html.DisplayFor(model => model.Student.Aadhaar, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>Address</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.Address, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>Country</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.Country, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>State</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.State, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>City</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.City, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>Postal Code</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.PostalCode, new { htmlAttributes = new { @class = "form-control" } })
-        </div>
-    </div>
-
-    <div class="mb-3">
-        <strong>Phone number</strong>
-        <div>
-            @Html.DisplayFor(model => model.Student.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
         </div>
     </div>
 </div>

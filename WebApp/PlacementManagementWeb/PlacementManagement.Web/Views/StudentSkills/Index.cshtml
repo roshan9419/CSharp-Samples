@@ -36,8 +36,14 @@
             @Html.DisplayFor(modelItem => item.ProjectsDone)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { skillId = item.SkillId }, new { @class = "btn btn-sm btn-info" })
-            @Html.ActionLink("Delete", "Delete", new { skillId = item.SkillId }, new { @class = "btn btn-sm btn-danger" })
+            <a href=@Url.Action("Edit", new { skillId = item.SkillId })
+               class="btn btn-info btn-sm">
+                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+            </a>
+            <a href=@Url.Action("Delete", new { skillId = item.SkillId })
+               class="btn btn-danger btn-sm">
+                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+            </a>
         </td>
     </tr>
 }

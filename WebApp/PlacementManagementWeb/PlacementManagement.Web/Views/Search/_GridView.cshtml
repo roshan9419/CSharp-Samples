@@ -31,12 +31,12 @@
 
         @if (ViewBag.PrevPage != null)
         {
-            <button class="btn btn-secondary btn-sm" onclick="switchPage(@ViewBag.PrevPage)">Previous</button>
+            <button class="btn btn-secondary btn-sm" onclick="switchPage(@ViewBag.PrevPage)"><i class="fa fa-angle-left" aria-hidden="true"></i> Previous</button>
         }
 
         @if (ViewBag.NextPage != null)
         {
-            <button class="btn btn-primary btn-sm" onclick="switchPage(@ViewBag.NextPage)">Next</button>
+            <button class="btn btn-primary btn-sm" onclick="switchPage(@ViewBag.NextPage)">Next <i class="fa fa-angle-right" aria-hidden="true"></i></button>
         }
     </div>
 </div>

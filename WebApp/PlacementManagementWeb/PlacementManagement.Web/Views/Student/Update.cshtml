@@ -61,7 +61,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DateOfBirth,new { @class = "form-control datepicker", @style = "background: white; cursor: pointer", @readonly = "readonly" })
+                @Html.TextBoxFor(model => model.DateOfBirth, new { @class = "form-control datepicker", @style = "background: white; cursor: pointer", @readonly = "readonly" })
                 @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -122,11 +122,14 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-success" />
+        @if (Model != null)
+        {
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-success"><i class="fa fa-check-square-o" aria-hidden="true"></i> Save Details</button>
+                </div>
             </div>
-        </div>
+        }
     </div>
 }
 

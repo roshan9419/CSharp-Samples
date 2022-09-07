@@ -5,9 +5,33 @@
 }
 
 <div class="jumbotron">
-    <h1 class="display-4">Hello, PMS!</h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <hr class="my-4">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+    <h1 class="display-4">Welcome to PMS!</h1>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <p class="lead">This is a Placement Management System application used to manage student and their data with placement filter option to easily filter out students</p>
+        <hr class="my-4">
+        <p>Here are some of the features...</p>
+        <a class="btn btn-primary btn-lg py-4 px-3 mr-1 mb-1" style="pointer-events: none">
+            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+            Placement Search
+        </a>
+        <a class="btn btn-primary btn-lg py-4 px-3 mr-1 mb-1" style="pointer-events: none">
+            <i class="fa fa-users" aria-hidden="true"></i>
+            Manage Students
+        </a>
+        <a class="btn btn-primary btn-lg py-4 px-3 mr-1 mb-1" style="pointer-events: none">
+            <i class="fa fa-sitemap" aria-hidden="true"></i>
+            Manage Programs
+        </a>
+        <a class="btn btn-primary btn-lg py-4 px-3 mr-1 mb-1" style="pointer-events: none">
+            <i class="fa fa-desktop" aria-hidden="true"></i>
+            Manage Skills
+        </a>
+        <a class="btn btn-primary btn-lg py-4 px-3 mr-1 mb-1" style="pointer-events: none">
+            <i class="fa fa-university" aria-hidden="true"></i>
+            Manage Qualifications
+        </a>
+    }
+
 </div>

@@ -58,11 +58,15 @@
 
     @if (ViewBag.PrevPage != null)
     {
-        @Html.ActionLink("Previous", "Index", new { page = ViewBag.PrevPage }, new { @class = "btn btn-secondary btn-sm" })
+        <a href="@Url.Action("Index", new { page = ViewBag.PrevPage })" class="btn btn-secondary btn-sm">
+            <i class="fa fa-angle-left" aria-hidden="true"></i> Previous
+        </a>
     }
 
     @if (ViewBag.NextPage != null)
     {
-        @Html.ActionLink("Next", "Index", new { page = ViewBag.NextPage }, new { @class = "btn btn-primary btn-sm ml-2" })
+        <a href="@Url.Action("Index", new { page = ViewBag.NextPage })" class="btn btn-primary btn-sm ml-2">
+            Next <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
     }
 </div>
