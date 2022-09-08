@@ -170,19 +170,49 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: StudentPrograms/Delete/5
-        public ActionResult Delete(int studentId, int programId)
+        public async Task<ActionResult> Delete(int studentId, int programId)
         {
-            return View();
+            try
+            {
+                var student = await _studentRepo.GetStudent(studentId);
+                var stdPrograms = await _programRepo.GetAll(studentId);
+
+                StudentProgram selectedProgram = stdPrograms.Find((prg) => prg.ProgramId == programId);
+
+                if (selectedProgram == null)
+                {
+                    return HttpNotFound("Program not exists");
+                }
+
+                var model = new StudentProgramViewModel
+                {
+                    StudentId = student.StudentId,
+                    StudentName = student.GetFullName(),
+                    ProgramId = selectedProgram.ProgramId,
+                    ProgramName = selectedProgram.ProgramName,
+                    BatchStartYear = selectedProgram.BatchStartYear,
+                    BatchEndYear = selectedProgram.BatchEndYear,
+                    Backlogs = selectedProgram.Backlogs,
+                    CurrentCGPA = selectedProgram.CurrentCGPA
+                };
+
+                return View(model);
+            }
+            catch
+            {
+                ViewBag.ErrorMessage = "Failed to delete program";
+                return View();
+            }
         }
 
         // POST: StudentPrograms/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int studentId, int programId, FormCollection collection)
+        public async Task<ActionResult> Delete(int studentId, int programId, StudentProgramViewModel model)
         {
             try
             {
-                await _programRepo.Remove(studentId, programId);
-                return RedirectToAction("Index");
+                await _programRepo.Remove(model.StudentId, model.ProgramId);
+                return RedirectToAction("Index", new { studentId = model.StudentId });
             }
             catch
             {

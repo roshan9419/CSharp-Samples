@@ -1,0 +1,65 @@
+﻿@model PlacementManagement.Web.ViewModels.StudentQualificationViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_DashboardLayout.cshtml";
+}
+
+<h2>Delete Qualification</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QualificationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QualificationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Percentage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Percentage)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PassingYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PassingYear)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(model => model.StudentId)
+        @Html.HiddenFor(model => model.QualificationTypeId)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete Qualification" class="btn btn-danger" />
+        </div>
+    }
+</div>

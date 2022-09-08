@@ -171,17 +171,46 @@ namespace PlacementManagement.Web.Controllers
         // GET: StudentQualifications/Delete/5
         public async Task<ActionResult> Delete(int studentId, int qualificationTypeId)
         {
-            return View();
+            try
+            {
+                var student = await _studentRepo.GetStudent(studentId);
+                var stdQualfications = await _qualRepo.GetAll(studentId);
+
+                StudentQualification selectedQual = stdQualfications.Find(
+                    (qual) => qual.QualificationTypeId == qualificationTypeId);
+
+                if (selectedQual == null)
+                {
+                    return HttpNotFound("Qualification not exists");
+                }
+
+                var model = new StudentQualificationViewModel
+                {
+                    StudentId = student.StudentId,
+                    StudentName = student.GetFullName(),
+                    QualificationTypeId = selectedQual.QualificationTypeId,
+                    QualificationName = selectedQual.QualificationName,
+                    PassingYear = selectedQual.PassingYear,
+                    Percentage = selectedQual.Percentage
+                };
+
+                return View(model);
+            }
+            catch
+            {
+                ViewBag.ErrorMessage = "Failed to delete qualification";
+                return View();
+            }
         }
 
         // POST: StudentQualifications/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int studentId, int qualificationTypeId, FormCollection collection)
+        public async Task<ActionResult> Delete(int studentId, int qualificationTypeId, StudentQualificationViewModel model)
         {
             try
             {
-                await _qualRepo.Remove(studentId, qualificationTypeId);
-                return RedirectToAction("Index");
+                await _qualRepo.Remove(model.StudentId, model.QualificationTypeId);
+                return RedirectToAction("Index", new { studentId = model.StudentId });
             }
             catch
             {

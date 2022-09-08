@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity.Owin;
 using PlacementManagement.Models;
 using PlacementManagement.Web.Models;
 using PlacementManagement.Web.Repository;
+using PlacementManagement.Web.Utils;
 using PlacementManagement.Web.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -100,6 +101,7 @@ namespace PlacementManagement.Web.Controllers
         // GET: Student/Create
         public ActionResult Register()
         {
+            ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text");
             return View();
         }
 
@@ -176,6 +178,7 @@ namespace PlacementManagement.Web.Controllers
                     State = student.State,
                     PostalCode = student.PostalCode
                 };
+                ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text", model.State);
                 return View(model);
             }
             catch

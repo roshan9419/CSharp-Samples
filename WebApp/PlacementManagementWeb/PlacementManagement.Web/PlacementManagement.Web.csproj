@@ -336,6 +336,9 @@
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Search\_GridView.cshtml" />
     <Content Include="Views\Profile\Index.cshtml" />
+    <Content Include="Views\StudentPrograms\Delete.cshtml" />
+    <Content Include="Views\StudentQualifications\Delete.cshtml" />
+    <Content Include="Views\StudentSkills\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

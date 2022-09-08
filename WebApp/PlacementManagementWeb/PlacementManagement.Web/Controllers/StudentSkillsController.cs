@@ -148,19 +148,45 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: StudentSkill/Delete/5
-        public ActionResult Delete(int skillId)
-        {
-            return View();
-        }
-
-        // POST: StudentSkill/Delete/5
-        [HttpPost]
-        public async Task<ActionResult> Delete(int skillId, FormCollection collection)
+        public async Task<ActionResult> Delete(int skillId)
         {
             try
             {
                 var student = await GetStudent();
-                await _skillsRepo.Remove(student.StudentId, skillId);
+                var stdSkills = await _skillsRepo.GetAll(student.StudentId);
+
+                StudentSkill selectedSkill = stdSkills.Find((skill) => skill.SkillId == skillId);
+
+                if (selectedSkill == null)
+                {
+                    return HttpNotFound("Skill not exists");
+                }
+
+                var model = new StudentSkillViewModel
+                {
+                    SkillId = selectedSkill.SkillId,
+                    SkillName = selectedSkill.SkillName,
+                    Experience = selectedSkill.Experience,
+                    ProjectsDone = selectedSkill.ProjectsDone
+                };
+
+                return View(model);
+            }
+            catch
+            {
+                ViewBag.ErrorMessage = "Failed to delete skill";
+                return View();
+            }
+        }
+
+        // POST: StudentSkill/Delete/5
+        [HttpPost]
+        public async Task<ActionResult> Delete(int skillId, StudentSkillViewModel model)
+        {
+            try
+            {
+                var student = await GetStudent();
+                await _skillsRepo.Remove(student.StudentId, model.SkillId);
                 return RedirectToAction("Index");
             }
             catch
