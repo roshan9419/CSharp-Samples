@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace PlacementManagement.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class StudentQualificationsController : Controller
     {
         private readonly IStudentRepository _studentRepo;

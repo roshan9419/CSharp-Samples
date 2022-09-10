@@ -69,24 +69,26 @@ namespace PlacementManagement.Web.Controllers
 
         // GET: Student/Details
         // GET: Student/Details?studentId=3
-        public async Task<ActionResult> Details(int? studentId = null)
+        public ActionResult Details(int? studentId = null)
         {
             if (studentId == null)
                 return View();
 
             try
             {
-                var student = await _studentRepo.GetStudent((int)studentId);
-                var programs = await _studentProgramRepo.GetAll((int)studentId);
-                var qualifications = await _studentQualRepo.GetAll((int)studentId);
-                var skills = await _studentSkillRepo.GetAll((int)studentId);
+                var studentTask = Task.Run(() => _studentRepo.GetStudent((int) studentId));
+                var programsTask = Task.Run(() => _studentProgramRepo.GetAll((int) studentId));
+                var qualificationsTask = Task.Run(() => _studentQualRepo.GetAll((int) studentId));
+                var skillsTask = Task.Run(() => _studentSkillRepo.GetAll((int) studentId));
+
+                Task.WaitAll();
 
                 var studentDetail = new StudentDetailViewModel
                 {
-                    Student = student,
-                    StudentPrograms = programs,
-                    StudentQualifications = qualifications,
-                    StudentSkills = skills
+                    Student = studentTask.Result,
+                    StudentPrograms = programsTask.Result,
+                    StudentQualifications = qualificationsTask.Result,
+                    StudentSkills = skillsTask.Result
                 };
 
                 return View(studentDetail);
@@ -237,12 +239,11 @@ namespace PlacementManagement.Web.Controllers
 
         // POST: Student/Delete/5
         [HttpPost]
-        public ActionResult Delete(int studentId, FormCollection collection)
+        public async Task<ActionResult> Delete(int studentId, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                await _studentRepo.DeleteStudent(studentId);
                 return RedirectToAction("Index");
             }
             catch

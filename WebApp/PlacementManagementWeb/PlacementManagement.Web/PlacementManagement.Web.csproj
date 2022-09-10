@@ -212,7 +212,6 @@
     <Compile Include="ViewModels\StudentProgramViewModel.cs" />
     <Compile Include="ViewModels\StudentQualificationViewModel.cs" />
     <Compile Include="ViewModels\StudentSkillViewModel.cs" />
-    <Compile Include="ViewModels\StudentUpdateViewModel.cs" />
     <Compile Include="ViewModels\StudentRegisterViewModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\StudentDetailViewModel.cs" />
@@ -220,7 +219,6 @@
     <Compile Include="Repository\Interfaces\IManageRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
-    <Compile Include="ViewModels\TotalStatsViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

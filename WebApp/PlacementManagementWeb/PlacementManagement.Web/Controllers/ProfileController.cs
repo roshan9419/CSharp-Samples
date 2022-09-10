@@ -36,14 +36,16 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 var student = await _studentRepo.GetStudentByUserId(userId);
-                var programs = await _studentProgramRepo.GetAll(student.StudentId);
-                var qualifications = await _studentQualRepo.GetAll(student.StudentId);
+                var programsTask = Task.Run(() => _studentProgramRepo.GetAll(student.StudentId));
+                var qualificationsTask = Task.Run(() => _studentQualRepo.GetAll(student.StudentId));
+
+                Task.WaitAll();
 
                 var studentDetail = new StudentDetailViewModel
                 {
                     Student = student,
-                    StudentPrograms = programs,
-                    StudentQualifications = qualifications
+                    StudentPrograms = programsTask.Result,
+                    StudentQualifications = qualificationsTask.Result
                 };
 
                 return View(studentDetail);
