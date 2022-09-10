@@ -3,6 +3,8 @@ using WebActivatorEx;
 using PlacementManagement.API;
 using Swashbuckle.Application;
 using System.Linq;
+using System;
+using System.Xml.XPath;
 
 [assembly: PreApplicationStartMethod(typeof(SwaggerConfig), "Register")]
 
@@ -252,6 +254,11 @@ namespace PlacementManagement.API
                         //
                         //c.EnableApiKeySupport("apiKey", "header");
                     });
+        }
+
+        private static string GetXmlCommentsPath()
+        {
+            return System.AppDomain.CurrentDomain.BaseDirectory + @"bin\PlacementManagement.API.xml";
         }
     }
 }
