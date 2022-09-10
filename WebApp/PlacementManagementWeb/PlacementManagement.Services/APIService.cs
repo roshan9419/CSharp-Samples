@@ -1,13 +1,16 @@
 ﻿using Newtonsoft.Json;
+using PlacementManagement.Services.Exceptions;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PlacementManagement.Services
 {
+    /// <summary>
+    /// APIService client used to make Http calls
+    /// </summary>
     public class APIService : IDisposable
     {
         private HttpClient _client;
@@ -18,6 +21,11 @@ namespace PlacementManagement.Services
             _client.BaseAddress = new Uri(baseUrl);
         }
 
+        /// <summary>
+        /// Makes GET request on provided endPoint to retrieve many resource objects. Use this to fetch many resource objects.
+        /// </summary>
+        /// <returns>Returns the list of resource objects</returns>
+        /// <exception cref="APIException"></exception>
         public async Task<List<T>> GetMany<T>(string endPoint)
         {
             List<T> resultList;
@@ -32,6 +40,11 @@ namespace PlacementManagement.Services
             return resultList;
         }
 
+        /// <summary>
+        /// Makes GET request on provided endPoint to retrieve single resource. Use this to fetch single resource.
+        /// </summary>
+        /// <returns>Returns a single resource object</returns>
+        /// <exception cref="APIException"></exception>
         public async Task<T> Get<T>(string endPoint)
         {
             T item;
@@ -46,10 +59,15 @@ namespace PlacementManagement.Services
             return item;
         }
 
+        /// <summary>
+        /// Makes POST request on provided endPoint with dataObj body. Use this to create a new resource.
+        /// </summary>
+        /// <returns>Returns the response object received</returns>
+        /// <exception cref="APIException"></exception>
         public async Task<object> Create<T>(string endPoint, T dataObj)
         {
             var response = await _client.PostAsync(endPoint, ObjectToStringContent(dataObj));
-            
+
             object result;
             if (response.IsSuccessStatusCode)
                 result = await response.Content.ReadAsAsync<object>();
@@ -59,6 +77,10 @@ namespace PlacementManagement.Services
             return result;
         }
 
+        /// <summary>
+        /// Makes PUT request on provided endPoint with dataObj body. Use this to update an existing resource.
+        /// </summary>
+        /// <exception cref="APIException"></exception>
         public async Task Update<T>(string endPoint, T dataObj)
         {
             var response = await _client.PutAsync(endPoint, ObjectToStringContent(dataObj));
@@ -67,6 +89,10 @@ namespace PlacementManagement.Services
                 throw new APIException(response.StatusCode, response.ReasonPhrase);
         }
 
+        /// <summary>
+        /// Makes DELETE request on provided endPoint. Use this to delete an existing resource.
+        /// </summary>
+        /// <exception cref="APIException"></exception>
         public async Task Delete(string endPoint)
         {
             var response = await _client.DeleteAsync(endPoint);
@@ -75,6 +101,12 @@ namespace PlacementManagement.Services
                 throw new APIException(response.StatusCode, response.ReasonPhrase);
         }
 
+        /// <summary>
+        /// Makes POST request on provided endPoint with dataObj body. 
+        /// Use this to retreive many resource objects by passing body.
+        /// </summary>
+        /// <returns>Returns </returns>
+        /// <exception cref="APIException"></exception>
         public async Task<List<T2>> GetManyUsingPost<T, T2>(string endPoint, T dataObj)
         {
             var response = await _client.PostAsync(endPoint, ObjectToStringContent(dataObj));
@@ -85,13 +117,13 @@ namespace PlacementManagement.Services
             else
                 throw new APIException(response.StatusCode, response.ReasonPhrase);
 
-            return resultList;;
+            return resultList; ;
         }
 
         private static StringContent ObjectToStringContent<T>(T dataObj)
         {
             var jsonData = JsonConvert.SerializeObject(dataObj);
-            return new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+            return new StringContent(jsonData, Encoding.UTF8, "application/json");
         }
 
         public void Dispose()
@@ -101,21 +133,6 @@ namespace PlacementManagement.Services
                 _client.Dispose();
                 _client = null;
             }
-        }
-    }
-
-    public class APIException : Exception
-    {
-        public APIException()
-        {
-        }
-
-        public HttpStatusCode StatusCode { get; set; }
-
-        public APIException(HttpStatusCode statusCode, string message)
-            : base(message)
-        {
-            StatusCode = statusCode;
         }
     }
 }

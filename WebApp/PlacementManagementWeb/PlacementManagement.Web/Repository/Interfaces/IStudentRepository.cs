@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace PlacementManagement.Web.Repository
 {
+    /// <summary>
+    /// Student related operations
+    /// </summary>
     public interface IStudentRepository
     {
         Task<int> CreateStudent(Student student);

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace PlacementManagement.Web.Repository
 {
+    /// <summary>
+    /// Student academic related operations like his/her programs, qualifications and skills
+    /// </summary>
     public interface IStudentAcademicRepository<TEntity, TPEntity> : 
         IManageRepository<TPEntity> where TPEntity : class
     {
