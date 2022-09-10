@@ -35,9 +35,9 @@ namespace PlacementManagement.API.Repository
         {
             var dataTable = _dbService.Get(procedureName, dbParams, CommandType.StoredProcedure);
             var resultList = dataTable.ConvertToObjects<TEntity>();
-            
+
             if (resultList.Count == 0)
-                throw new Exception("Entity not found");
+                return default(TEntity);
 
             return resultList[0];
         }

@@ -156,6 +156,8 @@ namespace PlacementManagement.Web.Controllers
         // GET: Student/Update/5
         public async Task<ActionResult> Update(int? studentId = null)
         {
+            ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text");
+
             if (studentId == null)
                 return View();
 
