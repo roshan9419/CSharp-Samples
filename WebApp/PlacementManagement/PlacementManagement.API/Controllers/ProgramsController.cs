@@ -14,7 +14,6 @@ namespace PlacementManagement.API.Controllers
         private static readonly ILog _logger = LogHelper.GetLogger();
         private readonly IRepository<Program> _programsRepo;
 
-
         public ProgramsController(IRepository<Program> programsRepo)
         {
             _programsRepo = programsRepo;
@@ -24,7 +23,6 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list all programs
         /// </summary>
-        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<Program> Get([FromUri] Pagination pagination)
         {
             try
@@ -42,8 +40,7 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will provide program details for id
         /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="HttpResponseException"></exception>
+        /// <returns>Returns the program</returns>
         public Program Get(int id)
         {
             Program program = _programsRepo.Get(id);
@@ -59,11 +56,17 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create program for provided body
         /// </summary>
-        /// <param name="value"></param>
         /// <returns>Returns the created program id</returns>
-        /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Program value)
         {
+            _logger.Debug(value);
+
+            if (!ModelState.IsValid)
+            {
+                _logger.Debug("Bad payload of program");
+                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            }
+
             try
             {
                 return _programsRepo.Create(value);
@@ -79,13 +82,18 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the program details for id
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="value"></param>
-        /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Program value)
         {
+            _logger.Debug(value); 
+            
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    _logger.Debug("Bad payload of program");
+                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                }
+                
                 Program program = Get(id);
             }
             catch (Exception ex)
@@ -111,8 +119,6 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the program for id
         /// </summary>
-        /// <param name="id"></param>
-        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int id)
         {
             try

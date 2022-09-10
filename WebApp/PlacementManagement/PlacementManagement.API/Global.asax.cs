@@ -1,4 +1,5 @@
-﻿using PlacementManagement.API.Repository;
+﻿using log4net;
+using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
 using PlacementManagement.Services;
 using SimpleInjector;
@@ -14,6 +15,8 @@ namespace PlacementManagement.API
 {
     public class WebApiApplication : System.Web.HttpApplication
     {
+        private static readonly ILog _logger = LogHelper.GetLogger();
+
         protected void Application_Start()
         {
             // Create the container as usual. SimpleInjector
@@ -24,6 +27,8 @@ namespace PlacementManagement.API
             container.RegisterInstance((DatabaseConfig)ConfigurationManager.GetSection("databaseConfig"));
             container.Register(() => new MySqlDBService(
                 ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString()));
+            
+            _logger.Info("Connected to MySqlDBService");
 
             // Registering repositories
             container.Register<IRepository<Skill>, SkillRepository>(Lifestyle.Scoped);
@@ -34,7 +39,8 @@ namespace PlacementManagement.API
             container.Register<IStudentRepository<StudentSkill>, StudentSkillRepository>(Lifestyle.Scoped);
             container.Register<IStudentRepository<StudentQualification>, StudentQualificationRepository>(Lifestyle.Scoped);
             container.Register<ISearchRepository, SearchRepository>(Lifestyle.Scoped);
-            
+
+            _logger.Info("Repositories registered");
 
             // This is an extension method from the integration package.
             container.RegisterWebApiControllers(GlobalConfiguration.Configuration);
@@ -52,6 +58,8 @@ namespace PlacementManagement.API
 
             // Response in the form of JSON instead of XML
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
+
+            _logger.Info("Server started...");
         }
     }
 }
