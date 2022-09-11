@@ -183,6 +183,8 @@
                     </div>
                 }
 
+                @RenderBody()
+
                 @if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
                 {
                     <script type="text/javascript">
@@ -190,8 +192,6 @@
                         ViewBag.AlertMessage = "";
                     </script>
                 }
-
-                @RenderBody()
             </main>
         </div>
     </div>

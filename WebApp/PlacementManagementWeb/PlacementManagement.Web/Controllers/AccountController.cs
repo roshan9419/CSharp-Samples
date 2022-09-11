@@ -81,7 +81,7 @@ namespace PlacementManagement.Web.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    _logger.Debug($"User: {User.Identity.GetUserId()} successful logged in");
+                    _logger.Debug($"User: {model.UserName} successful logged in");
                     if (returnUrl == null)
                         return RedirectToAction("Index", "Dashboard");
                     return RedirectToLocal(returnUrl);
@@ -101,9 +101,9 @@ namespace PlacementManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            var userId = User.Identity.GetUserId();
+            var userName = User.Identity.GetUserName();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            _logger.Debug($"User: {userId} logged out");
+            _logger.Debug($"User: {userName} logged out");
 
             return RedirectToAction("Login");
         }

@@ -109,7 +109,7 @@ namespace PlacementManagement.Web.Repository
                 switch (ex.StatusCode)
                 {
                     case HttpStatusCode.NotFound:
-                        msg = "Student not found";
+                        msg = "No such student exists - " + studentId.ToString();
                         break;
                 }
                 _logger.Error(msg, ex);

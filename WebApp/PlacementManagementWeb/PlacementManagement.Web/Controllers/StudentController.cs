@@ -24,7 +24,7 @@ namespace PlacementManagement.Web.Controllers
         private readonly IStudentAcademicRepository<StudentSkill, Skill> _studentSkillRepo;
 
         public StudentController(
-            IStudentRepository studentRepo, 
+            IStudentRepository studentRepo,
             IStudentAcademicRepository<StudentProgram, Program> studentProgramRepo,
             IStudentAcademicRepository<StudentQualification, QualificationType> studentQualRepo,
             IStudentAcademicRepository<StudentSkill, Skill> studentSkillRepo)
@@ -54,7 +54,7 @@ namespace PlacementManagement.Web.Controllers
         {
             var students = await _studentRepo.GetAllStudents(page, limit);
             var studentVMList = new List<StudentDetailViewModel>();
-            
+
             foreach (var student in students)
                 studentVMList.Add(new StudentDetailViewModel { Student = student });
 
@@ -69,23 +69,26 @@ namespace PlacementManagement.Web.Controllers
 
         // GET: Student/Details
         // GET: Student/Details?studentId=3
-        public ActionResult Details(int? studentId = null)
+        public async Task<ActionResult> Details(int? studentId = null)
         {
+            if (TempData["AlertMessage"] != null)
+                ViewBag.AlertMessage = TempData["AlertMessage"];
+
             if (studentId == null)
                 return View();
 
             try
             {
-                var studentTask = Task.Run(() => _studentRepo.GetStudent((int) studentId));
-                var programsTask = Task.Run(() => _studentProgramRepo.GetAll((int) studentId));
-                var qualificationsTask = Task.Run(() => _studentQualRepo.GetAll((int) studentId));
-                var skillsTask = Task.Run(() => _studentSkillRepo.GetAll((int) studentId));
+                var student = await _studentRepo.GetStudent((int)studentId);
+                var programsTask = Task.Run(() => _studentProgramRepo.GetAll((int)studentId));
+                var qualificationsTask = Task.Run(() => _studentQualRepo.GetAll((int)studentId));
+                var skillsTask = Task.Run(() => _studentSkillRepo.GetAll((int)studentId));
 
                 Task.WaitAll();
 
                 var studentDetail = new StudentDetailViewModel
                 {
-                    Student = studentTask.Result,
+                    Student = student,
                     StudentPrograms = programsTask.Result,
                     StudentQualifications = qualificationsTask.Result,
                     StudentSkills = skillsTask.Result
@@ -93,9 +96,9 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(studentDetail);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "No such student exists - " + studentId.ToString();
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
@@ -146,8 +149,9 @@ namespace PlacementManagement.Web.Controllers
                     // Create Student
                     int studentId = await _studentRepo.CreateStudent(student);
 
-                    ViewBag.AlertMessage = "Successfully registered student" +
-                                                       $"Credentials - Username({studentId}), Password: {password}";
+                    TempData["AlertMessage"] = "Successfully registered student!\n" +
+                                          $"Credentials - Username: {studentId}, Password: {password}";
+
                     return RedirectToAction("Details", new { studentId });
                 }
                 AddErrors(result);
@@ -226,9 +230,9 @@ namespace PlacementManagement.Web.Controllers
                 }
                 return RedirectToAction("Details", new { studentId = studentId });
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "No such student exists - " + studentId.ToString();
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
