@@ -180,7 +180,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="LogHelper.cs" />
+    <Compile Include="Logger\Log4NetObjectLogger.cs" />
+    <Compile Include="Logger\LogHelper.cs" />
     <Compile Include="Models\StudentFilter.cs" />
     <Compile Include="Models\StudentPagination.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
@@ -60,7 +61,7 @@ namespace PlacementManagement.API.Controllers
         /// <returns>Returns the newly created id</returns>
         public int Post([FromBody] QualificationType value)
         {
-            _logger.Debug(value);
+            _logger.Debug("Creating qualificationType: " + JsonConvert.SerializeObject(value));
 
             if (!ModelState.IsValid)
             {
@@ -86,8 +87,8 @@ namespace PlacementManagement.API.Controllers
         /// </summary>
         public void Put(int id, [FromBody] QualificationType value)
         {
-            _logger.Debug(value); 
-            
+            _logger.Debug("Updating qualificationType: " + JsonConvert.SerializeObject(value));
+
             try
             {
                 if (!ModelState.IsValid)

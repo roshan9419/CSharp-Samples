@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
@@ -66,7 +67,7 @@ namespace PlacementManagement.API.Controllers
         /// </summary>
         public int Post([FromBody] Student value)
         {
-            _logger.Debug(value);
+            _logger.Debug("Creating student: " + JsonConvert.SerializeObject(value));
 
             if (!ModelState.IsValid)
             {
@@ -91,7 +92,7 @@ namespace PlacementManagement.API.Controllers
         /// </summary>
         public void Put(int id, [FromBody] Student value)
         {
-            _logger.Debug(value);
+            _logger.Debug("Updating student: " + JsonConvert.SerializeObject(value));
 
             try
             {

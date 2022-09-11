@@ -144,9 +144,11 @@ namespace PlacementManagement.Web.Controllers
                     await UserManager.AddToRoleAsync(user.Id, "Student");
 
                     // Create Student
-                    await _studentRepo.CreateStudent(student);
+                    int studentId = await _studentRepo.CreateStudent(student);
 
-                    return RedirectToAction("Index");
+                    ViewBag.AlertMessage = "Successfully registered student" +
+                                                       $"Credentials - Username({studentId}), Password: {password}";
+                    return RedirectToAction("Details", new { studentId });
                 }
                 AddErrors(result);
             }

@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using log4net;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -15,6 +16,7 @@ namespace PlacementManagement.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly ILog _logger = LogHelper.GetLogger();
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -52,7 +54,6 @@ namespace PlacementManagement.Web.Controllers
             }
         }
 
-        //
         // GET: /Account/Login
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -61,7 +62,6 @@ namespace PlacementManagement.Web.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
@@ -73,12 +73,15 @@ namespace PlacementManagement.Web.Controllers
                 return View(model);
             }
 
+            _logger.Debug($"Attempting Login with username: {model.UserName}");
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.UserName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    _logger.Debug($"User: {User.Identity.GetUserId()} successful logged in");
                     if (returnUrl == null)
                         return RedirectToAction("Index", "Dashboard");
                     return RedirectToLocal(returnUrl);
@@ -93,17 +96,18 @@ namespace PlacementManagement.Web.Controllers
             }
         }
 
-        //
         // POST: /Account/LogOff
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
+            var userId = User.Identity.GetUserId();
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            _logger.Debug($"User: {userId} logged out");
+
             return RedirectToAction("Login");
         }
 
-        //
         // GET: /Account/ExternalLoginFailure
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()

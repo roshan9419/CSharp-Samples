@@ -1,4 +1,5 @@
 ﻿using log4net;
+using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
 using PlacementManagement.DataModels;
@@ -27,8 +28,8 @@ namespace PlacementManagement.API.Controllers
         /// <returns>Returns the list of Student</returns>
         public List<Student> Post([FromBody] StudentFilter filter)
         {
-            _logger.Debug(filter); 
-            
+            _logger.Debug("Applied StudentFilter: " + JsonConvert.SerializeObject(filter));
+
             try
             {
                 return _searchRepo.GetStudents(filter);

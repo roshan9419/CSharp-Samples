@@ -25,13 +25,6 @@ namespace PlacementManagement.Web.Controllers
             return View(list);
         }
 
-        // GET: Qualifications/Details/5
-        public async Task<ActionResult> Details(int id)
-        {
-            var qualType = await _qualRepo.Get(id);
-            return View(qualType);
-        }
-
         // GET: Qualifications/Create
         public ActionResult Create()
         {

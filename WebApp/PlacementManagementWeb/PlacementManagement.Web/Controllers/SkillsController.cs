@@ -21,13 +21,6 @@ namespace PlacementManagement.Web.Controllers
             return View(list);
         }
 
-        // GET: Skills/Details/5
-        public async Task<ActionResult> Details(int id)
-        {
-            var skill = await _skillRepo.Get(id);
-            return View(skill);
-        }
-
         // GET: Skills/Create
         public ActionResult Create()
         {

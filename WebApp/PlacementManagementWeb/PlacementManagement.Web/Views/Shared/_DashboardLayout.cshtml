@@ -170,6 +170,27 @@
             </nav>
 
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 pt-4">
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger" style="font-size: 1.2rem" role="alert">
+                        @ViewBag.ErrorMessage
+                    </div>
+                }
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success" style="font-size: 1.2rem" role="alert">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+
+                @if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
+                {
+                    <script type="text/javascript">
+                        alert("@ViewBag.AlertMessage");
+                        ViewBag.AlertMessage = "";
+                    </script>
+                }
+
                 @RenderBody()
             </main>
         </div>

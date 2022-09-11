@@ -6,6 +6,7 @@ using System.Web.Configuration;
 using Unity;
 using Unity.Injection;
 using PlacementManagement.Web.Controllers;
+using log4net;
 
 namespace PlacementManagement.Web
 {
@@ -14,6 +15,8 @@ namespace PlacementManagement.Web
     /// </summary>
     public static class UnityConfig
     {
+        private static readonly ILog _logger = LogHelper.GetLogger();
+
         #region Unity Container
         private static Lazy<IUnityContainer> container =
           new Lazy<IUnityContainer>(() =>
@@ -59,6 +62,8 @@ namespace PlacementManagement.Web
             container.RegisterType<IStudentAcademicRepository<StudentSkill, Skill>, StudentSkillRepository>();
 
             container.RegisterType<AccountController>(new InjectionConstructor());
+
+            _logger.Debug("Repositories registered");
         }
     }
 }

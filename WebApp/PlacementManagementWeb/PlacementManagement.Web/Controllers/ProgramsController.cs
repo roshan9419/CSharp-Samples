@@ -21,15 +21,21 @@ namespace PlacementManagement.Web.Controllers
         // GET: Programs
         public async Task<ActionResult> Index()
         {
-            var list = await _programRepo.GetAll();
-            return View(list);
-        }
+            var programs = new List<Program>();
 
-        // GET: Programs/Details/5
-        public async Task<ActionResult> Details(int id)
-        {
-            var program = await _programRepo.Get(id);
-            return View(program);
+            try
+            {
+                programs = await _programRepo.GetAll();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
+            return View(programs);
         }
 
         // GET: Programs/Create
@@ -44,23 +50,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await _programRepo.Create(program);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
+
+                await _programRepo.Create(program);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(program);
             }
         }
 
         // GET: Programs/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var program = await _programRepo.Get(id);
-            return View(program);
+            try
+            {
+                var program = await _programRepo.Get(id);
+                return View(program);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Programs/Edit/5
@@ -69,23 +84,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await _programRepo.Update(id, program);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
+
+                await _programRepo.Update(id, program);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(program);
             }
         }
 
         // GET: Programs/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var program = await _programRepo.Get(id);
-            return View(program);
+            try
+            {
+                var program = await _programRepo.Get(id);
+                return View(program);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Programs/Delete/5
@@ -97,9 +121,10 @@ namespace PlacementManagement.Web.Controllers
                 await _programRepo.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(program);
             }
         }
     }
