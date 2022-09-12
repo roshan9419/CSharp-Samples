@@ -184,14 +184,6 @@
                 }
 
                 @RenderBody()
-
-                @if (!string.IsNullOrEmpty(ViewBag.AlertMessage))
-                {
-                    <script type="text/javascript">
-                        alert("@ViewBag.AlertMessage");
-                        ViewBag.AlertMessage = "";
-                    </script>
-                }
             </main>
         </div>
     </div>

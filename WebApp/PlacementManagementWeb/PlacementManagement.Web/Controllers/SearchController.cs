@@ -34,17 +34,24 @@ namespace PlacementManagement.Web.Controllers
                 new SelectListItem { Text = "Male", Value = "1" },
                 new SelectListItem { Text = "Female", Value = "2" }
             };
-            
-            var programTask = Task.Run(() => _programRepo.GetAll());
-            var skillTask = Task.Run(() => _skillRepo.GetAll());
-            var qualTask = Task.Run(() => _qualRepo.GetAll());
 
-            Task.WaitAll();
+            try
+            {
+                var programTask = Task.Run(() => _programRepo.GetAll());
+                var skillTask = Task.Run(() => _skillRepo.GetAll());
+                var qualTask = Task.Run(() => _qualRepo.GetAll());
 
-            ViewBag.Genders = new SelectList(genders, "Value", "Text");
-            ViewBag.Programs = new SelectList(programTask.Result, "ProgramId", "ProgramName");
-            ViewBag.Skills = new SelectList(skillTask.Result, "SkillId", "SkillName");
-            ViewBag.Qualifications = new SelectList(qualTask.Result, "Id", "Name");
+                Task.WaitAll();
+
+                ViewBag.Genders = new SelectList(genders, "Value", "Text");
+                ViewBag.Programs = new SelectList(programTask.Result, "ProgramId", "ProgramName");
+                ViewBag.Skills = new SelectList(skillTask.Result, "SkillId", "SkillName");
+                ViewBag.Qualifications = new SelectList(qualTask.Result, "Id", "Name");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
 
             return View();
         }

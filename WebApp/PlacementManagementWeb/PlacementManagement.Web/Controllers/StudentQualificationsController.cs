@@ -29,6 +29,9 @@ namespace PlacementManagement.Web.Controllers
             if (studentId == null)
                 return View();
 
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
             try
             {
                 var student = await _studentRepo.GetStudent((int)studentId);
@@ -42,9 +45,9 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "No such student exists - " + studentId.ToString();
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
@@ -63,12 +66,13 @@ namespace PlacementManagement.Web.Controllers
 
                 List<QualificationType> qualTypes = await _qualRepo.GetAll();
                 ViewData["Qualifications"] = new SelectList(qualTypes, "Id", "Name");
+
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to add qualification";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -79,22 +83,22 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 if (ModelState.IsValid)
-                {
-                    var qualification = new StudentQualification
-                    {
-                        StudentId = model.StudentId,
-                        QualificationTypeId = model.QualificationTypeId,
-                        Percentage = model.Percentage,
-                        PassingYear = model.PassingYear
-                    };
+                    throw new Exception("Invalid student qualification details");
 
-                    await _qualRepo.Add(qualification);
-                }
+                var qualification = new StudentQualification
+                {
+                    StudentId = model.StudentId,
+                    QualificationTypeId = model.QualificationTypeId,
+                    Percentage = model.Percentage,
+                    PassingYear = model.PassingYear
+                };
+
+                await _qualRepo.Add(qualification);
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to add qualification";
+                ViewBag.ErrorMessage = ex.Message;
 
                 List<QualificationType> qualTypes = await _qualRepo.GetAll();
                 ViewData["Qualifications"] = new SelectList(qualTypes, "Id", "Name");
@@ -115,9 +119,7 @@ namespace PlacementManagement.Web.Controllers
                     (qual) => qual.QualificationTypeId == qualificationTypeId);
 
                 if (selectedQual == null)
-                {
-                    return HttpNotFound("Qualification not exists");
-                }
+                    throw new Exception("Qualification not exists");
 
                 var model = new StudentQualificationViewModel
                 {
@@ -131,10 +133,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update qualification";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -158,13 +160,9 @@ namespace PlacementManagement.Web.Controllers
                 }
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update qualification";
-                
-                List<QualificationType> qualTypes = await _qualRepo.GetAll();
-                ViewData["Qualifications"] = new SelectList(qualTypes, "Id", "Name", model.QualificationTypeId);
-
+                ViewBag.ErrorMessage = ex.Message;
                 return View(model);
             }
         }
@@ -181,9 +179,7 @@ namespace PlacementManagement.Web.Controllers
                     (qual) => qual.QualificationTypeId == qualificationTypeId);
 
                 if (selectedQual == null)
-                {
-                    return HttpNotFound("Qualification not exists");
-                }
+                    throw new Exception("Qualification not exists");
 
                 var model = new StudentQualificationViewModel
                 {
@@ -197,10 +193,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to delete qualification";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -213,9 +209,10 @@ namespace PlacementManagement.Web.Controllers
                 await _qualRepo.Remove(model.StudentId, model.QualificationTypeId);
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
     }

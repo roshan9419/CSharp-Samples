@@ -21,8 +21,21 @@ namespace PlacementManagement.Web.Controllers
         // GET: Qualifications
         public async Task<ActionResult> Index()
         {
-            var list = await _qualRepo.GetAll();
-            return View(list);
+            var qualTypes = new List<QualificationType>();
+
+            try
+            {
+                qualTypes = await _qualRepo.GetAll();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
+            return View(qualTypes);
         }
 
         // GET: Qualifications/Create
@@ -37,22 +50,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                    await _qualRepo.Create(qualType);
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
 
+                await _qualRepo.Create(qualType);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(qualType);
             }
         }
 
         // GET: Qualifications/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var qualType = await _qualRepo.Get(id);
-            return View(qualType);
+            try
+            {
+                var qualType = await _qualRepo.Get(id);
+                return View(qualType);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Qualifications/Edit/5
@@ -61,22 +84,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                    await _qualRepo.Update(id, qualType);
-
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
+                
+                await _qualRepo.Update(id, qualType);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(qualType);
             }
         }
 
         // GET: Qualifications/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var qualType = await _qualRepo.Get(id);
-            return View(qualType);
+            try
+            {
+                var qualType = await _qualRepo.Get(id);
+                return View(qualType);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Qualifications/Delete/5
@@ -88,9 +121,10 @@ namespace PlacementManagement.Web.Controllers
                 await _qualRepo.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(qualType);
             }
         }
     }

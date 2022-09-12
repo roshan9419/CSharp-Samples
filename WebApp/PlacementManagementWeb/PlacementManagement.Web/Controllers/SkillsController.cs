@@ -1,5 +1,7 @@
 ﻿using PlacementManagement.Models;
 using PlacementManagement.Web.Repository;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
@@ -17,8 +19,21 @@ namespace PlacementManagement.Web.Controllers
         // GET: Skills
         public async Task<ActionResult> Index()
         {
-            var list = await _skillRepo.GetAll();
-            return View(list);
+            var skills = new List<Skill>();
+
+            try
+            {
+                skills = await _skillRepo.GetAll();
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
+            return View(skills);
         }
 
         // GET: Skills/Create
@@ -33,23 +48,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await _skillRepo.Create(skill);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
+
+                await _skillRepo.Create(skill);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(skill);
             }
         }
 
         // GET: Skills/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
-            var skill = await _skillRepo.Get(id);
-            return View(skill);
+            try
+            {
+                var skill = await _skillRepo.Get(id);
+                return View(skill);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Skills/Edit/5
@@ -58,23 +82,32 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    await _skillRepo.Update(id, skill);
-                }
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid details");
+
+                await _skillRepo.Update(id, skill);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(skill);
             }
         }
 
         // GET: Skills/Delete/5
         public async Task<ActionResult> Delete(int id)
         {
-            var skill = await _skillRepo.Get(id);
-            return View(skill);
+            try
+            {
+                var skill = await _skillRepo.Get(id);
+                return View(skill);
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: Skills/Delete/5
@@ -86,9 +119,10 @@ namespace PlacementManagement.Web.Controllers
                 await _skillRepo.Delete(id);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(skill);
             }
         }
     }

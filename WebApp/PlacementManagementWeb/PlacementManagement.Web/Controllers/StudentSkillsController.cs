@@ -31,20 +31,30 @@ namespace PlacementManagement.Web.Controllers
         // GET: StudentSkill
         public async Task<ActionResult> Index()
         {
-            var student = await GetStudent();
-            var studentSkills = await _skillsRepo.GetAll(student.StudentId);
-            
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
             var skills = new List<StudentSkillViewModel>();
 
-            foreach (var skill in studentSkills)
+            try
             {
-                skills.Add(new StudentSkillViewModel
+                var student = await GetStudent();
+                var studentSkills = await _skillsRepo.GetAll(student.StudentId);
+
+                foreach (var skill in studentSkills)
                 {
-                    SkillId = skill.SkillId,
-                    SkillName = skill.SkillName,
-                    Experience = skill.Experience,
-                    ProjectsDone = skill.ProjectsDone
-                });
+                    skills.Add(new StudentSkillViewModel
+                    {
+                        SkillId = skill.SkillId,
+                        SkillName = skill.SkillName,
+                        Experience = skill.Experience,
+                        ProjectsDone = skill.ProjectsDone
+                    });
+                }
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
             }
 
             return View(skills);
@@ -53,10 +63,17 @@ namespace PlacementManagement.Web.Controllers
         // GET: StudentSkill/Create
         public async Task<ActionResult> Create()
         {
-            var skills = await _skillsRepo.GetAll();
-            ViewBag.Skills = new SelectList(skills, "SkillId", "SkillName");
-            
-            return View();
+            try
+            {
+                var skills = await _skillsRepo.GetAll();
+                ViewBag.Skills = new SelectList(skills, "SkillId", "SkillName");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
         // POST: StudentSkill/Create
@@ -80,10 +97,10 @@ namespace PlacementManagement.Web.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to add skill";
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
 
@@ -98,9 +115,7 @@ namespace PlacementManagement.Web.Controllers
                 StudentSkill selectedSkill = stdSkills.Find((skill) => skill.SkillId == skillId);
 
                 if (selectedSkill == null)
-                {
-                    return HttpNotFound("Skill not exists");
-                }
+                    throw new Exception("Skill not exists");
 
                 var model = new StudentSkillViewModel
                 {
@@ -112,10 +127,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update skill";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
             }
         }
 
@@ -140,10 +155,10 @@ namespace PlacementManagement.Web.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update skill";
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
 
@@ -158,9 +173,7 @@ namespace PlacementManagement.Web.Controllers
                 StudentSkill selectedSkill = stdSkills.Find((skill) => skill.SkillId == skillId);
 
                 if (selectedSkill == null)
-                {
-                    return HttpNotFound("Skill not exists");
-                }
+                    throw new Exception("Skill not exists");
 
                 var model = new StudentSkillViewModel
                 {
@@ -172,10 +185,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to delete skill";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index");
             }
         }
 
@@ -189,9 +202,10 @@ namespace PlacementManagement.Web.Controllers
                 await _skillsRepo.Remove(student.StudentId, model.SkillId);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
     }

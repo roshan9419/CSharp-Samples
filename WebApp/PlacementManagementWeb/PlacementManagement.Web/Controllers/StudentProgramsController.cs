@@ -29,6 +29,9 @@ namespace PlacementManagement.Web.Controllers
             if (studentId == null)
                 return View();
 
+            if (TempData["ErrorMessage"] != null)
+                ViewBag.ErrorMessage = TempData["ErrorMessage"];
+
             try
             {
                 var student = await _studentRepo.GetStudent((int)studentId);
@@ -42,9 +45,9 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "No such student exists - " + studentId.ToString();
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
@@ -63,12 +66,13 @@ namespace PlacementManagement.Web.Controllers
 
                 List<Program> programs = await _programRepo.GetAll();
                 ViewData["Programs"] = new SelectList(programs, "ProgramId", "ProgramName");
+
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to add program";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -78,26 +82,26 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    var program = new StudentProgram
-                    {
-                        StudentId = model.StudentId,
-                        ProgramId = model.ProgramId,
-                        BatchStartYear = model.BatchStartYear,
-                        BatchEndYear = model.BatchEndYear,
-                        Backlogs = model.Backlogs,
-                        CurrentCGPA = model.CurrentCGPA
-                    };
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid student program details");
 
-                    await _programRepo.Add(program);
-                }
+                var program = new StudentProgram
+                {
+                    StudentId = model.StudentId,
+                    ProgramId = model.ProgramId,
+                    BatchStartYear = model.BatchStartYear,
+                    BatchEndYear = model.BatchEndYear,
+                    Backlogs = model.Backlogs,
+                    CurrentCGPA = model.CurrentCGPA
+                };
+
+                await _programRepo.Add(program);
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to add program";
-                
+                ViewBag.ErrorMessage = ex.Message;
+
                 List<Program> programs = await _programRepo.GetAll();
                 ViewData["Programs"] = new SelectList(programs, "ProgramId", "ProgramName");
 
@@ -116,9 +120,7 @@ namespace PlacementManagement.Web.Controllers
                 StudentProgram selectedProgram = stdPrograms.Find((prg) => prg.ProgramId == programId);
 
                 if (selectedProgram == null)
-                {
-                    return HttpNotFound("Program not exists");
-                }
+                    throw new Exception("Program not exists");
 
                 var model = new StudentProgramViewModel
                 {
@@ -134,10 +136,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update program";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -163,9 +165,9 @@ namespace PlacementManagement.Web.Controllers
                 }
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to update program";
+                ViewBag.ErrorMessage = ex.Message;
                 return View(model);
             }
         }
@@ -181,9 +183,7 @@ namespace PlacementManagement.Web.Controllers
                 StudentProgram selectedProgram = stdPrograms.Find((prg) => prg.ProgramId == programId);
 
                 if (selectedProgram == null)
-                {
-                    return HttpNotFound("Program not exists");
-                }
+                    throw new Exception("Program not exists");
 
                 var model = new StudentProgramViewModel
                 {
@@ -199,10 +199,10 @@ namespace PlacementManagement.Web.Controllers
 
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "Failed to delete program";
-                return View();
+                TempData["ErrorMessage"] = ex.Message;
+                return RedirectToAction("Index", new { studentId = studentId });
             }
         }
 
@@ -215,9 +215,10 @@ namespace PlacementManagement.Web.Controllers
                 await _programRepo.Remove(model.StudentId, model.ProgramId);
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
     }

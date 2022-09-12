@@ -7,7 +7,6 @@ using PlacementManagement.Web.Utils;
 using PlacementManagement.Web.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -52,13 +51,21 @@ namespace PlacementManagement.Web.Controllers
         // GET: Student
         public async Task<ActionResult> Index(int page = 1, int limit = 10)
         {
-            var students = await _studentRepo.GetAllStudents(page, limit);
             var studentVMList = new List<StudentDetailViewModel>();
 
-            foreach (var student in students)
-                studentVMList.Add(new StudentDetailViewModel { Student = student });
+            try
+            {
+                var students = await _studentRepo.GetAllStudents(page, limit);
 
-            if (students.Count == limit)
+                foreach (var student in students)
+                    studentVMList.Add(new StudentDetailViewModel { Student = student });
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
+            }
+
+            if (studentVMList.Count == limit)
                 ViewBag.NextPage = page + 1;
 
             if (page > 1)
@@ -68,11 +75,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Student/Details
-        // GET: Student/Details?studentId=3
         public async Task<ActionResult> Details(int? studentId = null)
         {
-            if (TempData["AlertMessage"] != null)
-                ViewBag.AlertMessage = TempData["AlertMessage"];
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
 
             if (studentId == null)
                 return View();
@@ -80,6 +86,7 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 var student = await _studentRepo.GetStudent((int)studentId);
+
                 var programsTask = Task.Run(() => _studentProgramRepo.GetAll((int)studentId));
                 var qualificationsTask = Task.Run(() => _studentQualRepo.GetAll((int)studentId));
                 var skillsTask = Task.Run(() => _studentSkillRepo.GetAll((int)studentId));
@@ -115,8 +122,11 @@ namespace PlacementManagement.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(StudentRegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid student details");
+
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
 
                 var student = new Student
@@ -149,12 +159,16 @@ namespace PlacementManagement.Web.Controllers
                     // Create Student
                     int studentId = await _studentRepo.CreateStudent(student);
 
-                    TempData["AlertMessage"] = "Successfully registered student!\n" +
+                    TempData["SuccessMessage"] = "Successfully registered student! " +
                                           $"Credentials - Username: {studentId}, Password: {password}";
 
                     return RedirectToAction("Details", new { studentId });
                 }
                 AddErrors(result);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.ErrorMessage = ex.Message;
             }
 
             // If we got this far, something failed, redisplay form
@@ -188,12 +202,13 @@ namespace PlacementManagement.Web.Controllers
                     State = student.State,
                     PostalCode = student.PostalCode
                 };
+
                 ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text", model.State);
                 return View(model);
             }
-            catch
+            catch (Exception ex)
             {
-                ViewBag.ErrorMessage = "No such student exists - " + studentId.ToString();
+                ViewBag.ErrorMessage = ex.Message;
                 return View();
             }
         }
@@ -204,30 +219,30 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
+                    throw new Exception("Invalid student details");
+                
+                var student = await _studentRepo.GetStudent(studentId);
+                student = new Student
                 {
-                    var student = await _studentRepo.GetStudent(studentId);
-                    student = new Student
-                    {
-                        UserId = student.UserId,
-                        StudentId = student.StudentId,
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        Email = model.Email,
-                        RegistrationDate = DateTime.Now,
-                        Aadhaar = model.Aadhaar,
-                        Address = model.Address,
-                        City = model.City,
-                        Country = model.Country,
-                        DateOfBirth = model.DateOfBirth,
-                        Gender = model.Gender,
-                        PhoneNumber = model.PhoneNumber,
-                        PostalCode = model.PostalCode,
-                        State = model.State
-                    };
+                    UserId = student.UserId,
+                    StudentId = student.StudentId,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    Email = model.Email,
+                    RegistrationDate = DateTime.Now,
+                    Aadhaar = model.Aadhaar,
+                    Address = model.Address,
+                    City = model.City,
+                    Country = model.Country,
+                    DateOfBirth = model.DateOfBirth,
+                    Gender = model.Gender,
+                    PhoneNumber = model.PhoneNumber,
+                    PostalCode = model.PostalCode,
+                    State = model.State
+                };
 
-                    await _studentRepo.UpdateStudent(studentId, student);
-                }
+                await _studentRepo.UpdateStudent(studentId, student);
                 return RedirectToAction("Details", new { studentId = studentId });
             }
             catch (Exception ex)
@@ -245,16 +260,17 @@ namespace PlacementManagement.Web.Controllers
 
         // POST: Student/Delete/5
         [HttpPost]
-        public async Task<ActionResult> Delete(int studentId, FormCollection collection)
+        public async Task<ActionResult> Delete(int studentId, StudentRegisterViewModel model)
         {
             try
             {
                 await _studentRepo.DeleteStudent(studentId);
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.ErrorMessage = ex.Message;
+                return View(model);
             }
         }
 
