@@ -12,7 +12,6 @@ namespace PlacementManagement.Services
         {
             _conn = new MySqlConnection(connectionString);
         }
-
         public DataTable Get(string procedureName, DBParameter[] dbParams, CommandType commandType)
         {
             MySqlCommand cmd = new MySqlCommand(procedureName, _conn);

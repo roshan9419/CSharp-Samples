@@ -26,7 +26,7 @@ namespace PlacementManagement.API
             // Register your types, for instance using the scoped lifestyle:
             container.RegisterInstance((DatabaseConfig)ConfigurationManager.GetSection("databaseConfig"));
             container.Register(() => new MySqlDBService(
-                ConfigurationManager.ConnectionStrings["DefaultConnection"].ToString()));
+                ConfigurationManager.ConnectionStrings["PmsDBConnection"].ToString()));
             
             _logger.Info("Connected to MySqlDBService");
 
@@ -59,7 +59,7 @@ namespace PlacementManagement.API
             // Response in the form of JSON instead of XML
             GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
-            _logger.Info("Server started...");
+            _logger.Info("Server started");
         }
     }
 }

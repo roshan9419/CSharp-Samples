@@ -37,7 +37,7 @@ namespace PlacementManagement.API.Utils
             if (attr == null)
                 throw new InvalidOperationException($"TableAttribute not specified for Type: {classType}");
 
-            return attr.Name;
+            return attr.Name.ToLower();
         }
     }
 }
