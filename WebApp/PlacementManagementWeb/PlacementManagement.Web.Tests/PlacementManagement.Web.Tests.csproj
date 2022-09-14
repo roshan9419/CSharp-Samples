@@ -81,6 +81,8 @@
     <Compile Include="Controllers\SkillsControllerTests.cs" />
     <Compile Include="Controllers\StudentControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\StudentQualificationRepositoryTests.cs" />
+    <Compile Include="Repository\StudentSkillRepositoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
