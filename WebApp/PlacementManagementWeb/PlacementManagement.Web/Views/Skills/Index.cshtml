@@ -5,12 +5,15 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Available Skills</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add Skill
+    </a>
 </p>
-<table class="table table-striped">
+<table class="table table-striped table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.SkillName)
@@ -18,22 +21,23 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.SkillName)
-        </td>
-        <td>
-            <a href=@Url.Action("Edit", new { id = item.SkillId })
-               class="btn btn-info btn-sm">
-                <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-            </a>
-            <a href=@Url.Action("Delete", new { id = item.SkillId })
-               class="btn btn-danger btn-sm">
-                <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
-            </a>
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SkillName)
+            </td>
+            <td>
+                <a href=@Url.Action("Edit", new { id = item.SkillId })
+                   class="btn btn-info btn-sm">
+                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                </a>
+                <a href=@Url.Action("Delete", new { id = item.SkillId })
+                   class="btn btn-danger btn-sm">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
+                </a>
+            </td>
+        </tr>
+    }
 
 </table>

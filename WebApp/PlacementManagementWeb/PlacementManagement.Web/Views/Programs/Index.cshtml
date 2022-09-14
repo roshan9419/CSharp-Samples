@@ -5,12 +5,16 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Available Programs</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add Program
+    </a>
 </p>
-<table class="table table-striped">
+
+<table class="table table-striped table-hover">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.ProgramName)
