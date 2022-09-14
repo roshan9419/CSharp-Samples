@@ -20,7 +20,7 @@ namespace PlacementManagement.Web.Controllers.Tests
 
         public StudentControllerTests()
         {
-            // Assign
+            // Arrange
             var apiService = new APIService("https://localhost:44373/api/");
             var studentRepo = new StudentRepository(apiService);
             var programRepo = new StudentProgramRepository(apiService);

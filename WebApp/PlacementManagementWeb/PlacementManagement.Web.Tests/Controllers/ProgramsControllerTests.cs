@@ -19,7 +19,7 @@ namespace PlacementManagement.Web.Controllers.Tests
 
         public ProgramsControllerTests()
         {
-            // Assign
+            // Arrange
             var apiService = new APIService("https://localhost:44373/api/");
             var programRepo = new ProgramRepository(apiService);
             _controller = new ProgramsController(programRepo);
@@ -39,7 +39,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Create_ShouldReturnViewResult_WithErrorMessage_WhenModelStateIsInvalid()
         {
-            // Assign
+            // Arrange
             var program = new Program { };
 
             // Act
@@ -53,7 +53,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Create_ShouldRedirectToIndex()
         {
-            // Assign
+            // Arrange
             var program = new Program { ProgramName = "Test Program " + DateTime.Now.Millisecond.ToString() };
 
             // Act
@@ -66,7 +66,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Edit_ShouldReturnViewResult_WithErrorMessage_WhenProgramIdIsUnknown()
         {
-            // Assign
+            // Arrange
             var program = new Program { ProgramId = -100, ProgramName = "Test Program" };
 
             // Act

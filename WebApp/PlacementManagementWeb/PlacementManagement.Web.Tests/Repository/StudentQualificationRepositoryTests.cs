@@ -18,7 +18,7 @@ namespace PlacementManagement.Web.Repository.Tests
 
         public StudentQualificationRepositoryTests()
         {
-            // Assign
+            // Arrange
             var apiService = new APIService("https://localhost:44373/api/");
             _qualRepo = new StudentQualificationRepository(apiService);
         }
@@ -37,7 +37,7 @@ namespace PlacementManagement.Web.Repository.Tests
         [TestMethod()]
         public async Task Add_ShouldThrowException_WhenModelStateIsInvalid()
         {
-            // Assign
+            // Arrange
             var studentQual = new StudentQualification { StudentId = _studentId, PassingYear = -2020 };
 
             // Act & Assert
@@ -54,7 +54,7 @@ namespace PlacementManagement.Web.Repository.Tests
         [TestMethod()]
         public async void Update_ShouldThrowException_WhenQualificationIdIsUnknown()
         {
-            // Assign
+            // Arrange
             var studentQual = new StudentQualification
             {
                 StudentId = _studentId,

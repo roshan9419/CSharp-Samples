@@ -19,7 +19,7 @@ namespace PlacementManagement.Web.Controllers.Tests
 
         public SkillsControllerTests()
         {
-            // Assign
+            // Arrange
             var apiService = new APIService("https://localhost:44373/api/");
             var skillRepo = new SkillRepository(apiService);
             _controller = new SkillsController(skillRepo);
@@ -39,7 +39,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Create_ShouldReturnViewResult_WithErrorMessage_WhenModelStateIsInvalid()
         {
-            // Assign
+            // Arrange
             var skill = new Skill { };
 
             // Act
@@ -53,7 +53,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Create_ShouldRedirectToIndex()
         {
-            // Assign
+            // Arrange
             var skill = new Skill { SkillName = "Test Skill " + DateTime.Now.Millisecond.ToString() };
 
             // Act
@@ -66,7 +66,7 @@ namespace PlacementManagement.Web.Controllers.Tests
         [TestMethod()]
         public async Task Edit_ShouldReturnViewResult_WithErrorMessage_WhenSkillIdIsUnknown()
         {
-            // Assign
+            // Arrange
             var skill = new Skill { SkillId = -100, SkillName = "Test Skill" };
 
             // Act
