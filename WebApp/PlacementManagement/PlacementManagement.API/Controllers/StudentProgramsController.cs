@@ -47,7 +47,7 @@ namespace PlacementManagement.API.Controllers
         {
             _logger.Debug("Creating studentProgram: " + JsonConvert.SerializeObject(value));
 
-            if (!ModelState.IsValid)
+            if (value == null || !ModelState.IsValid)
             {
                 _logger.Debug("Bad payload of StudentProgram");
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -72,7 +72,7 @@ namespace PlacementManagement.API.Controllers
         {
             _logger.Debug("Updating studentProgram: " + JsonConvert.SerializeObject(value));
 
-            if (!ModelState.IsValid)
+            if (value == null || !ModelState.IsValid)
             {
                 _logger.Debug("Bad payload of StudentProgram");
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -83,7 +83,12 @@ namespace PlacementManagement.API.Controllers
                 bool success = _programRepo.Update(value);
 
                 if (!success)
-                    throw new Exception("Update not successful");
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            catch (HttpResponseException ex)
+            {
+                _logger.Debug("StudentId or ProgramId not found");
+                throw ex;
             }
             catch (Exception ex)
             {
@@ -103,7 +108,12 @@ namespace PlacementManagement.API.Controllers
                 bool success = _programRepo.Delete(studentId, programId);
 
                 if (!success)
-                    throw new Exception("Delete not successful");
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
+            catch (HttpResponseException ex)
+            {
+                _logger.Debug("StudentId or ProgramId not found");
+                throw ex;
             }
             catch (Exception ex)
             {

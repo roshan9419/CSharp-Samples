@@ -15,25 +15,25 @@ using System.Web.Http;
 namespace PlacementManagement.API.Controllers.Tests
 {
     [TestClass()]
-    public class ProgramsControllerTests
+    public class SkillsControllerTests
     {
-        private readonly ProgramsController _controller;
+        private readonly SkillsController _controller;
         private readonly DatabaseConfig _dbConfig;
-        
-        public ProgramsControllerTests()
+
+        public SkillsControllerTests()
         {
             // Arrange
             _dbConfig = new DatabaseConfig();
             var dbService = new MySqlDBService("Server=127.0.0.1;Database=pms;Uid=root;Pwd=lsq1234;");
-            var programRepo = new ProgramRepository(dbService, _dbConfig);
-            _controller = new ProgramsController(programRepo);
+            var skillRepo = new SkillRepository(dbService, _dbConfig);
+            _controller = new SkillsController(skillRepo);
         }
 
         [TestMethod()]
-        public void GetPrograms_ShouldReturnProgramsList()
+        public void GetSkills_ShouldReturnSkillsList()
         {
             // Arrange
-            _dbConfig.Program.GetAll = "GetPrograms";
+            _dbConfig.Skill.GetAll = "GetSkills";
             var pagination = new Pagination { Page = 1 };
 
             // Act
@@ -45,10 +45,10 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetProgram_WithUnknownProgramId_ShouldReturnNotFound404()
+        public void GetSkill_WithUnknownSkillId_ShouldReturnNotFound404()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
+            _dbConfig.Skill.Get = "GetSkill";
 
             // Act
             Action call = () => _controller.Get(-1);
@@ -59,10 +59,10 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetProgram_WithValidProgramId_ShouldReturnProgram()
+        public void GetSkill_WithValidSkillId_ShouldReturnSkill()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
+            _dbConfig.Skill.Get = "GetSkill";
 
             // Act
             var result = _controller.Get(1);
@@ -72,12 +72,12 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void PutProgram_WithInvalidModelState_ShouldReturnBadRequest400()
+        public void PutSkill_WithInvalidModelState_ShouldReturnBadRequest400()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
-            _dbConfig.Program.Update = "UpdateProgram";
-            var model = new Program { };
+            _dbConfig.Skill.Get = "GetSkill";
+            _dbConfig.Skill.Update = "UpdateSkill";
+            var model = new Skill { };
 
             // Act
             Action call = () => _controller.Put(1, null);
@@ -88,11 +88,11 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void DeleteProgram_WithUnknownProgramId_ShouldReturnNotFound404()
+        public void DeleteSkill_WithUnknownSkillId_ShouldReturnNotFound404()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
-            _dbConfig.Program.Delete = "DeleteProgram";
+            _dbConfig.Skill.Get = "GetSkill";
+            _dbConfig.Skill.Delete = "DeleteSkill";
 
             // Act
             Action call = () => _controller.Delete(-1);

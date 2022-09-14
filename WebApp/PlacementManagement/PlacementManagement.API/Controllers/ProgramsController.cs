@@ -62,7 +62,7 @@ namespace PlacementManagement.API.Controllers
         {
             _logger.Debug("Creating program: " + JsonConvert.SerializeObject(value));
 
-            if (!ModelState.IsValid)
+            if (value == null || !ModelState.IsValid)
             {
                 _logger.Debug("Bad payload of program");
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -89,7 +89,7 @@ namespace PlacementManagement.API.Controllers
 
             try
             {
-                if (!ModelState.IsValid)
+                if (value == null || !ModelState.IsValid)
                 {
                     _logger.Debug("Bad payload of program");
                     throw new HttpResponseException(HttpStatusCode.BadRequest);

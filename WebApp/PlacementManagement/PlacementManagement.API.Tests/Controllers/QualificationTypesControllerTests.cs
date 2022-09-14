@@ -15,25 +15,25 @@ using System.Web.Http;
 namespace PlacementManagement.API.Controllers.Tests
 {
     [TestClass()]
-    public class ProgramsControllerTests
+    public class QualificationTypesControllerTests
     {
-        private readonly ProgramsController _controller;
+        private readonly QualificationTypesController _controller;
         private readonly DatabaseConfig _dbConfig;
-        
-        public ProgramsControllerTests()
+
+        public QualificationTypesControllerTests()
         {
             // Arrange
             _dbConfig = new DatabaseConfig();
             var dbService = new MySqlDBService("Server=127.0.0.1;Database=pms;Uid=root;Pwd=lsq1234;");
-            var programRepo = new ProgramRepository(dbService, _dbConfig);
-            _controller = new ProgramsController(programRepo);
+            var qualRepo = new QualificationTypeRepository(dbService, _dbConfig);
+            _controller = new QualificationTypesController(qualRepo);
         }
 
         [TestMethod()]
-        public void GetPrograms_ShouldReturnProgramsList()
+        public void GetQualificationTypes_ShouldReturnQualificationTypesList()
         {
             // Arrange
-            _dbConfig.Program.GetAll = "GetPrograms";
+            _dbConfig.QualificationType.GetAll = "GetQualificationTypes";
             var pagination = new Pagination { Page = 1 };
 
             // Act
@@ -45,10 +45,10 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetProgram_WithUnknownProgramId_ShouldReturnNotFound404()
+        public void GetQualificationType_WithUnknownQualificationTypeId_ShouldReturnNotFound404()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
+            _dbConfig.QualificationType.Get = "GetQualificationType";
 
             // Act
             Action call = () => _controller.Get(-1);
@@ -59,10 +59,10 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void GetProgram_WithValidProgramId_ShouldReturnProgram()
+        public void GetQualificationType_WithValidQualificationTypeId_ShouldReturnQualificationType()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
+            _dbConfig.QualificationType.Get = "GetQualificationType";
 
             // Act
             var result = _controller.Get(1);
@@ -72,12 +72,12 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void PutProgram_WithInvalidModelState_ShouldReturnBadRequest400()
+        public void PutQualificationType_WithInvalidModelState_ShouldReturnBadRequest400()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
-            _dbConfig.Program.Update = "UpdateProgram";
-            var model = new Program { };
+            _dbConfig.QualificationType.Get = "GetQualificationType";
+            _dbConfig.QualificationType.Update = "UpdateQualificationType";
+            var model = new QualificationType { };
 
             // Act
             Action call = () => _controller.Put(1, null);
@@ -88,11 +88,11 @@ namespace PlacementManagement.API.Controllers.Tests
         }
 
         [TestMethod()]
-        public void DeleteProgram_WithUnknownProgramId_ShouldReturnNotFound404()
+        public void DeleteQualificationType_WithUnknownProgramId_ShouldReturnNotFound404()
         {
             // Arrange
-            _dbConfig.Program.Get = "GetProgram";
-            _dbConfig.Program.Delete = "DeleteProgram";
+            _dbConfig.QualificationType.Get = "GetQualificationType";
+            _dbConfig.QualificationType.Delete = "DeleteQualificationType";
 
             // Act
             Action call = () => _controller.Delete(-1);

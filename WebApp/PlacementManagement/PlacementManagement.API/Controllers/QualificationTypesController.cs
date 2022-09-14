@@ -63,7 +63,7 @@ namespace PlacementManagement.API.Controllers
         {
             _logger.Debug("Creating qualificationType: " + JsonConvert.SerializeObject(value));
 
-            if (!ModelState.IsValid)
+            if (value == null || !ModelState.IsValid)
             {
                 _logger.Debug("Bad payload of qualificationType");
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -91,7 +91,7 @@ namespace PlacementManagement.API.Controllers
 
             try
             {
-                if (!ModelState.IsValid)
+                if (value == null || !ModelState.IsValid)
                 {
                     _logger.Debug("Bad payload of qualificationType");
                     throw new HttpResponseException(HttpStatusCode.BadRequest);
