@@ -212,6 +212,7 @@
     <Compile Include="Repository\StudentQualificationRepository.cs" />
     <Compile Include="Repository\StudentRepository.cs" />
     <Compile Include="Repository\StudentSkillRepository.cs" />
+    <Compile Include="Utils\PasswordGenerator.cs" />
     <Compile Include="Utils\SelectListItemHelper.cs" />
     <Compile Include="ViewModels\StudentProgramViewModel.cs" />
     <Compile Include="ViewModels\StudentQualificationViewModel.cs" />

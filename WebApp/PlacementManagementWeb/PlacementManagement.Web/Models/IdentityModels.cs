@@ -31,7 +31,7 @@ namespace PlacementManagement.Web.Models
 
         public static ApplicationDbContext Create()
         {
-            return new ApplicationDbContext("DefaultConnection");
+            return new ApplicationDbContext("PmsDBConnection");
         }
     }
 }

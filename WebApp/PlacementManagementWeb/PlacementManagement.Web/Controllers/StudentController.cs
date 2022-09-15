@@ -148,7 +148,7 @@ namespace PlacementManagement.Web.Controllers
                 };
 
                 // Create user account
-                string password = GeneratePassword(student);
+                string password = PasswordGenerator.GenerateRandom();
                 var result = await UserManager.CreateAsync(user, password);
 
                 if (result.Succeeded)
@@ -170,6 +170,8 @@ namespace PlacementManagement.Web.Controllers
             {
                 ViewBag.ErrorMessage = ex.Message;
             }
+
+            ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text");
 
             // If we got this far, something failed, redisplay form
             return View(model);
@@ -282,11 +284,6 @@ namespace PlacementManagement.Web.Controllers
             {
                 ModelState.AddModelError("", error);
             }
-        }
-
-        private string GeneratePassword(Student student)
-        {
-            return "123456";
         }
     }
 }
