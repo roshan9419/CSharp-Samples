@@ -32,6 +32,9 @@ namespace PlacementManagement.Web.Controllers
             if (TempData["ErrorMessage"] != null)
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
 
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             try
             {
                 var student = await _studentRepo.GetStudent((int)studentId);
@@ -94,6 +97,8 @@ namespace PlacementManagement.Web.Controllers
                 };
 
                 await _qualRepo.Add(qualification);
+
+                TempData["SuccessMessage"] = "Student qualification added successfully!";
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
             catch (Exception ex)
@@ -157,6 +162,8 @@ namespace PlacementManagement.Web.Controllers
                     };
 
                     await _qualRepo.Update(qualification);
+
+                    TempData["SuccessMessage"] = "Qualification details updated!";
                 }
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
@@ -207,6 +214,8 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 await _qualRepo.Remove(model.StudentId, model.QualificationTypeId);
+
+                TempData["SuccessMessage"] = "Student qualification has been removed successfully!";
                 return RedirectToAction("Index", new { studentId = model.StudentId });
             }
             catch (Exception ex)

@@ -35,6 +35,9 @@ namespace PlacementManagement.Web.Controllers
             if (TempData["ErrorMessage"] != null)
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
 
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             return View(qualTypes);
         }
 
@@ -54,6 +57,8 @@ namespace PlacementManagement.Web.Controllers
                     throw new Exception("Invalid details");
 
                 await _qualRepo.Create(qualType);
+
+                TempData["SuccessMessage"] = "New qualification added successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -86,8 +91,10 @@ namespace PlacementManagement.Web.Controllers
             {
                 if (!ModelState.IsValid)
                     throw new Exception("Invalid details");
-                
+
                 await _qualRepo.Update(id, qualType);
+
+                TempData["SuccessMessage"] = "Qualification details updated!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -119,6 +126,8 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 await _qualRepo.Delete(id);
+
+                TempData["SuccessMessage"] = $"{qualType.Name} deleted successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

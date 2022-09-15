@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<PlacementManagement.Models.Student>
 
 <div>
-    <table id="studentTable" class="table table-striped w-100">
+    <table id="studentTable" class="table table-striped table-hover w-100">
         <thead>
             <tr>
                 <th>StudentId</th>
@@ -21,7 +21,7 @@
                     <td>@item.FirstName @item.LastName</td>
                     <td>@item.Email</td>
                     <td>@item.Gender</td>
-                    <td>@item.PhoneNumber</td>
+                    <td>+91 @item.PhoneNumber</td>
                 </tr>
             }
         </tbody>
@@ -36,7 +36,7 @@
 
         @if (ViewBag.NextPage != null)
         {
-            <button class="btn btn-primary btn-sm" onclick="switchPage(@ViewBag.NextPage)">Next <i class="fa fa-angle-right" aria-hidden="true"></i></button>
+            <button class="btn btn-primary btn-sm ml-2" onclick="switchPage(@ViewBag.NextPage)">Next <i class="fa fa-angle-right" aria-hidden="true"></i></button>
         }
     </div>
 </div>

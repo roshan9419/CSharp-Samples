@@ -33,6 +33,9 @@ namespace PlacementManagement.Web.Controllers
             if (TempData["ErrorMessage"] != null)
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
 
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             return View(skills);
         }
 
@@ -52,6 +55,8 @@ namespace PlacementManagement.Web.Controllers
                     throw new Exception("Invalid details");
 
                 await _skillRepo.Create(skill);
+
+                TempData["SuccessMessage"] = "New skill added successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -86,6 +91,8 @@ namespace PlacementManagement.Web.Controllers
                     throw new Exception("Invalid details");
 
                 await _skillRepo.Update(id, skill);
+
+                TempData["SuccessMessage"] = "Skill details updated!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -117,6 +124,8 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 await _skillRepo.Delete(id);
+
+                TempData["SuccessMessage"] = $"{skill.SkillName} has been removed successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

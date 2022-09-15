@@ -34,6 +34,9 @@ namespace PlacementManagement.Web.Controllers
             if (TempData["ErrorMessage"] != null)
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
 
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             var skills = new List<StudentSkillViewModel>();
 
             try
@@ -94,6 +97,8 @@ namespace PlacementManagement.Web.Controllers
                     };
 
                     await _skillsRepo.Add(studentSkill);
+
+                    TempData["SuccessMessage"] = "New skill has been added successfully!";
                 }
                 return RedirectToAction("Index");
             }
@@ -152,6 +157,8 @@ namespace PlacementManagement.Web.Controllers
                     };
 
                     await _skillsRepo.Update(studentSkill);
+
+                    TempData["SuccessMessage"] = "Skill details updated!";
                 }
                 return RedirectToAction("Index");
             }
@@ -200,6 +207,8 @@ namespace PlacementManagement.Web.Controllers
             {
                 var student = await GetStudent();
                 await _skillsRepo.Remove(student.StudentId, model.SkillId);
+
+                TempData["SuccessMessage"] = $"{model.SkillName} removed successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

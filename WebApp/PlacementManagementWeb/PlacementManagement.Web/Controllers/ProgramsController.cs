@@ -35,6 +35,9 @@ namespace PlacementManagement.Web.Controllers
             if (TempData["ErrorMessage"] != null)
                 ViewBag.ErrorMessage = TempData["ErrorMessage"];
 
+            if (TempData["SuccessMessage"] != null)
+                ViewBag.SuccessMessage = TempData["SuccessMessage"];
+
             return View(programs);
         }
 
@@ -54,6 +57,8 @@ namespace PlacementManagement.Web.Controllers
                     throw new Exception("Invalid details");
 
                 await _programRepo.Create(program);
+
+                TempData["SuccessMessage"] = "New program added successfully!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -88,6 +93,8 @@ namespace PlacementManagement.Web.Controllers
                     throw new Exception("Invalid details");
 
                 await _programRepo.Update(id, program);
+
+                TempData["SuccessMessage"] = "Program details updated!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -119,6 +126,8 @@ namespace PlacementManagement.Web.Controllers
             try
             {
                 await _programRepo.Delete(id);
+
+                TempData["SuccessMessage"] = $"{program.ProgramName} deleted successfuly!";
                 return RedirectToAction("Index");
             }
             catch (Exception ex)

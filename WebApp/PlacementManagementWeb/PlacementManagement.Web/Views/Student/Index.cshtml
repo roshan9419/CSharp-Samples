@@ -35,7 +35,8 @@
                 @Html.ActionLink(item.Student.StudentId.ToString(), "Details", new { studentId = item.Student.StudentId })
             </td>
             <td>
-                @Html.DisplayName(item.Student.FirstName) @Html.DisplayName(item.Student.LastName)
+                @Html.DisplayName(item.Student.FirstName) @item.Student.LastName
+
             </td>
             <td>
                 @item.Student.Email
@@ -44,7 +45,7 @@
                 @Html.DisplayFor(model => item.Student.Gender)
             </td>
             <td>
-                @Html.DisplayName(item.Student.PhoneNumber)
+                +91 @Html.DisplayName(item.Student.PhoneNumber)
             </td>
             <td>
                 @Html.DisplayName(item.Student.RegistrationDate.ToString())

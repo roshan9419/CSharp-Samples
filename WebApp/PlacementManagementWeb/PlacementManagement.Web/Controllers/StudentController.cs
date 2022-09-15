@@ -159,8 +159,8 @@ namespace PlacementManagement.Web.Controllers
                     // Create Student
                     int studentId = await _studentRepo.CreateStudent(student);
 
-                    TempData["SuccessMessage"] = "Successfully registered student! " +
-                                          $"Credentials - Username: {studentId}, Password: {password}";
+                    TempData["SuccessMessage"] = "Student successfully registered! " +
+                                          $"( Credentials - Username: {studentId}, Password: {password} )";
 
                     return RedirectToAction("Details", new { studentId });
                 }
@@ -243,6 +243,8 @@ namespace PlacementManagement.Web.Controllers
                 };
 
                 await _studentRepo.UpdateStudent(studentId, student);
+
+                TempData["SuccessMessage"] = "Student details updated!";
                 return RedirectToAction("Details", new { studentId = studentId });
             }
             catch (Exception ex)

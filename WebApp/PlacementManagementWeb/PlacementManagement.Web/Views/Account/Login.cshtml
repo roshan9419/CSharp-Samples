@@ -8,8 +8,9 @@
     <div class="col-md-8 d-flex flex-column align-items-center">
         <h2 class="text-center mb-3 display-4 text-light">PMS</h2>
         <h3 class="mb-5 text-light">Placement Management System</h3>
-        <section id="loginForm" class="card shadow p-4" style="width: fit-content">
-            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { style = "width: fit-content; min-width: 400px", role = "form" }))
+        <section id="loginForm" class="card shadow p-4" style = "width: 100%; max-width: 400px;">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, 
+                new {  role = "form" }))
             {
                 @Html.AntiForgeryToken()
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })

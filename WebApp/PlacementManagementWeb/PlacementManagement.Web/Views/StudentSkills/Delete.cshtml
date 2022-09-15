@@ -5,8 +5,6 @@
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
 }
 
-<h2>Delete</h2>
-
 <h3>Are you sure you want to delete this Skill?</h3>
 <div>
     <hr />
@@ -40,6 +38,8 @@
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.SkillId)
+        @Html.HiddenFor(model => model.SkillName)
+
         <div class="form-actions no-color">
             <input type="submit" value="Delete Skill" class="btn btn-danger" />
         </div>
