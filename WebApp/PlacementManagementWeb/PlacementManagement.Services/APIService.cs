@@ -15,6 +15,10 @@ namespace PlacementManagement.Services
     {
         private HttpClient _client;
 
+        /// <summary>
+        /// Initializes the new instance of APIService class
+        /// </summary>
+        /// <param name="baseUrl">Base url or starting url path where requests will be made</param>
         public APIService(string baseUrl)
         {
             _client = new HttpClient();
@@ -24,6 +28,7 @@ namespace PlacementManagement.Services
         /// <summary>
         /// Makes GET request on provided endPoint to retrieve many resource objects. Use this to fetch many resource objects.
         /// </summary>
+        /// <param name="endPoint">Endpoint url path</param>
         /// <returns>Returns the list of resource objects</returns>
         /// <exception cref="APIException"></exception>
         public async Task<List<T>> GetMany<T>(string endPoint)
@@ -43,6 +48,7 @@ namespace PlacementManagement.Services
         /// <summary>
         /// Makes GET request on provided endPoint to retrieve single resource. Use this to fetch single resource.
         /// </summary>
+        /// <param name="endPoint">Endpoint url path</param>
         /// <returns>Returns a single resource object</returns>
         /// <exception cref="APIException"></exception>
         public async Task<T> Get<T>(string endPoint)
@@ -62,6 +68,7 @@ namespace PlacementManagement.Services
         /// <summary>
         /// Makes POST request on provided endPoint with dataObj body. Use this to create a new resource.
         /// </summary>
+        /// <param name="endPoint">Endpoint url path</param>
         /// <returns>Returns the response object received</returns>
         /// <exception cref="APIException"></exception>
         public async Task<object> Create<T>(string endPoint, T dataObj)
@@ -80,6 +87,7 @@ namespace PlacementManagement.Services
         /// <summary>
         /// Makes PUT request on provided endPoint with dataObj body. Use this to update an existing resource.
         /// </summary>
+        /// <param name="endPoint">Endpoint url path</param>
         /// <exception cref="APIException"></exception>
         public async Task Update<T>(string endPoint, T dataObj)
         {
@@ -92,6 +100,7 @@ namespace PlacementManagement.Services
         /// <summary>
         /// Makes DELETE request on provided endPoint. Use this to delete an existing resource.
         /// </summary>
+        /// <param name="endPoint">Endpoint url path</param>
         /// <exception cref="APIException"></exception>
         public async Task Delete(string endPoint)
         {

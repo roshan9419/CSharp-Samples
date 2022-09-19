@@ -29,6 +29,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Profile
+        /// <summary>
+        /// This will fetch all the student details like Programs, Qualifications and loads the profile page
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();

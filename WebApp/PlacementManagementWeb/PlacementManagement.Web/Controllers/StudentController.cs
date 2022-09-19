@@ -49,6 +49,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Student
+        /// <summary>
+        /// Fetches the students page wise and loads the list page
+        /// </summary>
+        /// <param name="page">Page number</param>
+        /// <param name="limit">Per page limit</param>
         public async Task<ActionResult> Index(int page = 1, int limit = 10)
         {
             var studentVMList = new List<StudentDetailViewModel>();
@@ -75,6 +80,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Student/Details
+        /// <summary>
+        /// Fetches the details like studentProgram, studentQualifications, studentskills and loads the details page
+        /// </summary>
+        /// <param name="studentId">StudentId of student</param>
         public async Task<ActionResult> Details(int? studentId = null)
         {
             if (TempData["SuccessMessage"] != null)
@@ -118,6 +127,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Student/Register
+        /// <summary>
+        /// This will register a new student and loads back the details page
+        /// </summary>
+        /// <param name="model">Student StudentRegisterViewModel object</param>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(StudentRegisterViewModel model)
@@ -178,6 +191,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Student/Update/5
+        /// <summary>
+        /// This will loads the details of existing student and loads the update form
+        /// </summary>
+        /// <param name="studentId">StudentId of student to be updated</param>
         public async Task<ActionResult> Update(int? studentId = null)
         {
             ViewBag.States = new SelectList(SelectListItemHelper.GetIndianStates(), "Value", "Text");
@@ -216,6 +233,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Student/Update/5
+        /// <summary>
+        /// This will update the details of existing student and redirects to the details page
+        /// </summary>
+        /// <param name="studentId">StudentId of student to be updated</param>
+        /// <param name="model">Updated StudentRegisterViewModel model</param>
         [HttpPost]
         public async Task<ActionResult> Update(int studentId, StudentRegisterViewModel model)
         {
@@ -263,6 +285,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Student/Delete/5
+        /// <summary>
+        /// This will delete the existing student and redirects back to the list page
+        /// </summary>
+        /// <param name="studentId">StudentId of student to be deleted</param>
+        /// <param name="model">Optional StudentRegisterViewModel model</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int studentId, StudentRegisterViewModel model)
         {

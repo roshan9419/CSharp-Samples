@@ -29,6 +29,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: StudentSkill
+        /// <summary>
+        /// This fetches the all the skills of the logged in student and loads the list page
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             if (TempData["ErrorMessage"] != null)
@@ -80,6 +83,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentSkill/Create
+        /// <summary>
+        /// This will add a new skill in a student account and redirects back to the list page
+        /// </summary>
+        /// <param name="model">StudentSkillViewModel object</param>
         [HttpPost]
         public async Task<ActionResult> Create(StudentSkillViewModel model)
         {
@@ -140,6 +147,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentSkill/Edit/5
+        /// <summary>
+        /// This will update the skill details and redirects back to the list
+        /// </summary>
+        /// <param name="model">Updated StudentSkillViewModel object</param>
         [HttpPost]
         public async Task<ActionResult> Edit(StudentSkillViewModel model)
         {
@@ -200,6 +211,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentSkill/Delete/5
+        /// <summary>
+        /// This will remove the existing skill from the student
+        /// </summary>
+        /// <param name="skillId">SkillId to be removed (optional)</param>
+        /// <param name="model">StudentSkillViewModel object</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int skillId, StudentSkillViewModel model)
         {

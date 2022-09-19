@@ -24,6 +24,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: StudentQualifications?studentId=1
+        /// <summary>
+        /// This fetches all the studentQualifications and loads the list page
+        /// </summary>
+        /// <param name="studentId">StudentId for which qualifications are mapped</param>
         public async Task<ActionResult> Index(int? studentId)
         {
             if (studentId == null)
@@ -80,6 +84,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentQualifications/Create
+        /// <summary>
+        /// This will add a new StudentQualification of a student and redirects to the list page
+        /// </summary>
+        /// <param name="model">StudentQualificationViewModel model to be created</param>
         [HttpPost]
         public async Task<ActionResult> Create(StudentQualificationViewModel model)
         {
@@ -146,6 +154,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentQualifications/Edit/5
+        /// <summary>
+        /// This will update the StudentQualification of a student and redirects to the list page
+        /// </summary>
+        /// <param name="model">Updated StudentQualificationViewModel object</param>
         [HttpPost]
         public async Task<ActionResult> Edit(StudentQualificationViewModel model)
         {
@@ -208,6 +220,12 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentQualifications/Delete/5
+        /// <summary>
+        /// This will remove qualification from the student and redirects to the list page
+        /// </summary>
+        /// <param name="studentId">StudentId of the student (optional)</param>
+        /// <param name="qualificationTypeId">QualificationTypeId of the qualification (optional)</param>
+        /// <param name="model">StudentQualificationViewModel object</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int studentId, int qualificationTypeId, StudentQualificationViewModel model)
         {

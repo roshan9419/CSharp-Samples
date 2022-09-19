@@ -19,6 +19,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Qualifications
+        /// <summary>
+        /// This will fetch all the qualifications and loads the list page
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             var qualTypes = new List<QualificationType>();
@@ -48,6 +51,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Qualifications/Create
+        /// <summary>
+        /// This will create a new QualificationType and redirects back to list page
+        /// </summary>
+        /// <param name="qualType">Details of QualificationType model</param>
         [HttpPost]
         public async Task<ActionResult> Create(QualificationType qualType)
         {
@@ -84,6 +91,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Qualifications/Edit/5
+        /// <summary>
+        /// This will update the existing qualificationType and redirects back to list page
+        /// </summary>
+        /// <param name="id">Id of the qualificationType</param>
+        /// <param name="qualType">Updated qualificationType model</param>
         [HttpPost]
         public async Task<ActionResult> Edit(int id, QualificationType qualType)
         {
@@ -120,6 +132,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Qualifications/Delete/5
+        /// <summary>
+        /// This will delete the existing QualificationType and redirects back to list page
+        /// </summary>
+        /// <param name="id">Id of qulaificationtype</param>
+        /// <param name="qualType">Optional qualificationtype model</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int id, QualificationType qualType)
         {

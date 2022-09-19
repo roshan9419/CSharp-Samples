@@ -24,6 +24,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: StudentPrograms?studentId=1
+        /// <summary>
+        /// This will loads the StudentPrograms details page
+        /// </summary>
+        /// <param name="studentId">StudentId of the student</param>
         public async Task<ActionResult> Index(int? studentId)
         {
             if (studentId == null)
@@ -80,6 +84,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentPrograms/Create
+        /// <summary>
+        /// This will add new StudentProgram of a student and redirects back to list page
+        /// </summary>
+        /// <param name="studentId">StudentId of the student</param>
         [HttpPost]
         public async Task<ActionResult> Create(StudentProgramViewModel model)
         {
@@ -149,6 +157,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentPrograms/Edit/5
+        /// <summary>
+        /// This will update the details of StudentProgram and redirects back to list page
+        /// </summary>
+        /// <param name="model">StudentProgramViewModel model object</param>
         [HttpPost]
         public async Task<ActionResult> Edit(StudentProgramViewModel model)
         {
@@ -214,6 +226,12 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: StudentPrograms/Delete/5
+        /// <summary>
+        /// This will remove the studentProgram from a student and redirects back to the list page
+        /// </summary>
+        /// <param name="studentId">StudentId of a student (optional)</param>
+        /// <param name="programId">ProgramId of a program (optional)</param>
+        /// <param name="model">StudentProgramViewModel model object</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int studentId, int programId, StudentProgramViewModel model)
         {

@@ -27,6 +27,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Search
+        /// <summary>
+        /// This will fetch all the programs, qualifications and skills for the filter ui page
+        /// </summary>
         public ActionResult Index()
         {
             List<SelectListItem> genders = new List<SelectListItem>
@@ -55,6 +58,11 @@ namespace PlacementManagement.Web.Controllers
 
             return View();
         }
+
+        /// <summary>
+        /// Fetches the students based on the filter
+        /// </summary>
+        /// <param name="filter">StudentFilter object containing applied filters</param>
         public async Task<PartialViewResult> SearchStudents(StudentFilter filter)
         {
             List<Student> students = await _studentRepo.GetFilteredStudents(filter);

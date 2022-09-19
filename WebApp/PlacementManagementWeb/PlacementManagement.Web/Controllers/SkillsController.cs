@@ -17,6 +17,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Skills
+        /// <summary>
+        /// Fetches all the skills and loads the list page
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             var skills = new List<Skill>();
@@ -46,6 +49,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Skills/Create
+        /// <summary>
+        /// This will create a new Skill and redirects back to the list page
+        /// </summary>
+        /// <param name="skill">Skill model object</param>
         [HttpPost]
         public async Task<ActionResult> Create(Skill skill)
         {
@@ -82,6 +89,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Skills/Edit/5
+        /// <summary>
+        /// This will update the existing skill and redirects back to the list page
+        /// </summary>
+        /// <param name="id">Id of the skill</param>
+        /// <param name="skill">Updated skill model object</param>
         [HttpPost]
         public async Task<ActionResult> Edit(int id, Skill skill)
         {
@@ -118,6 +130,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Skills/Delete/5
+        /// <summary>
+        /// This will delete the existing skill and redirects back to the list page
+        /// </summary>
+        /// <param name="id">Id of the skill</param>
+        /// <param name="skill">Optional skill object</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int id, Skill skill)
         {

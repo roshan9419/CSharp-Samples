@@ -19,6 +19,9 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // GET: Programs
+        /// <summary>
+        /// This will fetch all the programs and loads the page
+        /// </summary>
         public async Task<ActionResult> Index()
         {
             var programs = new List<Program>();
@@ -48,6 +51,10 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Programs/Create
+        /// <summary>
+        /// This will create a new Program and redirects back to list page
+        /// </summary>
+        /// <param name="program">Details of the new program</param>
         [HttpPost]
         public async Task<ActionResult> Create(Program program)
         {
@@ -84,6 +91,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Programs/Edit/5
+        /// <summary>
+        /// This will update the details of existing program and redirects back to list page
+        /// </summary>
+        /// <param name="id">Id of the program</param>
+        /// <param name="program">Update program object</param>
         [HttpPost]
         public async Task<ActionResult> Edit(int id, Program program)
         {
@@ -120,6 +132,11 @@ namespace PlacementManagement.Web.Controllers
         }
 
         // POST: Programs/Delete/5
+        /// <summary>
+        /// This will delete the existing program and redirects back to list page
+        /// </summary>
+        /// <param name="id">Id of the program</param>
+        /// <param name="program">Optional program</param>
         [HttpPost]
         public async Task<ActionResult> Delete(int id, Program program)
         {
