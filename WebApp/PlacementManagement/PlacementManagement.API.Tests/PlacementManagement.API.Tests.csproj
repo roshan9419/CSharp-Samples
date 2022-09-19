@@ -70,6 +70,8 @@
     <Compile Include="Controllers\QualificationTypesControllerTests.cs" />
     <Compile Include="Controllers\SkillsControllerTests.cs" />
     <Compile Include="Controllers\StudentProgramsControllerTests.cs" />
+    <Compile Include="Controllers\StudentQualificationsControllerTests.cs" />
+    <Compile Include="Controllers\StudentsControllerTests.cs" />
     <Compile Include="Controllers\StudentSkillsControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
