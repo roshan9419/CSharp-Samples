@@ -25,6 +25,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list all qualification types
         /// </summary>
+        /// <param name="pagination">Pagination object containing Page, Limit values</param>
+        /// <returns>Returns list of QualificationTypes</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<QualificationType> Get([FromUri] Pagination pagination)
         {
             try
@@ -42,7 +45,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will provide QualificationType details for id
         /// </summary>
+        /// <param name="id">Id of QualificationTypeId</param>
         /// <returns>Returns the QualificationType</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public QualificationType Get(int id)
         {
             QualificationType item = _qualTypeRepo.Get(id);
@@ -59,6 +64,8 @@ namespace PlacementManagement.API.Controllers
         /// This will create new QualificationType
         /// </summary>
         /// <returns>Returns the newly created id</returns>
+        /// <param name="value">QualificationType model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] QualificationType value)
         {
             _logger.Debug("Creating qualificationType: " + JsonConvert.SerializeObject(value));
@@ -85,6 +92,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the QualificationType for id
         /// </summary>
+        /// <param name="id">Id of qualificationTypeId to be updated</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] QualificationType value)
         {
             _logger.Debug("Updating qualificationType: " + JsonConvert.SerializeObject(value));
@@ -123,6 +132,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the QualificationType of id
         /// </summary>
+        /// <param name="id">Id of qualificationTypeId to be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int id)
         {
             try

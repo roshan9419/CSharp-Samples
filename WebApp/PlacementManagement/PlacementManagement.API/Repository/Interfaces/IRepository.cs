@@ -3,6 +3,9 @@ using PlacementManagement.API.Models;
 
 namespace PlacementManagement.API.Repository
 {
+    /// <summary>
+    /// Repository Interface for basic CRUD operations
+    /// </summary>
     public interface IRepository<TEntity> where TEntity : class
     {
         /// <summary>

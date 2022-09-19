@@ -25,7 +25,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list StudentQualifications of studentId
         /// </summary>
+        /// <param name="studentId">StudentId for which the qualificatoins are mapped</param>
         /// <returns>Returns the list of StudentQualification</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<StudentQualification> Get(int studentId)
         {
             try
@@ -43,6 +45,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create new StudentQualification of studentId
         /// </summary>
+        /// <param name="value">StudentQualification model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Post([FromBody]StudentQualification value)
         {
             _logger.Debug("Creating studentQualification: " + JsonConvert.SerializeObject(value));
@@ -68,9 +72,16 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the existing qualification details of studentId and qualificationTypeId
         /// </summary>
+        /// <param name="studentId">StudentId for which this qualification is mapped</param>
+        /// <param name="qualificationTypeId">QualificationTypeId of qualification to be updated</param>
+        /// <param name="value">StudentQualification model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int studentId, int qualificationTypeId, [FromBody]StudentQualification value)
         {
             _logger.Debug("Updating studentQualification: " + JsonConvert.SerializeObject(value));
+
+            value.StudentId = studentId;
+            value.QualificationTypeId = qualificationTypeId;
 
             if (value == null || !ModelState.IsValid)
             {
@@ -101,6 +112,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the StudentQualification of studentId and qualificationTypeId
         /// </summary>
+        /// <param name="studentId">StudentId for which this qualification is mapped</param>
+        /// <param name="qualificationTypeId">QualificationTypeId of qualification to be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int studentId, int qualificationTypeId)
         {
             try

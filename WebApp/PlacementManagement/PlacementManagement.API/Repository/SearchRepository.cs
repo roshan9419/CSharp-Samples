@@ -53,7 +53,7 @@ namespace PlacementManagement.API.Repository
 
             query += $" GROUP BY S.StudentId LIMIT {offset},{limit};";
 
-            return ExecuteQuery(query, null);
+            return ExecuteQuery(query);
         }
 
         private string AddStudentFilter(string query, StudentFilter filter)

@@ -25,7 +25,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list StudentSkills of studentId
         /// </summary>
+        /// <param name="studentId">StudentId for which skills are mapped</param>
         /// <returns>Returns the list of StudentSkill</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<StudentSkill> Get(int studentId)
         {
             try
@@ -43,6 +45,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create new StudentSkill of studentId
         /// </summary>
+        /// <param name="value">StudentSkill model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Post([FromBody] StudentSkill value)
         {
             _logger.Debug("Creating studentSkill: " + JsonConvert.SerializeObject(value));
@@ -68,9 +72,16 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the existing skill details of studentId and skillId
         /// </summary>
+        /// <param name="studentId">StudentId for which this skill is mapped</param>
+        /// <param name="skillId">SkillId of skilll to be updated</param>
+        /// <param name="value">StudentSkill model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int studentId, int skillId, [FromBody] StudentSkill value)
         {
             _logger.Debug("Updating studentSkill: " + JsonConvert.SerializeObject(value));
+
+            value.StudentId = studentId;
+            value.SkillId = skillId;
 
             if (value == null || !ModelState.IsValid)
             {
@@ -101,6 +112,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the StudentQualification of studentId and skillId
         /// </summary>
+        /// <param name="studentId">StudentId for which this skill is mapped</param>
+        /// <param name="skillId">SkillId of skilll to be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int studentId, int skillId)
         {
             try

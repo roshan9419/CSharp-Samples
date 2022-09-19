@@ -26,6 +26,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list the students in pages
         /// </summary>
+        /// <param name="stdPagination">StudentPagination object containing Page, Limit or UserId</param>
+        /// <returns>Returns list of students</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<Student> Get([FromUri] StudentPagination stdPagination)
         {
             Pagination pagination = new Pagination
@@ -50,6 +53,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will return the student details for id
         /// </summary>
+        /// <param name="id">Id of the Student</param>
+        /// <returns>Returns the Student object</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public Student Get(int id)
         {
             Student student = _studentRepo.Get(id);
@@ -65,6 +71,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create a new student and returns the studentId
         /// </summary>
+        /// <param name="value">Student model object</param>
+        /// <returns>Returns the StudentId of created student</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Student value)
         {
             _logger.Debug("Creating student: " + JsonConvert.SerializeObject(value));
@@ -90,6 +99,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the existing student for id
         /// </summary>
+        /// <param name="id">Id of the student to be updated</param>
+        /// <param name="value">Student model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Student value)
         {
             _logger.Debug("Updating student: " + JsonConvert.SerializeObject(value));
@@ -127,6 +139,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the existing student for id
         /// </summary>
+        /// <param name="id">Id of the student ot be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int id)
         {
             try

@@ -8,6 +8,9 @@ namespace PlacementManagement.API.Controllers
 {
     public class HomeController : Controller
     {
+        /// <summary>
+        /// Home Page of API which contains Documentation Link
+        /// </summary>
         public ActionResult Index()
         {
             return View();

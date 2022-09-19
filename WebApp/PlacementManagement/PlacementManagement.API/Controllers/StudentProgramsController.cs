@@ -25,7 +25,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list StudentPrograms of studentId
         /// </summary>
+        /// <param name="studentId">StudentId for which the programs are mapped</param>
         /// <returns>Returns the list of StudentProgram</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<StudentProgram> Get(int studentId)
         {
             try
@@ -43,6 +45,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create new StudentProgram of studentId
         /// </summary>
+        /// <param name="value">StudentProgram model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Post([FromBody] StudentProgram value)
         {
             _logger.Debug("Creating studentProgram: " + JsonConvert.SerializeObject(value));
@@ -68,9 +72,16 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the existing program details of studentId and programId
         /// </summary>
+        /// <param name="studentId">StudentId for which this program is mapped</param>
+        /// <param name="programId">ProgramId of program to be updated</param>
+        /// <param name="value">StudentQualification model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int studentId, int programId, [FromBody] StudentProgram value)
         {
             _logger.Debug("Updating studentProgram: " + JsonConvert.SerializeObject(value));
+
+            value.StudentId = studentId;
+            value.ProgramId = programId;
 
             if (value == null || !ModelState.IsValid)
             {
@@ -101,6 +112,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the StudentProgram of studentId and programId
         /// </summary>
+        /// <param name="studentId">StudentId for which this program is mapped</param>
+        /// <param name="programId">ProgramId of program to be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int studentId, int programId)
         {
             try

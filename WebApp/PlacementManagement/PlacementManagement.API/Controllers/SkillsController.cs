@@ -24,6 +24,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list all the Skills
         /// </summary>
+        /// <param name="pagination">Pagination object containing Page, Limit values</param>
+        /// <returns>Returns list of Skills</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<Skill> Get([FromUri] Pagination pagination)
         {
             try
@@ -42,6 +45,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will returns the skill for id
         /// </summary>
+        /// <param name="id">Id of skill</param>
+        /// <returns>Returns Skill object</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public Skill Get(int id)
         {
             Skill skill = _skillsRepo.Get(id);
@@ -57,6 +63,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create new skill
         /// </summary>
+        /// <param name="value">Skill model object</param>
+        /// <returns>Returns the id of created skill</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Skill value)
         {
             _logger.Debug("Creating skill: " + JsonConvert.SerializeObject(value));
@@ -82,6 +91,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the skill for id
         /// </summary>
+        /// <param name="id">Id to skill to be updated</param>
+        /// <param name="value">Skill model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Skill value)
         {
             _logger.Debug("Updating skill: " + JsonConvert.SerializeObject(value));
@@ -119,7 +131,7 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the skill for id
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="id">Id of skill to be deleted</param>
         /// <exception cref="HttpResponseException"></exception>
         public void Delete(int id)
         {

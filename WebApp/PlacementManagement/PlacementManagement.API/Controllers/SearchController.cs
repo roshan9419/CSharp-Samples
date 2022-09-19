@@ -25,7 +25,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will list all the students matching the provided filter
         /// </summary>
+        /// <param name="filter">StudentFilter object</param>
         /// <returns>Returns the list of Student</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public List<Student> Post([FromBody] StudentFilter filter)
         {
             _logger.Debug("Applied StudentFilter: " + JsonConvert.SerializeObject(filter));

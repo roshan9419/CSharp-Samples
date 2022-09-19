@@ -20,10 +20,13 @@ namespace PlacementManagement.API.Controllers
             _programsRepo = programsRepo;
         }
 
-        // GET: api/Programs
+        /// GET: api/Programs
         /// <summary>
         /// This will list all programs
         /// </summary>
+        /// <param name="pagination">Pagination object containing Page, Limit values</param>
+        /// <returns>Returns list of Program</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public IEnumerable<Program> Get([FromUri] Pagination pagination)
         {
             try
@@ -32,6 +35,7 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
+
                 _logger.Error("Failed to get programs", ex);
                 throw new HttpResponseException(HttpStatusCode.InternalServerError);
             }
@@ -41,7 +45,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will provide program details for id
         /// </summary>
-        /// <returns>Returns the program</returns>
+        /// <param name="id">Id of the Program</param>
+        /// <returns>Returns the Program</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public Program Get(int id)
         {
             Program program = _programsRepo.Get(id);
@@ -57,7 +63,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will create program for provided body
         /// </summary>
+        /// <param name="value">Program model object</param>
         /// <returns>Returns the created program id</returns>
+        /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Program value)
         {
             _logger.Debug("Creating program: " + JsonConvert.SerializeObject(value));
@@ -83,6 +91,9 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will update the program details for id
         /// </summary>
+        /// <param name="id">Id of Program to be updated</param>
+        /// <param name="value">Program model object</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Program value)
         {
             _logger.Debug("Updating program: " + JsonConvert.SerializeObject(value));
@@ -120,6 +131,8 @@ namespace PlacementManagement.API.Controllers
         /// <summary>
         /// This will delete the program for id
         /// </summary>
+        /// <param name="id">Id of program to be deleted</param>
+        /// <exception cref="HttpResponseException"></exception>
         public void Delete(int id)
         {
             try
