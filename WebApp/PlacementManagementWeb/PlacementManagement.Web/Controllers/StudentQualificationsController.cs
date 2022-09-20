@@ -93,7 +93,7 @@ namespace PlacementManagement.Web.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                if (!ModelState.IsValid)
                     throw new Exception("Invalid student qualification details");
 
                 var qualification = new StudentQualification

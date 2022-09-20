@@ -278,33 +278,6 @@ namespace PlacementManagement.Web.Controllers
             }
         }
 
-        // GET: Student/Delete/5
-        public ActionResult Delete(int studentId)
-        {
-            return View();
-        }
-
-        // POST: Student/Delete/5
-        /// <summary>
-        /// This will delete the existing student and redirects back to the list page
-        /// </summary>
-        /// <param name="studentId">StudentId of student to be deleted</param>
-        /// <param name="model">Optional StudentRegisterViewModel model</param>
-        [HttpPost]
-        public async Task<ActionResult> Delete(int studentId, StudentRegisterViewModel model)
-        {
-            try
-            {
-                await _studentRepo.DeleteStudent(studentId);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                ViewBag.ErrorMessage = ex.Message;
-                return View(model);
-            }
-        }
-
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)
