@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -36,8 +37,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to get qualifications", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = "Failed to get qualifications";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -53,8 +55,9 @@ namespace PlacementManagement.API.Controllers
             QualificationType item = _qualTypeRepo.Get(id);
             if (item == null)
             {
-                _logger.Debug($"QualificationType not found for id: {id}");
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                string message = $"QualificationType not found for id: {id}";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.NotFound, message));
             }
             return item;
         }
@@ -68,12 +71,14 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] QualificationType value)
         {
-            _logger.Debug("Creating qualificationType: " + JsonConvert.SerializeObject(value));
+            string message = "Creating qualificationType: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of qualificationType");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of qualificationType";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -82,8 +87,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to create qualificationType", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to create qualificationType";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
 
         }
@@ -96,14 +102,16 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] QualificationType value)
         {
-            _logger.Debug("Updating qualificationType: " + JsonConvert.SerializeObject(value));
+            string message = "Updating qualificationType: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             try
             {
                 if (value == null || !ModelState.IsValid)
                 {
-                    _logger.Debug("Bad payload of qualificationType");
-                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                    message = "Bad payload of qualificationType";
+                    _logger.Debug(message);
+                    throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
                 }
 
                 QualificationType item = Get(id);
@@ -122,8 +130,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to update qualificationType: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = $"Failed to update qualificationType: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
 
         }
@@ -154,8 +163,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to delete qualificationType: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = $"Failed to delete qualificationType: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
     }

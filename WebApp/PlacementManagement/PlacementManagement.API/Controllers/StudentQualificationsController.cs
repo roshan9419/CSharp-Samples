@@ -1,6 +1,7 @@
 ﻿using log4net;
 using Newtonsoft.Json;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace PlacementManagement.API.Controllers
     {
         private readonly ILog _logger = LogHelper.GetLogger();
         private readonly IStudentRepository<StudentQualification> _stdQualRepo;
-        
+
         public StudentQualificationsController(IStudentRepository<StudentQualification> stdQualRepo)
         {
             _stdQualRepo = stdQualRepo;
@@ -36,8 +37,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to get student qualifications for studentId: {studentId}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = $"Failed to get student qualifications for studentId: {studentId}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -47,14 +49,16 @@ namespace PlacementManagement.API.Controllers
         /// </summary>
         /// <param name="value">StudentQualification model object</param>
         /// <exception cref="HttpResponseException"></exception>
-        public void Post([FromBody]StudentQualification value)
+        public void Post([FromBody] StudentQualification value)
         {
-            _logger.Debug("Creating studentQualification: " + JsonConvert.SerializeObject(value));
+            string message = "Creating studentQualification: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of StudentQualification");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of StudentQualification";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -63,8 +67,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to create StudentQualification", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to create StudentQualification";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -76,17 +81,19 @@ namespace PlacementManagement.API.Controllers
         /// <param name="qualificationTypeId">QualificationTypeId of qualification to be updated</param>
         /// <param name="value">StudentQualification model object</param>
         /// <exception cref="HttpResponseException"></exception>
-        public void Put(int studentId, int qualificationTypeId, [FromBody]StudentQualification value)
+        public void Put(int studentId, int qualificationTypeId, [FromBody] StudentQualification value)
         {
-            _logger.Debug("Updating studentQualification: " + JsonConvert.SerializeObject(value));
+            string message = "Updating studentQualification: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             value.StudentId = studentId;
             value.QualificationTypeId = qualificationTypeId;
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of StudentQualification");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of StudentQualification";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -94,17 +101,21 @@ namespace PlacementManagement.API.Controllers
                 bool success = _stdQualRepo.Update(value);
 
                 if (!success)
+                {
+                    message = "StudentId or QualificationTypeId not found";
+                    _logger.Debug(message);
                     throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
             }
             catch (HttpResponseException ex)
             {
-                _logger.Debug("StudentId or QualificationTypeId not found");
                 throw ex;
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to update studentQualification", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to update studentQualification";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -117,21 +128,27 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Delete(int studentId, int qualificationTypeId)
         {
+            string message;
+
             try
             {
                 bool success = _stdQualRepo.Delete(studentId, qualificationTypeId);
 
                 if (!success)
+                {
+                    message = "StudentId or QualificationTypeId not found";
+                    _logger.Debug(message);
                     throw new HttpResponseException(HttpStatusCode.NotFound);
+                }
             }
             catch (HttpResponseException ex)
             {
-                _logger.Debug("StudentId or QualificationTypeId not found");
                 throw ex;
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to delete studentQualification, studentId: {studentId}, qualificationTypeId: {qualificationTypeId}", ex);
+                message = $"Failed to delete studentQualification, studentId: {studentId}, qualificationTypeId: {qualificationTypeId}";
+                _logger.Error(message, ex);
                 throw new HttpResponseException(HttpStatusCode.InternalServerError);
             }
         }

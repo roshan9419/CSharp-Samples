@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -35,8 +36,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to get skills", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = "Failed to get skills";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
 
         }
@@ -53,8 +55,9 @@ namespace PlacementManagement.API.Controllers
             Skill skill = _skillsRepo.Get(id);
             if (skill == null)
             {
-                _logger.Debug($"Skill not found for id: {id}");
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                string message = $"Skill not found for id: {id}";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.NotFound, message));
             }
             return skill;
         }
@@ -68,12 +71,14 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Skill value)
         {
-            _logger.Debug("Creating skill: " + JsonConvert.SerializeObject(value));
+            string message = "Creating skill: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of skill");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of skill";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -82,8 +87,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to create skill", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to create skill";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -96,14 +102,16 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Skill value)
         {
-            _logger.Debug("Updating skill: " + JsonConvert.SerializeObject(value));
+            string message = "Updating skill: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             try
             {
                 if (value == null || !ModelState.IsValid)
                 {
-                    _logger.Debug("Bad payload of skill");
-                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                    message = "Bad payload of skill";
+                    _logger.Debug(message);
+                    throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
                 }
 
                 Skill skill = Get(id);
@@ -122,8 +130,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to update skill: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = $"Failed to update skill: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -153,8 +162,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to delete skill: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = $"Failed to delete skill: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
     }

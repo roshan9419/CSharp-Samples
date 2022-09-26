@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -30,7 +31,8 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public List<Student> Post([FromBody] StudentFilter filter)
         {
-            _logger.Debug("Applied StudentFilter: " + JsonConvert.SerializeObject(filter));
+            string message = "Applied StudentFilter: " + JsonConvert.SerializeObject(filter);
+            _logger.Debug(message);
 
             try
             {
@@ -38,8 +40,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch(Exception ex)
             {
-                _logger.Error("Failed to get filtered students", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to get filtered students";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
     }

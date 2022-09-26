@@ -1,6 +1,7 @@
 ﻿using log4net;
 using Newtonsoft.Json;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace PlacementManagement.API.Controllers
     {
         private readonly ILog _logger = LogHelper.GetLogger();
         private readonly IStudentRepository<StudentSkill> _stdSkillRepo;
-        
+
         public StudentSkillsController(IStudentRepository<StudentSkill> stdSkillRepo)
         {
             _stdSkillRepo = stdSkillRepo;
@@ -36,8 +37,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to get student skills for studentId: {studentId}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = $"Failed to get student skills for studentId: {studentId}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -49,12 +51,14 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Post([FromBody] StudentSkill value)
         {
-            _logger.Debug("Creating studentSkill: " + JsonConvert.SerializeObject(value));
+            string message = "Creating studentSkill: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of StudentSkill");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of StudentSkill";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -63,8 +67,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to create StudentSkill", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to create StudentSkill";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -78,15 +83,17 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Put(int studentId, int skillId, [FromBody] StudentSkill value)
         {
-            _logger.Debug("Updating studentSkill: " + JsonConvert.SerializeObject(value));
+            string message = "Updating studentSkill: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             value.StudentId = studentId;
             value.SkillId = skillId;
 
             if (value == null || !ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of StudentSkill");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of StudentSkill";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -94,17 +101,21 @@ namespace PlacementManagement.API.Controllers
                 bool success = _stdSkillRepo.Update(value);
 
                 if (!success)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                {
+                    message = "StudentId or SkillId not found";
+                    _logger.Debug(message);
+                    throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.NotFound, message));
+                }
             }
             catch (HttpResponseException ex)
             {
-                _logger.Debug("StudentId or SkillId not found");
                 throw ex;
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to update studentSkill", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to update studentSkill";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -117,22 +128,28 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Delete(int studentId, int skillId)
         {
+            string message;
+
             try
             {
                 bool success = _stdSkillRepo.Delete(studentId, skillId);
 
                 if (!success)
-                    throw new HttpResponseException(HttpStatusCode.NotFound);
+                {
+                    message = "StudentId or SkillId not found";
+                    _logger.Debug(message);
+                    throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.NotFound, message));
+                }
             }
             catch (HttpResponseException ex)
             {
-                _logger.Debug("StudentId or SkillId not found");
                 throw ex;
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to delete studentSkill, studentId: {studentId}, skillId: {skillId}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = $"Failed to delete studentSkill, studentId: {studentId}, skillId: {skillId}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
     }

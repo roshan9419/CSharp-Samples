@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PlacementManagement.API.Models;
 using PlacementManagement.API.Repository;
+using PlacementManagement.API.Utils;
 using PlacementManagement.DataModels;
 using System;
 using System.Collections.Generic;
@@ -44,8 +45,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to get students", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = "Failed to get students";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -61,8 +63,9 @@ namespace PlacementManagement.API.Controllers
             Student student = _studentRepo.Get(id);
             if (student == null)
             {
-                _logger.Debug($"Student not found of id: {id}");
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                string message = $"Student not found of id: {id}";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.NotFound, message));
             }
             return student;
         }
@@ -76,12 +79,14 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public int Post([FromBody] Student value)
         {
-            _logger.Debug("Creating student: " + JsonConvert.SerializeObject(value));
+            string message = "Creating student: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             if (!ModelState.IsValid)
             {
-                _logger.Debug("Bad payload of student");
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+                message = "Bad payload of student";
+                _logger.Debug(message);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
             }
 
             try
@@ -90,8 +95,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error("Failed to create student", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = "Failed to create student";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -104,14 +110,16 @@ namespace PlacementManagement.API.Controllers
         /// <exception cref="HttpResponseException"></exception>
         public void Put(int id, [FromBody] Student value)
         {
-            _logger.Debug("Updating student: " + JsonConvert.SerializeObject(value));
+            string message = "Updating student: " + JsonConvert.SerializeObject(value);
+            _logger.Debug(message);
 
             try
             {
                 if (!ModelState.IsValid)
                 {
-                    _logger.Debug("Bad payload of student");
-                    throw new HttpResponseException(HttpStatusCode.BadRequest);
+                    message = "Bad payload of student";
+                    _logger.Debug(message);
+                    throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.BadRequest, message));
                 }
 
                 Student student = Get(id);
@@ -130,8 +138,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to update student: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                message = $"Failed to update student: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
 
@@ -161,8 +170,9 @@ namespace PlacementManagement.API.Controllers
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to delete student: {id}", ex);
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                string message = $"Failed to delete student: {id}";
+                _logger.Error(message, ex);
+                throw new HttpResponseException(HttpUtils.GetHttpResponse(HttpStatusCode.InternalServerError, message));
             }
         }
     }

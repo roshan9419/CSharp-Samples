@@ -199,6 +199,7 @@
     <Compile Include="Repository\StudentRepository.cs" />
     <Compile Include="Repository\SkillRepository.cs" />
     <Compile Include="Utils\DBExtension.cs" />
+    <Compile Include="Utils\HttpUtils.cs" />
     <Compile Include="Utils\ModelParser.cs" />
     <Compile Include="Utils\Utils.cs" />
   </ItemGroup>
